@@ -5,16 +5,17 @@ import { GoHeart } from 'react-icons/go'
 import { BsBag } from 'react-icons/bs'
 import { MdOutlineSearch } from 'react-icons/md'
 import CategorySlide from '../offcanvas/CategorySlide'
+import { NavLink } from 'react-router-dom'
 
 function Header() {
   const [showCategorySlide,setShowCategorySlide]=useState(false)
   const {dataCategory}=useContext(DATA)
   const {imgsformenu}=useContext(DATA)
-  return (
+  return (  
     <>
-      <header>
+      <header className=' fixed w-[100%] bg-white z-50'>
         {/* headersection1 */}
-        <section className=' fixed w-[100%] z-50 bg-white  p-[10px] bp1200:p-[30px]'>
+        <section className=' w-[100%] z-50 bg-white  p-[10px] bp1200:p-[30px]'>
           <div className='flex w-[100%] justify-between'>
             <div className='w-[45%]'>
               <ul className='flex bp1200:hidden text-[1.6em]'>
@@ -30,14 +31,19 @@ function Header() {
               <ul className='bp1200:flex hidden'>
               {
                   dataCategory && dataCategory.map((item,i)=>{
-                  return <div key={i} className='group'>
+                  return <div key={i} className='cathead'>
                   <li className='hover:bg-[#E4E4E4] py-[5px] rounded px-[10px]  text-[1.1em] cursor-pointer' >{item.name}</li>
-                  <div className='bg-white absolute p-[40px] left-0 w-screen hidden justify-between group-hover:flex shadow-[0_10px_10px_0_rgba(0,0,0,0.3)]'>
+                  <div className='bg-white absolute p-[40px] left-0 w-screen hidden justify-between catim shadow-[0_10px_10px_0_rgba(0,0,0,0.3)]'>
                       <div>
-                        <ul>
+                        <ul className='flex flex-col gap-[5px]'>
                             {
                             item.Subcategory.map((item,i)=>{
-                                return <li key={i} className='cursor-pointer'>{item.name}</li>
+                                return <NavLink key={i} to={'/'} className="relative w-max mx-[10px] cursor-pointer group">
+                                        <span className=''>{item.name}</span>
+                                        <span className="absolute  -bottom-1 left-1/2 w-0 transition-all h-[1px] bg-black group-hover:w-3/6"></span>
+                                        <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-[1px] bg-black group-hover:w-3/6"></span>
+                                      </NavLink>
+                                //  <li key={i} className='cursor-pointer'>{item.name}</li>
                             })
                             }
                         </ul>
@@ -64,10 +70,17 @@ function Header() {
             </div>
           </div>
         </section>
+        
+        <section className='hidden bp1200:flex  justify-end z-50  p-[20px]'>
+          <div className='bg-white flex justify-between items-center py-[5px] w-[200px] border-[1px] border-gray-300'>
+            <input type="text" className='w-[100px] h-[30px] text-gray-200 px-[10px]' placeholder='Search' />
+            <MdOutlineSearch  className='text-[1.3em] text-gray-600'/>
+          </div>
+        </section>
 
-        <div className={`${showCategorySlide ? 'block' : 'hidden'}  bp1200:hidden`}>
+        {/* <div className={`${showCategorySlide ? 'block' : 'hidden'}  bp1200:hidden`}>
           <CategorySlide/>
-        </div>
+        </div> */}
       </header>
     </>
   )

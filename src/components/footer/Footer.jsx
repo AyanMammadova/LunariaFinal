@@ -18,16 +18,34 @@ function Footer() {
   const date=new Date
   return (
     <>
-      <footer className='p-[40px]'>
+      <footer className='p-[40px] bg-white'>
         <section>
           <p className='text-[1.1em] py-[20px]'>@LUNARIABAKU</p>
           <Swiper
-            slidesPerView={6}
-            spaceBetween={30}
+            slidesPerView={ 2 }
+            spaceBetween={10}
+            breakpoints={{
+              400: {
+                slidesPerView: 2,
+                spaceBetween: 10, 
+              },
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 6,
+                spaceBetween: 25,
+              },
+            }}
             freeMode={true}
             autoplay={{
-              delay: 3000, // Set autoplay delay
-              disableOnInteraction: false, // Keep autoplay active after interaction
+              delay: 3000, 
+              disableOnInteraction: false, 
             }}
             
             modules={[FreeMode, Pagination,Autoplay]}
@@ -36,7 +54,7 @@ function Footer() {
             {
               imgsforfooter && imgsforfooter.map((item,i)=>{
                 return  <SwiperSlide key={i} > 
-                         <img className="h-[100px] w-[100px] " src={item} alt="" />
+                         <img className="w-full h-auto cursor-pointer object-cover " src={item} alt="" />
                         </SwiperSlide>
               })
             }
@@ -50,7 +68,7 @@ function Footer() {
             <p className='text-[1.5em] font-serif w-[40%] mx-auto'>By signing up to Lunaria, you’ll be the first to hear about special offers, our new arrivals, new brands and fashion trends.</p>
             <div className='py-[20px] '>
               <input className='rounded mx-[10px] border-2 border-gray-300 bg-white text-black font-serif text-[1.2em] h-[40px] px-[20px]' type="text" name="" id="" placeholder='Enter your email address' />
-              <button className=' rounded bg-black text-white text-[1.2em] h-[40px] px-[20px]'>SUBSCRIBE</button>
+              <button className='rounded bg-black text-white text-[1.2em] h-[40px] px-[20px]'>SUBSCRIBE</button>
             </div>
           </div>
         </section>
