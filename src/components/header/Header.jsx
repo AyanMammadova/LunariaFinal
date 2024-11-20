@@ -4,22 +4,23 @@ import { IoCloseSharp, IoMenu, IoPersonOutline } from 'react-icons/io5'
 import { GoHeart } from 'react-icons/go'
 import { BsBag } from 'react-icons/bs'
 import { MdOutlineSearch } from 'react-icons/md'
+import CategorySlide from '../offcanvas/CategorySlide'
 
 function Header() {
-  const [showOffCanvas,setShowOffCanvas]=useState(false)
+  const [showCategorySlide,setShowCategorySlide]=useState(false)
   const {dataCategory}=useContext(DATA)
   const {imgsformenu}=useContext(DATA)
   return (
     <>
       <header>
         {/* headersection1 */}
-        <section className='p-[10px] bp1200:p-[30px]'>
+        <section className=' fixed w-[100%] z-50 bg-white  p-[10px] bp1200:p-[30px]'>
           <div className='flex w-[100%] justify-between'>
             <div className='w-[45%]'>
               <ul className='flex bp1200:hidden text-[1.6em]'>
-                <li onClick={()=>{setShowOffCanvas(!showOffCanvas)}}>
+                <li className='cursor-pointer' onClick={()=>{setShowCategorySlide(!showCategorySlide)}}>
                   {
-                    showOffCanvas ?  <IoCloseSharp />: <IoMenu />
+                    showCategorySlide ?  <IoCloseSharp />: <IoMenu />
                   }
                 </li>
                 <li>
@@ -63,6 +64,10 @@ function Header() {
             </div>
           </div>
         </section>
+
+        <div className={`${showCategorySlide ? 'block' : 'hidden'}  bp1200:hidden`}>
+          <CategorySlide/>
+        </div>
       </header>
     </>
   )

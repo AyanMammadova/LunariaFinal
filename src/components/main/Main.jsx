@@ -6,7 +6,7 @@ function Main() {
   const {dataCategory}=useContext(DATA)
   return (
     <>
-      <main>
+      <main className='pt-[70px]'>
         <section>
           <div className='overflow-hidden h-[80vh] w-[95%] mx-[auto] relative'>
             <img className='h-full object-cover object-top w-full  m-[auto] transition-all duration-500 hover:scale-110' src="https://tradium.ibradev.me/img/qadin.jpg" alt="" />

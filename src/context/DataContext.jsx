@@ -6,6 +6,19 @@ function DataContext({children}) {
     useEffect(()=>{
       getDataCategories().then(res=>{setDataCategory(res)})
     },[])
+    const imgsforfooter=[
+      'https://www.emporium.az/i/social/instagram-1.jpg?v=120724',
+      'https://www.emporium.az/i/social/instagram-2.jpg?v=120724',
+      'https://www.emporium.az/i/social/instagram-3.jpg?v=120724',
+      'https://www.emporium.az/i/social/instagram-4.jpg?v=120724',
+      'https://www.emporium.az/i/social/instagram-5.jpg?v=120724  ',
+      'https://www.emporium.az/i/social/instagram-6.jpg?v=120724',
+      'https://tradium.ibradev.me/img/instagram-1.jpg',
+      'https://tradium.ibradev.me/img/instagram-3.jpg',
+      'https://tradium.ibradev.me/img/instagram-5.jpg',
+      'https://tradium.ibradev.me/img/instagram-4.jpg',
+      'https://tradium.ibradev.me/img/instagram-6.jpg',
+    ]
     const imgsformenu=[
       'https://www.emporium.az/b/cat/28-81-women-accessories.jpg?v=140324',
       'https://www.emporium.az/b/cat/29-313-men-clothing.jpg?v=140324',
@@ -29,7 +42,8 @@ function DataContext({children}) {
               dataCategory,
               setDataCategory,
               imgsformenu,
-              imgsfordeps
+              imgsfordeps,
+              imgsforfooter
           }}
         >
           {children}

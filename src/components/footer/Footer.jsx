@@ -1,11 +1,60 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa'
 
+import { Autoplay, FreeMode, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+import { DATA } from '../../context/DataContext';
+
+
 function Footer() {
+  const {imgsforfooter}=useContext(DATA)
+  const date=new Date
   return (
     <>
-      <footer className='px-[40px]'>
-        <div className='flex flex-wrap gap-[20px] justify-between    py-[20px]'>
+      <footer className='p-[40px]'>
+        <section>
+          <p className='text-[1.1em] py-[20px]'>@LUNARIABAKU</p>
+          <Swiper
+            slidesPerView={6}
+            spaceBetween={30}
+            freeMode={true}
+            autoplay={{
+              delay: 3000, // Set autoplay delay
+              disableOnInteraction: false, // Keep autoplay active after interaction
+            }}
+            
+            modules={[FreeMode, Pagination,Autoplay]}
+            className="mySwiper"
+          >
+            {
+              imgsforfooter && imgsforfooter.map((item,i)=>{
+                return  <SwiperSlide key={i} > 
+                         <img className="h-[100px] w-[100px] " src={item} alt="" />
+                        </SwiperSlide>
+              })
+            }
+            
+            
+          </Swiper>
+        </section>
+        <section>
+          <div className='bg-[#F7F7F2] text-center my-[30px] py-[30px]'>
+            <p className='text-[3em] font-serif'>Join our newsletter</p>
+            <p className='text-[1.5em] font-serif w-[40%] mx-auto'>By signing up to Lunaria, you’ll be the first to hear about special offers, our new arrivals, new brands and fashion trends.</p>
+            <div className='py-[20px] '>
+              <input className='rounded mx-[10px] border-2 border-gray-300 bg-white text-black font-serif text-[1.2em] h-[40px] px-[20px]' type="text" name="" id="" placeholder='Enter your email address' />
+              <button className=' rounded bg-black text-white text-[1.2em] h-[40px] px-[20px]'>SUBSCRIBE</button>
+            </div>
+          </div>
+        </section>
+        <section className='flex flex-wrap gap-[20px] justify-between    py-[20px]'>
           <div>
             <p className='text-[1.4em]'>Emporium</p>
             <p className='text-[1.2em]'>About us</p>
@@ -37,14 +86,14 @@ function Footer() {
            <img src="/img/visacards.png" alt="" />
            <p>SOCIAL MEDIA</p>
            <div className='flex text-[2em] justify-between'>
-            <FaFacebookF className='border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]'/>
-            <FaInstagram className='border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]'/>
-            <FaWhatsapp className='border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]'  />
+              <FaFacebookF className='border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]'/>
+              <FaInstagram className='border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]'/>
+              <FaWhatsapp className='border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]'  />
            </div>
           </div>
 
-        </div>
-        <p className='pb-[400px]'>© Copyright 2024 Lunaira.</p>
+        </section>
+        <p className='pb-[400px] text-center'>© Copyright {date.getFullYear() } Lunaira.</p>
       </footer>
     </>
   )
