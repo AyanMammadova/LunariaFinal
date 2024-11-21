@@ -1,9 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getDataCategories } from '../services/api'
+import { getDataByCategory, getDataCategories } from '../services/api'
 export const DATA=createContext(null)
 function DataContext({children}) {
     const [dataCategory,setDataCategory]=useState(null)
+    const [dataByCategory,setDataByCategory]=useState(null)
     useEffect(()=>{
+      getDataByCategory().then(res=>{setDataByCategory(res)})
       getDataCategories().then(res=>{setDataCategory(res)})
     },[])
     const imgsforfooter=[
@@ -41,6 +43,8 @@ function DataContext({children}) {
           value={{
               dataCategory,
               setDataCategory,
+              dataByCategory,
+              setDataByCategory,
               imgsformenu,
               imgsfordeps,
               imgsforfooter
