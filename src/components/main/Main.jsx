@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { DATA } from '../../context/DataContext'
+import { Link } from 'react-router-dom'
 
 function Main() {
   const {imgsfordeps}=useContext(DATA)
@@ -8,33 +9,41 @@ function Main() {
     <>
       <main className='pt-[100px] bg-white'>
         <section>
-          <div className='overflow-hidden h-[80vh]  w-[95%] mx-[auto] relative'>
-            <div className='h-full absolute  w-full  m-[auto] bg-[#35313180]' ></div>
-            <img  className='h-full object-top object-cover  w-full  m-[auto] transition-all duration-500 hover:scale-110' 
+          <div className='overflow-hidden h-[80vh]  w-[95%] mx-[auto] relative group'>
+            <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
+            <img  className=' absolute top-0 object-top lg:w-full object-cover h-full  transition-all duration-500 group-hover:scale-110' 
                   src="https://www.versace.com/dw/image/v2/BGWN_PRD/on/demandware.static/-/Library-Sites-ver-library/default/dwe92ce0c5/Homepage-New/SS25/hp-mercury-18112024-hero-desk.jpg" alt="MainPhoto" />
-            <p className='absolute top-[60%]  text-[2em] font-serif text-white w-[100%] text-center'>Black Friday</p>
-            <div className='absolute bottom-[100px] w-[100%] flex gap-[20px] text-white flex-col sm:flex-row sm:w-[40%] sm:left-[30%]'>
-              <button className='bg-transparent border-2 border-white mx-[auto] w-[200px] py-[10px] hover:bg-gradient-to-r hover:from-white hover:to-white hover:text-black '>Women</button>
-              <button className='bg-transparent border-2 border-white mx-[auto] w-[200px] py-[10px] hover:bg-gradient-to-r hover:from-white hover:to-white hover:text-black '>Men</button>
+            <p className='absolute z-20 top-[60%] bp600:top-[70%]  text-[2em] font-serif text-white w-[100%] text-center'>Black Friday</p>
+            <div className='absolute z-20 bottom-[60px] w-[100%] flex-col bp600:flex-row justify-center flex gap-[20px] text-white bp600:w-[40%] bp600:left-[30%]'>
+              <Link to={'/productsbycategory/Women/1'}>
+                <button className='bg-transparent border-2 border-white ml-[2%] w-[95%]  bp600:w-[200px] py-[10px] hover:bg-[#FFFFFF33] font-[600] hover:text-[#2F2729] '>
+                  Women
+                </button>
+              </Link>
+              <Link to={'/productsbycategory/Men/2'}>
+                <button className='bg-transparent border-2 border-white ml-[2%] w-[95%] bp600:w-[200px] py-[10px] hover:bg-[#FFFFFF33] font-[600] hover:text-[#2F2729] '>
+                  Men
+                </button>
+              </Link>
             </div>
           </div>
         </section>
 
 
-        <div className='flex items-center  justify-between m-[30px]'>
+        <div className='flex items-center  justify-between mx-[10px] my-[30px]'>
           <div className='h-[1px] border-b-[1px] w-[35%] border-gray-200'></div>
-          <p className='text-center text-[2em] font-serif'>Choose a department</p>
+          <p className='text-center text-[1.3em] bp600:text-[2em] font-serif'>Choose a department</p>
           <div className='h-[1px] border-b-[1px] w-[35%] border-gray-200'></div>
         </div>
         
         <section>
-          <div className='flex gap-[10px] justify-between flex-wrap w-[100%] px-[40px]'>
+          <div className='flex gap-[10px] justify-between flex-wrap w-[100%] px-[10px] bp600:px-[40px]'>
             {
               dataCategory && dataCategory.map((item,i)=>{
-                return <div key={i} className='w-[100%]  md:w-[49%] relative'>
-                <img className='h-full w-full object-cover' src={imgsfordeps[i]} alt="" />
-                <p className='absolute text-white top-1/2 left-[44%] font-serif text-[2em]'>{item.name}</p>
-              </div>
+                return <Link to={`/productsbycategory/${item.name}/${item.id}`} key={i} className='w-[100%] overflow-hidden  md:w-[49%] relative'>
+                            <img className='bp600:h-full w-full object-cover hover:scale-110  transition-all' src={imgsfordeps[i]} alt="" />
+                            <p className='absolute text-white top-1/2 w-[100%] text-center font-serif text-[1.5em] bp600:text-[2em]'>{item.name}</p>
+                          </Link>
               })
             }
           </div>

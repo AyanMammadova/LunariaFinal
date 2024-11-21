@@ -8,9 +8,11 @@ export default {
     extend: {
       screens: {
         'bp400': '400px',
+        'bp600':'600px',
         sm: '640px', 
         md: '768px', 
         lg: '1024px',
+        'bp900': '900px',
         'bp1200':'1200px',
         xl: '1280px',
         '2xl': '1536px', 

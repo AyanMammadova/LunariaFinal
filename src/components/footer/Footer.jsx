@@ -18,7 +18,7 @@ function Footer() {
   const date=new Date
   return (
     <>
-      <footer className='p-[40px] bg-white'>
+      <footer className='p-[10px] bp600:p-[40px] bg-white'>
         <section>
           <p className='text-[1.1em] py-[20px]'>@LUNARIABAKU</p>
           <Swiper
@@ -64,11 +64,11 @@ function Footer() {
         </section>
         <section>
           <div className='bg-[#F7F7F2] text-center my-[30px] py-[30px]'>
-            <p className='text-[3em] font-serif'>Join our newsletter</p>
-            <p className='text-[1.5em] font-serif w-[40%] mx-auto'>By signing up to Lunaria, you’ll be the first to hear about special offers, our new arrivals, new brands and fashion trends.</p>
-            <div className='py-[20px] '>
-              <input className='rounded mx-[10px] border-2 border-gray-300 bg-white text-black font-serif text-[1.2em] h-[40px] px-[20px]' type="text" name="" id="" placeholder='Enter your email address' />
-              <button className='rounded bg-black text-white text-[1.2em] h-[40px] px-[20px]'>SUBSCRIBE</button>
+            <p className='text-[2em] pb-[10px] bp900:text-[3em] font-serif'>Join our newsletter</p>
+            <p className='text-[1.2em] bp900:text-[1.5em] font-serif w-[95%] bp900:w-[60%] mx-auto'>By signing up to Lunaria, you’ll be the first to hear about special offers, our new arrivals, new brands and fashion trends.</p>
+            <div className='py-[20px]'>  
+              <input className='w-[80%] bp600:w-auto rounded mx-[10px] border-2 border-gray-300 bg-white text-black font-serif text-[1.2em] h-[40px] px-[20px]' type="text" placeholder='Enter your email address' />
+              <button className='w-[80%] bp600:w-auto my-[20px] rounded bg-black text-white text-[1.2em] h-[40px] px-[20px]'>SUBSCRIBE</button>
             </div>
           </div>
         </section>
