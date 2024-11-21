@@ -5,7 +5,7 @@ import { GoHeart } from 'react-icons/go'
 import { BsBag } from 'react-icons/bs'
 import { MdOutlineSearch } from 'react-icons/md'
 import CategorySlide from '../offcanvas/CategorySlide'
-import {NavLink } from 'react-router-dom'
+import {Link, NavLink } from 'react-router-dom'
 
 function Header() {
   const [showCategorySlide,setShowCategorySlide]=useState(false)
@@ -61,7 +61,9 @@ function Header() {
             </div>
 
             <div>
-              <img src="/img/logo.png" alt="Lunaria.logo" />
+              <Link to={'/'}>
+                <img src="/img/logo.png" alt="Lunaria.logo" />
+              </Link>
             </div>
 
             <div className='text-[1.6em] w-[43%] justify-end flex gap-[10px]'>

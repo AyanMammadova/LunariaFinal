@@ -32,7 +32,7 @@ function Main() {
             {
               dataCategory && dataCategory.map((item,i)=>{
                 return <div key={i} className='w-[100%]  md:w-[49%] relative'>
-                <img src={imgsfordeps[i]} alt="" />
+                <img className='h-full w-full object-cover' src={imgsfordeps[i]} alt="" />
                 <p className='absolute text-white top-1/2 left-[44%] font-serif text-[2em]'>{item.name}</p>
               </div>
               })

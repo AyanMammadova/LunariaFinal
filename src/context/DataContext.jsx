@@ -5,7 +5,7 @@ function DataContext({children}) {
     const [dataCategory,setDataCategory]=useState(null)
     const [dataByCategory,setDataByCategory]=useState(null)
     useEffect(()=>{
-      getDataByCategory().then(res=>{setDataByCategory(res)})
+      // getDataByCategory().then(res=>{setDataByCategory(res)})
       getDataCategories().then(res=>{setDataCategory(res)})
     },[])
     const imgsforfooter=[
@@ -33,9 +33,9 @@ function DataContext({children}) {
       'https://www.emporium.az/i/maincard/cat_65.jpg?v=1.8.23',
       'https://www.emporium.az/i/maincard/cat_1.jpg?v=1.8.23',
       'https://www.emporium.az/i/maincard/cat_189.jpg?v=1.8.23',
-      'https://www.emporium.az/i/maincard/cat_264.jpg?v=1.8.23',
       'https://www.emporium.az/i/maincard/cat_297.jpg?v=1.8.23',
-      'https://www.emporium.az/i/maincard/cat_228.jpg?v=1.8.23',
+      'https://www.emporium.az/b/beauty-page-main-banner-desktop.jpg?v=140324',
+      'https://www.emporium.az/b/cat/2-235-bedroom.jpg?v=140324',
     ]
     return (
       <>
@@ -44,7 +44,6 @@ function DataContext({children}) {
               dataCategory,
               setDataCategory,
               dataByCategory,
-              setDataByCategory,
               imgsformenu,
               imgsfordeps,
               imgsforfooter

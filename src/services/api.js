@@ -1,11 +1,11 @@
 import axios from "axios"
 
 async function getDataCategories() {
-    const res=await axios.get('https://ecommerse.apasni.me/categories/all')
+    const res=await axios.get('https://ecommerce.ibradev.me/categories/all')
     return res.data
 }
-async function getDataByCategory() {
-    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?categoryId=2}`)
+async function getDataByCategory(catid) {
+    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?categoryId=${catid}}`)
     return res.data
 }
 
@@ -13,5 +13,4 @@ async function getDataByCategory() {
 export {
     getDataCategories,
     getDataByCategory
-
 }
