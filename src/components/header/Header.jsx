@@ -7,17 +7,23 @@ import { MdOutlineSearch } from 'react-icons/md'
 import CategorySlide from '../offcanvas/CategorySlide'
 import {Link, NavLink } from 'react-router-dom'
 import SearchBar from '../offcanvas/SearchBar'
+import ShoppingBag from '../offcanvas/ShoppingBag'
 
 function Header() {
   const [showCategorySlide,setShowCategorySlide]=useState(false)
   const {dataCategory}=useContext(DATA)
   const {imgsformenu}=useContext(DATA)
   const [showSeachBar,setShowSearchBar]=useState(false)
+  const [showBag,setShowBag]=useState(false)
   return (  
     <>
       <header className=' fixed w-[100%] bg-white z-50'>
-        
-        <div className={`${showSeachBar ? 'block' : 'hidden'}`}>
+        <div className={`${showBag||showSeachBar ? 'block' : 'hidden'} w-full h-full bg-[#53525280] fixed z-30`}></div>
+        <div className={`w-[30%] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[40%]' }`}>
+          <ShoppingBag setShowBag={setShowBag}/>
+        </div>
+
+        <div className={`z-50 absolute w-[100%] transition-all duration-300  ${showSeachBar ? 'top-0' : '-top-[30vh]'}`}>
           <SearchBar setShowSearchBar={setShowSearchBar}/>
         </div>
 
@@ -72,18 +78,18 @@ function Header() {
               </Link>
             </div>
               
-            <div className='text-[1.6em] w-[43%] justify-end flex gap-[10px]'>
-              <div className='hidden bp1200:flex  justify-end z-50 pr-[40px] '>
+            <div className='text-[1.6em]  w-[43%] justify-end flex gap-[10px]'>
+              <div className='hidden bp1200:flex  justify-end  pr-[40px] '>
                 <div 
                   onClick={()=>{setShowSearchBar(true)}}
-                  className='bg-white flex justify-between items-center py-[5px] w-[200px] border-[1px] border-gray-300'>
-                  <input type="text" className='w-[100px] text-[.7em] h-[30px] text-gray-200 px-[10px]' placeholder='Search' />
+                  className='bg-white flex  justify-between items-center py-[5px] w-[200px] border-[1px] border-gray-300'>
+                  <input type="text" className='w-[100px] text-[.7em] h-[30px]  text-gray-200 px-[10px]' placeholder='Search' />
                   <MdOutlineSearch className='text-[1.1em] text-gray-600'/>
                 </div>
               </div>
-              <IoPersonOutline  className='hidden bp1200:block'/>
-              <GoHeart />
-              <BsBag />
+              <IoPersonOutline  className='hidden cursor-pointer bp1200:block'/>
+              <GoHeart className='cursor-pointer' />
+              <BsBag className='cursor-pointer'  onClick={()=>{setShowBag(true)}}/>
             </div>
           </div>
         </section>
