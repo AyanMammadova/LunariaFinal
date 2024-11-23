@@ -1,13 +1,20 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { getDataByCategory, getDataCategories } from '../services/api'
+import { getDataAll, getDataByCategory, getDataCategories } from '../services/api'
 export const DATA=createContext(null)
 function DataContext({children}) {
     const [dataCategory,setDataCategory]=useState(null)
     const [dataByCategory,setDataByCategory]=useState(null)
+    const [dataAll,setDataAll]=useState(null)
+    
     useEffect(()=>{
-      // getDataByCategory().then(res=>{setDataByCategory(res)})
-      getDataCategories().then(res=>{setDataCategory(res)})
-    },[])
+        getDataCategories().then(res=>{setDataCategory(res)})
+        getDataAll().then(res=>{setDataAll(res.data)})
+      },[]
+    )
+    const dataDiscounted= dataAll?.filter(item=>item.discount>1)
+                          .sort((a,b)=>b.discount-a.discount)
+    
+
     const imgsforfooter=[
       'https://www.emporium.az/i/social/instagram-1.jpg?v=120724',
       'https://www.emporium.az/i/social/instagram-2.jpg?v=120724',
@@ -31,12 +38,13 @@ function DataContext({children}) {
     ]
     const imgsfordeps=[
       'https://www.emporium.az/i/maincard/cat_65.jpg?v=1.8.23',
-      'https://www.emporium.az/i/maincard/cat_1.jpg?v=1.8.23',
+      'https://www.emporium.az/b/cat/32-26-men-watches.jpg?v=140324',
       'https://www.emporium.az/i/maincard/cat_189.jpg?v=1.8.23',
       'https://www.emporium.az/i/maincard/cat_297.jpg?v=1.8.23',
       'https://www.emporium.az/b/beauty-page-main-banner-desktop.jpg?v=140324',
       'https://www.emporium.az/b/cat/2-235-bedroom.jpg?v=140324',
     ]
+
     return (
       <>
         <DATA.Provider
@@ -46,7 +54,8 @@ function DataContext({children}) {
               dataByCategory,
               imgsformenu,
               imgsfordeps,
-              imgsforfooter
+              imgsforfooter,
+              dataDiscounted
           }}
         >
           {children}

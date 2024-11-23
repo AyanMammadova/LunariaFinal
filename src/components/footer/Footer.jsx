@@ -1,66 +1,17 @@
 import React, { useContext } from 'react'
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa'
-
-import { Autoplay, FreeMode, Pagination } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-import { DATA } from '../../context/DataContext';
+import FooterSwiper from './FooterSwiper'
 
 
 function Footer() {
-  const {imgsforfooter}=useContext(DATA)
+  
   const date=new Date
   return (
     <>
       <footer className='p-[10px] bp600:p-[40px] bg-white'>
         <section>
           <p className='text-[1.1em] py-[20px]'>@LUNARIABAKU</p>
-          <Swiper
-            slidesPerView={ 2 }
-            spaceBetween={10}
-            breakpoints={{
-              400: {
-                slidesPerView: 2,
-                spaceBetween: 10, 
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 15,
-              },
-              768: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 6,
-                spaceBetween: 25,
-              },
-            }}
-            freeMode={true}
-            autoplay={{
-              delay: 3000, 
-              disableOnInteraction: false, 
-            }}
-            
-            modules={[FreeMode, Pagination,Autoplay]}
-            className="mySwiper"
-          >
-            {
-              imgsforfooter && imgsforfooter.map((item,i)=>{
-                return  <SwiperSlide key={i} > 
-                         <img className="w-full h-auto cursor-pointer object-cover " src={item} alt="" />
-                        </SwiperSlide>
-              })
-            }
-            
-            
-          </Swiper>
+          <FooterSwiper/>
         </section>
         <section>
           <div className='bg-[#F7F7F2] text-center my-[30px] py-[30px]'>
@@ -111,7 +62,7 @@ function Footer() {
           </div>
 
         </section>
-        <p className='pb-[400px] text-center'>© Copyright {date.getFullYear() } Lunaira.</p>
+        <p className='pb-[20px] text-center'>© Copyright {date.getFullYear() } Lunaira.</p>
       </footer>
     </>
   )

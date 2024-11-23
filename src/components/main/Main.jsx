@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { DATA } from '../../context/DataContext'
 import { Link } from 'react-router-dom'
+import ProductSwiper from './ProductSwiper'
 
 function Main() {
   const {imgsfordeps}=useContext(DATA)
@@ -35,17 +36,28 @@ function Main() {
           <p className='text-center text-[1.3em] bp600:text-[2em] font-serif'>Choose a department</p>
           <div className='h-[1px] border-b-[1px] w-[35%] border-gray-200'></div>
         </div>
-        
+        {/* DEPARTAMENTS */}
         <section>
           <div className='flex gap-[10px] justify-between flex-wrap w-[100%] px-[10px] bp600:px-[40px]'>
             {
               dataCategory && dataCategory.map((item,i)=>{
-                return <Link to={`/productsbycategory/${item.name}/${item.id}`} key={i} className='w-[100%] overflow-hidden  md:w-[49%] relative'>
-                            <img className='bp600:h-full w-full object-cover hover:scale-110  transition-all' src={imgsfordeps[i]} alt="" />
-                            <p className='absolute text-white top-1/2 w-[100%] text-center font-serif text-[1.5em] bp600:text-[2em]'>{item.name}</p>
+                return  <Link 
+                            to={`/productsbycategory/${item.name}/${item.id}`} 
+                            key={i} 
+                            className='w-[100%] group overflow-hidden  md:w-[49%] relative'>
+                            <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
+                            <img className='bp600:h-full w-full object-cover transition-all duration-200 group-hover:scale-110  ' src={imgsfordeps[i]} alt="" />
+                            <p className='absolute z-20 text-white top-1/2 w-[100%] text-center font-serif text-[1.5em] bp600:text-[2em]'>{item.name}</p>
                           </Link>
               })
             }
+          </div>
+        </section>
+        {/* DISCOUNTED PRODUCTS */}
+        <section>
+          <div className='p-[10px] bp600:p-[40px]'>
+            <p className='font-[600] text-[1.2em]'>HIGHLIGHTS</p>
+            <ProductSwiper/>
           </div>
         </section>
       </main>
