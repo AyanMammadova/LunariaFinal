@@ -19,7 +19,7 @@ function Header() {
     <>
       <header className=' fixed w-[100%] bg-white z-50'>
         <div className={`${showBag||showSeachBar ? 'block' : 'hidden'} w-full h-full bg-[#53525280] fixed z-30`}></div>
-        <div className={`w-[30%] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[40%]' }`}>
+        <div className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[100%]' }`}>
           <ShoppingBag setShowBag={setShowBag}/>
         </div>
 
@@ -27,8 +27,14 @@ function Header() {
           <SearchBar setShowSearchBar={setShowSearchBar}/>
         </div>
 
+
+        <div className={`absolute top-[90px] translate-x-0 duration-300 ${showCategorySlide ? 'left-0' : '-left-[120%]'}  bp1200:hidden`}>
+          <CategorySlide/>
+        </div>
+
         <section className=' w-[100%] z-50 bg-white p-[10px]  md:px-[40px]  bp1200:pt-[30px]'>
           <div className='flex w-[100%] items-center h-[90px] justify-between'>
+
             <div className='w-[45%]'>
               <ul className='flex bp1200:hidden text-[1.6em]'>
                 <li className='cursor-pointer' onClick={()=>{setShowCategorySlide(!showCategorySlide)}}>
@@ -37,7 +43,7 @@ function Header() {
                   }
                 </li>
                 <li>
-                  <MdOutlineSearch />
+                  <MdOutlineSearch onClick={()=>{setShowSearchBar(true)}}/>
                 </li>
               </ul>
               <ul className='bp1200:flex hidden'>
@@ -94,18 +100,7 @@ function Header() {
           </div>
         </section>
         
-        {/* <section className='hidden bp1200:flex  justify-end z-50 pr-[40px]  pb-[20px]'>
-          <div 
-            onClick={()=>{setShowSearchBar(true)}}
-            className='bg-white flex justify-between items-center py-[5px] w-[200px] border-[1px] border-gray-300'>
-            <input type="text" className='w-[100px] h-[30px] text-gray-200 px-[10px]' placeholder='Search' />
-            <MdOutlineSearch className='text-[1.3em] text-gray-600'/>
-          </div>
-        </section> */}
-
-        <div className={`${showCategorySlide ? 'block' : 'hidden'}  bp1200:hidden`}>
-          <CategorySlide/>
-        </div>
+       
       </header>
     </>
   )

@@ -5,15 +5,19 @@ function DataContext({children}) {
     const [dataCategory,setDataCategory]=useState(null)
     const [dataByCategory,setDataByCategory]=useState(null)
     const [dataAll,setDataAll]=useState(null)
+    const [dataDiscounted,setDataDiscounted]=useState(null)
     
     useEffect(()=>{
         getDataCategories().then(res=>{setDataCategory(res)})
         getDataAll().then(res=>{setDataAll(res.data)})
       },[]
     )
-    const dataDiscounted= dataAll?.filter(item=>item.discount>1)
+    useEffect(()=>{
+      setDataDiscounted(dataAll?.filter(item=>item.discount>1)
                           .sort((a,b)=>b.discount-a.discount)
-    
+                          .map((item,i)=>({...item,isHover:false})))
+    },[dataAll])
+                          
 
     const imgsforfooter=[
       'https://www.emporium.az/i/social/instagram-1.jpg?v=120724',
@@ -55,7 +59,9 @@ function DataContext({children}) {
               imgsformenu,
               imgsfordeps,
               imgsforfooter,
-              dataDiscounted
+              dataDiscounted,
+              setDataDiscounted
+              
           }}
         >
           {children}

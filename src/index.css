@@ -10,5 +10,6 @@
 
 .cathead:hover .catim{
   display: flex;
-  /* background-color: rgba(53, 49, 49, 0.502); */
+  position: absolute;
+  top: 80px;
 }

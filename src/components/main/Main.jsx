@@ -57,7 +57,7 @@ function Main() {
         <section>
           <div className='p-[10px] bp600:p-[40px]'>
             <p className='font-[600] text-[1.2em]'>HIGHLIGHTS</p>
-            <ProductSwiper/>
+            <ProductSwiper type={'discount'}/>
           </div>
         </section>
       </main>

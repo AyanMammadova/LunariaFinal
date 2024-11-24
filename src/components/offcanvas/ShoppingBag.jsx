@@ -7,7 +7,6 @@ function ShoppingBag({setShowBag}) {
   return (
     <>
       <div className='w-full relative h-[100vh] bg-white z-50 shadow-lg'>
-        
 
         <IoCloseSharp 
         className='absolute top-[20px] right-[20px] cursor-pointer text-[1.2em]' 
@@ -18,7 +17,7 @@ function ShoppingBag({setShowBag}) {
         <p className='font-serif text-[1.5em] text-center'>Your Bag Is Empty</p>
         
         <FaRegSadCry  className='text-[2em] mx-[auto]'/>
-        <p className='font-serif text-[0.5em] text-center'>Buy smth loser</p>
+        <p className='font-serif text-[0.7em] text-center'>Buy smth loser</p>
       </div> 
     </>
   )
