@@ -11,7 +11,12 @@ async function getDataByCategory(catid) {
 }
 
 async function getDataAll() {
-    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?limit=100}`)
+    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?limit=100`)
+    return res.data
+}
+
+async function getProductById({proid}) {
+    const res=await axios.get(`https://ecommerce.ibradev.me/products/get/${proid}`)
     return res.data
 }
 
@@ -19,5 +24,6 @@ async function getDataAll() {
 export {
     getDataCategories,
     getDataByCategory,
-    getDataAll
+    getDataAll,
+    getProductById
 }

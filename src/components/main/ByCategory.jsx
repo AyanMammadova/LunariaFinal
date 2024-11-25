@@ -2,11 +2,16 @@ import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { DATA } from '../../context/DataContext'
 import ProductSwiper from './ProductSwiper'
+import { Autoplay, FreeMode, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
 
 function ByCategory() {
   const {catname,catid}=useParams()
-  const {imgsfordeps}=useContext(DATA)
-  
+  const {imgsfordeps,imgsforsubcats,dataCategory}=useContext(DATA)
+  // console.log(imgsforsubcats[catid-1])
   
   return (
     <>
@@ -26,6 +31,48 @@ function ByCategory() {
           <p className='font-[600] text-[1.2em]'>{catname}</p>
           <ProductSwiper type={catid}/>
         </div>
+      </section>
+      <section>
+        <div className='p-[40px]'>
+          <Swiper
+            slidesPerView={ 2 }
+            spaceBetween={10}
+            breakpoints={{
+              400: {
+                slidesPerView: 2,
+                spaceBetween: 10, 
+              },
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+              }
+            }}
+            freeMode={true}
+            autoplay={{
+              delay: 3000, 
+              disableOnInteraction: false, 
+            }}
+            
+            modules={[FreeMode, Pagination,Autoplay]}
+            className="mySwiper"
+          >
+            {
+              imgsforsubcats && imgsforsubcats[catid-1].map((item,i)=>{
+                return  <SwiperSlide key={i} > 
+                          <div className='w-full h-auto relative group overflow-hidden'>
+                            <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
+                            <p 
+                            className='z-50 flex justify-center items-center text-white font-serif text-[1.3em] absolute inset-0'>
+                              {dataCategory && dataCategory[catid-1].Subcategory[i].name}
+                            </p>
+                            <img className=" w-full z-30 h-auto cursor-grab object-cover transition-all duration-300 group-hover:scale-110" src={item} alt="" />
+                          </div>
+                        </SwiperSlide>
+              })
+            }   
+          </Swiper>
+        </div>
+        
       </section>
     </>
   )

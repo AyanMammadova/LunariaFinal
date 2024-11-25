@@ -19,6 +19,39 @@ function DataContext({children}) {
     },[dataAll])
                           
 
+    const imgsforsubcats = [
+      [
+        'https://www.emporium.az/b/home/0609triple-banner-1-.gif?v=2224',
+        'https://www.emporium.az/b/home/0609triple-banner-2.jpg?v=1001',
+        'https://www.emporium.az/b/home/0609Triple-banner-3-.gif?v=2224'
+      ],
+      [
+        'https://tradium.ibradev.me/img/24Triple-man-1_.jpeg',
+        'https://tradium.ibradev.me/img/24triple-man-2.gif',
+        'https://tradium.ibradev.me/img/24triple-man-3.jpg'
+      ],
+      [
+        'https://www.emporium.az/b/home/24triple-kids-banner-1.jpg?v=0412',
+        'https://www.emporium.az/b/home/24triple-kids-banner-2.jpg?v=0412',
+        'https://www.emporium.az/b/home/24triple-kids-banner-3.jpg?v=0412'
+      ],
+      [
+        'https://www.emporium.az/b/home/24triple-jewelry-1.jpg?v=2310',
+        'https://www.emporium.az/b/home/jewellery_triple_banner_2.jpg?v=140324',
+        'https://www.emporium.az/b/home/jewellery_triple_banner_3.jpg?v=140324'
+      ],
+      [
+        'https://www.emporium.az/b/home/24triple-banner-beauty-1.jpg?v=0412',
+        'https://www.emporium.az/b/triple-banner-2.jpg?v=12345',
+        'https://www.emporium.az/b/home/24triple-banner-3.jpg?v=0412'
+      ],
+      [
+        'https://tradium.ibradev.me/img/24triple-home-12.jpg',
+        'https://tradium.ibradev.me/img/24triple-home-2.jpg',
+        'https://tradium.ibradev.me/img/24triple-home-11.jpg'
+      ]
+    ]
+    
     const imgsforfooter=[
       'https://www.emporium.az/i/social/instagram-1.jpg?v=120724',
       'https://www.emporium.az/i/social/instagram-2.jpg?v=120724',
@@ -60,7 +93,8 @@ function DataContext({children}) {
               imgsfordeps,
               imgsforfooter,
               dataDiscounted,
-              setDataDiscounted
+              setDataDiscounted,
+              imgsforsubcats
               
           }}
         >
