@@ -1,36 +1,68 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProductById } from '../../services/api'
+import { IoMdHeartEmpty } from 'react-icons/io'
+import { FaWhatsapp } from 'react-icons/fa'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Image } from 'antd';
 
 function ProductById() {
+    const notify = () => toast(`Product Added to Your Bag ☻`);
     const {proid}=useParams()
     const [product,setProduct]=useState(null)
     useEffect(()=>{
         getProductById({proid}).then(res=>{setProduct(res)})
     },[proid])
-    console.log(product?.Colors[0].toLowerCase())
 
   return (
     <>
-        <section className='pt-[160px] p-[40px] w-[100%]'>
-            <div className='w-full flex justify-between border-2 border-gray-200'>
-                <div>
-                    <img 
-                    className='h-[70vh] object-top object-cover' 
-                    src={product &&  product.images[0]}
-                    alt="" />
+    
+        <section className=' pt-[150px]  p-[5px] w-[100%] md:p-[40px] md:pt-[160px]'>
+            <div className='w-full flex flex-col md:flex-row justify-start gap-[50px] '>
+                {/* IMAGEDIV */}
+                <div className='flex justify-center'>
+                    <Image 
+                        className='h-[70vh] w-[100%] object-top object-cover cursor-zoom-in ' 
+                        src={product &&  product.images[0]}
+                        alt="" 
+                    />
                 </div>
-                <div className='text-black w-[50%]'>
+                {/* DETAILSDIV */}
+                <div className='text-black flex flex-col gap-[10px] md:w-[50%]'>
                     <p className='font-bold'>{product?.Brands.name}</p>
                     <p className=''>{product?.name}</p>
                     <p className=''>{product?.price} USD</p>
+                    {/* COLOR */}
                     <div className=''>Color:
                         {
                             product?.Colors.map((item,i)=>{
-                                return <div className={`h-[30px] rounded-full w-[30px] bg-[${item.toLowerCase()}]`}></div>
+                                return <div key={i} className={`cursor-pointer h-[25px] rounded-full w-[25px] bg-${item.toLowerCase()}`}></div>
                             })
                         }
                         
+                    </div>
+                    {/* SIZE */}
+                    <div className='flex gap-[5px] flex-wrap'>
+                        {
+                            product?.Size.map((item,i)=>{
+                                return <div className='px-[26px] py-[2px] border-2 cursor-pointer border-gray-800 hover:text-white hover:bg-black transition-all duration-300' key={i}>{item}</div>
+                            })
+                        }
+                    </div>
+                    <div className='flex flex-col gap-[10px] *:w-[100%]'>
+                        <div className='cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' onClick={notify}>
+                            <button>
+                                ADD TO CARD
+                            </button>
+                            <ToastContainer/>
+                        </div>
+                        <button className='flex gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white'> <FaWhatsapp />SEND US A MESSAGE</button>
+                        <button className='flex gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white '><IoMdHeartEmpty />ADD TO WISHLIST</button>
+                    </div>
+                    <div>
+                        <span className='font-serif font-[600]'>Description:</span> <br />
+                         {product?.description}
                     </div>
 
                     

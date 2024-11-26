@@ -2,16 +2,13 @@
   import { DATA } from '../../context/DataContext'
   import { Autoplay, FreeMode, Pagination } from 'swiper/modules'
   import { Swiper, SwiperSlide } from 'swiper/react';
-
-
-
   import 'swiper/css';
   import 'swiper/css/free-mode';
   import 'swiper/css/pagination';
   import { getDataByCategory } from '../../services/api';
-import { Link } from 'react-router-dom';
+  import { Link } from 'react-router-dom';
   function ProductSwiper({type}) {
-    // console.log(type)
+    
       const [currentData,setCurrentData]=useState(null)
       const {dataDiscounted,setDataDiscounted}=useContext(DATA)
       useEffect(()=>{
@@ -20,17 +17,16 @@ import { Link } from 'react-router-dom';
         }
         else{
           getDataByCategory(type).then(res=>{setCurrentData(res.data)})
-          // setCurrentData(newdd)
         }
       },[type,dataDiscounted])
-      function handleHover(id,status){
-        const updatedData=currentData?.map((item,i)=>{
-            if(item.id==id){
-              return {...item,isHover:status}
-            }return item
-          })
-          setCurrentData(updatedData)
-      }
+      // function handleHover(id,status){
+      //   const updatedData=currentData?.map((item,i)=>{
+      //       if(item.id==id){
+      //         return {...item,isHover:status}
+      //       }return item
+      //     })
+      //     setCurrentData(updatedData)
+      // }
       
       return (
         <>
@@ -74,15 +70,16 @@ import { Link } from 'react-router-dom';
                             <Link to={`/productbyid/${item.id}`}>
                               <div key={i} className='my-[20px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
                                   <div 
-                                  onPointerEnter={()=>{handleHover(item.id,true)}}
-                                  onPointerLeave={()=>{handleHover(item.id,false)}}
-                                  className=' relative h-[100%] overflow-hidden group'>
+                                  className=' relative h-[100%] overflow-hidden group '>
                                     <img 
-                                    className='transition-all duration-300 ease-in-out '
-                                    src={item.isHover ?  item.images[1] : item.images[0]}
-                                    alt={item.name} 
-                                    
+                                      className={`group-hover:hidden transition-opacity duration-300 ease-in-out `} 
+                                      src={item.images[0]} alt="" 
                                     />
+                                    <img 
+                                    className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`} 
+                                    src={item.images[1]} alt="" 
+                                    />
+                                   
                                     <div 
                                     // onClick={()=>{setShowQuickView(true)}}
                                     className={ `group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]  text-center text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}>
