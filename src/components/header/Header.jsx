@@ -8,6 +8,7 @@ import CategorySlide from '../offcanvas/CategorySlide'
 import { Link, NavLink } from 'react-router-dom'
 import SearchBar from '../offcanvas/SearchBar'
 import ShoppingBag from '../offcanvas/ShoppingBag'
+import QuickView from '../main/QuickView'
 
 function Header() {
   const [showCategorySlide, setShowCategorySlide] = useState(false)
@@ -18,11 +19,14 @@ function Header() {
   return (
     <>
       <header className=' fixed w-[100%] bg-white z-50'>
+        
         <div className={`${showBag || showSeachBar ? 'block' : 'hidden'} w-full h-full bg-[#53525280] fixed z-30`}></div>
         <div className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[100%]'}`}>
           <ShoppingBag setShowBag={setShowBag} />
         </div>
-
+        {/* <div className='w-[100vw] bg-[#53525280]  fixed h-[100vh] z-50'>
+          <QuickView/>
+        </div> */}
         <div className={`z-50 absolute w-[100%] transition-all duration-300  ${showSeachBar ? 'top-0' : '-top-[30vh]'}`}>
           <SearchBar setShowSearchBar={setShowSearchBar} />
         </div>
@@ -61,7 +65,7 @@ function Header() {
                           <ul className='flex flex-col gap-[5px]'>
                             {
                               item.Subcategory.map((item, i) => {
-                                return <NavLink key={i} to={'/'} className="relative  w-max mx-[10px] cursor-pointer group">
+                                return <NavLink key={i} to={`/productsbysubcategory/${item.name}/${item.id}`} className="relative  w-max mx-[10px] cursor-pointer group">
                                   <span className=''>{item.name}</span>
                                   <span className="absolute  -bottom-1 left-1/2 w-0 transition-all h-[1px] bg-black group-hover:w-3/6"></span>
                                   <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-[1px] bg-black group-hover:w-3/6"></span>

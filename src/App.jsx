@@ -4,6 +4,7 @@ import Layout from './layout/Layout'
 import Main from './components/main/Main'
 import ByCategory from './components/main/ByCategory'
 import ProductById from './components/main/ProductById'
+import BySubCategory from './components/main/BySubCategory'
 
 function App() {
   const { pathname } = useLocation()
@@ -20,6 +21,7 @@ function App() {
           <Route index element={<Main/>}/>
           <Route path='/productsbycategory/:catname/:catid' element={<ByCategory/>}/>
           <Route path='/productbyid/:proid' element={<ProductById/>}/>
+          <Route path='/productsbysubcategory/:subname/:subid' element={<BySubCategory/>}/>
         </Route>
      </Routes>
     </>

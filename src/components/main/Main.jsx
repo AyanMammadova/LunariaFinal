@@ -2,13 +2,16 @@ import React, { useContext } from 'react'
 import { DATA } from '../../context/DataContext'
 import { Link } from 'react-router-dom'
 import ProductSwiper from './ProductSwiper'
+import QuickView from './QuickView'
 
 function Main() {
   const {imgsfordeps}=useContext(DATA)
   const {dataCategory}=useContext(DATA)
   return (
     <>
-      <main className='pt-[100px] bg-white'>
+          
+        
+      <main className='pt-[100px] w-[100%] bg-white'>
         <section>
           <div className='overflow-hidden h-[80vh]  w-[95%] mx-[auto] relative group'>
             <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>

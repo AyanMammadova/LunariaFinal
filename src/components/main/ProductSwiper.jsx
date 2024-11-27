@@ -5,110 +5,124 @@
   import 'swiper/css';
   import 'swiper/css/free-mode';
   import 'swiper/css/pagination';
-  import { getDataByCategory } from '../../services/api';
+  import { getDataByCategory, getDataBySubCategory } from '../../services/api';
   import { Link } from 'react-router-dom';
-  function ProductSwiper({type}) {
+  function ProductSwiper({type,validId,setShowQuick,setproid}) {
     
       const [currentData,setCurrentData]=useState(null)
-      const {dataDiscounted,setDataDiscounted}=useContext(DATA)
+      const {dataDiscounted}=useContext(DATA)
+      
       useEffect(()=>{
         if(type=='discount') {
           setCurrentData(dataDiscounted)
         }
-        else{
-          getDataByCategory(type).then(res=>{setCurrentData(res.data)})
+        else if(type=='category'){
+          getDataByCategory(validId).then(res=>{setCurrentData(res.data)})
         }
-      },[type,dataDiscounted])
-      // function handleHover(id,status){
-      //   const updatedData=currentData?.map((item,i)=>{
-      //       if(item.id==id){
-      //         return {...item,isHover:status}
-      //       }return item
-      //     })
-      //     setCurrentData(updatedData)
-      // }
+        else if(type=='subcategory'){
+          getDataBySubCategory(validId).then(res=>{setCurrentData(res.data)})
+        }
+      },[type,dataDiscounted,validId])
+
+      console.log(currentData)
       
       return (
         <>
-          <Swiper
-            slidesPerView={ 2 }
-            spaceBetween={10}
-            breakpoints={{
-              400: {
-                slidesPerView: 2,
-                spaceBetween: 10, 
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 15,
-              },
-              768: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 5,
-                spaceBetween: 25,
-              },
-            }}
-            freeMode={true}
-            autoplay={{
-              delay: 2500, 
-              disableOnInteraction: false, 
-            }}
-            onSwiper={(swiper) => {
-                swiper.el.addEventListener('mouseenter', () => swiper.autoplay.stop());
-                swiper.el.addEventListener('mouseleave', () => swiper.autoplay.start());
-              }}
-            
-            modules={[FreeMode, Pagination,Autoplay]}
-            className="mySwiper"
-          >
-            {
-              currentData && currentData.map((item,i)=>{
-                return  <SwiperSlide key={i} > 
-                            <Link to={`/productbyid/${item.id}`}>
-                              <div key={i} className='my-[20px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
-                                  <div 
-                                  className=' relative h-[100%] overflow-hidden group '>
-                                    <img 
-                                      className={`group-hover:hidden transition-opacity duration-300 ease-in-out `} 
-                                      src={item.images[0]} alt="" 
-                                    />
-                                    <img 
-                                    className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`} 
-                                    src={item.images[1]} alt="" 
-                                    />
-                                   
-                                    <div 
-                                    // onClick={()=>{setShowQuickView(true)}}
-                                    className={ `group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]  text-center text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}>
-                                      QUICK VIEW
-                                    </div>
+          <div className='relative w-[100%] flex flex-col h-[100%]'>
+            <div className='flex '>
+              <div className={`${type=='category' ? 'block' : 'hidden'} flex flex-col mx-[20px] gap-[20px] text-center pt-[80px] w-[300px]`}>
+                <p>NEW ARRIVALS</p>
+                <p>{currentData?.length}</p>
+                <button className='text-white border-[1px] border-black bg-black p-[10px] hover:bg-white  hover:text-black transition-all duration-300'>SHOP NOW</button>
+              </div>
+              <Swiper
+                slidesPerView={ 2 }
+                spaceBetween={10}
+                breakpoints={{
+                  400: {
+                    slidesPerView: 2,
+                    spaceBetween: 10, 
+                  },
+                  640: {
+                    slidesPerView: 3,
+                    spaceBetween: 15,
+                  },
+                  768: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                  },
+                  1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 25,
+                  },
+                }}
+                freeMode={true}
+                autoplay={{
+                  delay: 2500, 
+                  disableOnInteraction: false, 
+                }}
+                onSwiper={(swiper) => {
+                    swiper.el.addEventListener('mouseenter', () => swiper.autoplay.stop());
+                    swiper.el.addEventListener('mouseleave', () => swiper.autoplay.start());
+                  }}
+                
+                modules={[FreeMode, Pagination,Autoplay]}
+                className="mySwiper"
+              >
+                {
+                  currentData && currentData.map((item,i)=>{
+                    return  <SwiperSlide key={i} className=''> 
+                                <Link to={`/productbyid/${item.id}`}>
+                                  <div key={i} className='my-[20px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
+                                      <div 
+                                      className=' relative h-[100%] overflow-hidden group '>
+                                        <img 
+                                          className={`group-hover:hidden transition-opacity duration-300 ease-in-out `} 
+                                          src={item.images[0]} alt="" 
+                                        />
+                                        <img 
+                                        className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`} 
+                                        src={item.images[1]} alt="" 
+                                        />
+                                      
+                                        <div className={`${type=='discount' ? 'hidden' : 'block'}`}>
+                                          <div 
+                                          onClick={(e)=>{
+                                            setShowQuick(true)
+                                            setproid(item.id)
+                                            e.preventDefault()
+                                          }}
+                                          className={ ` group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]  text-center text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}>
+                                            QUICK VIEW
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div 
+                                        className={`${type=='discount' ? 'block' : 'hidden'} bg-black text-white w-[40px] text-center rounded absolute top-0 left-0`}>
+                                          {item.discount}%
+                                      </div>
+                                      <div className='p-[10px]'>
+                                          <p className='font-bold text-[1.1em] z-10'>{item.Brands.name}</p>
+                                          <p className=' text-nowrap overflow-hidden font-[600] text-ellipsis text-gray-500'>{item.name}</p>
+                                          <p className={`${type=='discount' ? 'block' : 'hidden'} text-green-700 py-[10px] font-bold`}>
+                                              <del className='text-red-500'>{item.price}</del> 
+                                              <span className='px-[10px]'>{((item.price*(100-item.discount))/100).toFixed(2)}$</span>
+                                          </p>
+                                          <p className={`${type=='discount' ? 'hidden' : 'block'} font-bold`}>
+                                            {item.price}$
+                                          </p>
+                                      </div>
                                   </div>
-                                  <div 
-                                    className={`${type=='discount' ? 'block' : 'hidden'} bg-black text-white w-[40px] text-center rounded absolute top-0 left-0`}>
-                                      {item.discount}%
-                                  </div>
-                                  <div className='p-[10px]'>
-                                      <p className='font-bold text-[1.1em] z-10'>{item.Brands.name}</p>
-                                      <p className=' text-nowrap overflow-hidden font-[600] text-ellipsis text-gray-500'>{item.name}</p>
-                                      <p className={`${type=='discount' ? 'block' : 'hidden'} text-green-700 py-[10px] font-bold`}>
-                                          <del className='text-red-500'>{item.price}</del> 
-                                          <span className='px-[10px]'>{((item.price*(100-item.discount))/100).toFixed(2)}$</span>
-                                      </p>
-                                      <p className={`${type=='discount' ? 'hidden' : 'block'} font-bold`}>
-                                        {item.price}$
-                                      </p>
-                                  </div>
-                              </div>
-                            </Link>
-                        </SwiperSlide>
-              })
-            }
-            
-            
-          </Swiper>
+                                </Link>
+                            </SwiperSlide>
+                  })
+                }
+                
+                
+              </Swiper>
+            </div>
+            </div>
+          
         </>
         
       )

@@ -50,18 +50,22 @@ function ProductById() {
                             })
                         }
                     </div>
-                    <div className='flex flex-col gap-[10px] *:w-[100%]'>
-                        <div className='cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' onClick={notify}>
+                    <div className='flex pt-[30px] flex-col gap-[10px] *:w-[100%]'>
+                        <div className='h-[45px] items-center flex justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' onClick={notify}>
                             <button>
                                 ADD TO CARD
                             </button>
                             <ToastContainer/>
                         </div>
-                        <button className='flex gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white'> <FaWhatsapp />SEND US A MESSAGE</button>
-                        <button className='flex gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white '><IoMdHeartEmpty />ADD TO WISHLIST</button>
+                        <button className='h-[45px] flex  gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white'> 
+                            <FaWhatsapp />SEND US A MESSAGE
+                        </button>
+                        <button className='h-[45px]  flex gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white '>
+                            <IoMdHeartEmpty />ADD TO WISHLIST
+                        </button>
                     </div>
-                    <div>
-                        <span className='font-serif font-[600]'>Description:</span> <br />
+                    <div className='pt-[50px]'>
+                        <span className='font-serif font-[600] '>Description:</span> <br />
                          {product?.description}
                     </div>
 

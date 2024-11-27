@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { DATA } from '../../context/DataContext'
 import ProductSwiper from './ProductSwiper'
@@ -7,15 +7,21 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
+import QuickView from './QuickView'
 
 function ByCategory() {
   const {catname,catid}=useParams()
   const {imgsfordeps,imgsforsubcats,dataCategory}=useContext(DATA)
   // console.log(imgsforsubcats[catid-1])
+  const [showQuick,setShowQuick]=useState(false)
+  const [proid,setproid]=useState(1)
   
   return (
     <>
       <section>
+        <div className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
+          <QuickView setShowQuick={setShowQuick} proid={proid}/>
+        </div>
         <div className='overflow-hidden h-[100vh]  w-[95%] mx-[auto] relative group'>
           <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
           <img  className=' absolute  top-0 object-top lg:w-full object-cover h-full  transition-all duration-500 group-hover:scale-110' 
@@ -29,7 +35,7 @@ function ByCategory() {
       <section>
         <div className='p-[10px] bp600:p-[40px]'>
           <p className='font-[600] text-[1.2em]'>{catname}</p>
-          <ProductSwiper type={catid}/>
+          <ProductSwiper type={'category'} validId={catid} setproid={setproid} setShowQuick={setShowQuick}/>
         </div>
       </section>
       <section>
