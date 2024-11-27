@@ -1,25 +1,30 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { DATA } from '../../context/DataContext'
 import { IoCloseSharp, IoMenu, IoPersonOutline } from 'react-icons/io5'
 import { GoHeart } from 'react-icons/go'
 import { BsBag } from 'react-icons/bs'
 import { MdOutlineSearch } from 'react-icons/md'
 import CategorySlide from '../offcanvas/CategorySlide'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import SearchBar from '../offcanvas/SearchBar'
 import ShoppingBag from '../offcanvas/ShoppingBag'
-import QuickView from '../main/QuickView'
+import LoginPopUp from '../login/LoginPopUp'
+
 
 function Header() {
+  const location =useLocation()
   const [showCategorySlide, setShowCategorySlide] = useState(false)
   const { dataCategory } = useContext(DATA)
   const { imgsformenu } = useContext(DATA)
   const [showSeachBar, setShowSearchBar] = useState(false)
   const [showBag, setShowBag] = useState(false)
+  const [showLogin,setShowLogin]=useState(false)
+  useEffect(()=>{
+    setShowLogin(false)
+  },[location.pathname])
   return (
     <>
       <header className=' fixed w-[100%] bg-white z-50'>
-        
         <div className={`${showBag || showSeachBar ? 'block' : 'hidden'} w-full h-full bg-[#53525280] fixed z-30`}></div>
         <div className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[100%]'}`}>
           <ShoppingBag setShowBag={setShowBag} />
@@ -91,7 +96,10 @@ function Header() {
               </Link>
             </div>
 
-            <div className='text-[1.6em]  w-[43%] justify-end flex gap-[10px]'>
+            <div className='text-[1.6em] relative w-[43%] justify-end flex gap-[10px]'>
+              <div className={`${showLogin ? 'absolute' : 'hidden'}  top-[50px] ring-0`}>
+                <LoginPopUp/>
+              </div>
               <div className='hidden bp1200:flex  justify-end  pr-[40px] '>
                 <div
                   onClick={() => { setShowSearchBar(true) }}
@@ -100,7 +108,9 @@ function Header() {
                   <MdOutlineSearch className='text-[1.1em] text-gray-600' />
                 </div>
               </div>
-              <IoPersonOutline className='hidden cursor-pointer bp1200:block' />
+              <IoPersonOutline
+              onClick={()=>{setShowLogin(!showLogin)}}
+               className='hidden cursor-pointer bp1200:block' />
               <GoHeart className='cursor-pointer' />
               <BsBag className='cursor-pointer' onClick={() => { setShowBag(true) }} />
             </div>

@@ -36,9 +36,10 @@ function ProductById() {
                     {/* COLOR */}
                     <div className=''>Color:
                         {
-                            product?.Colors.map((item,i)=>{
+                            product?.Colors.length>1 ?  product?.Colors.map((item,i)=>{
                                 return <div key={i} className={`cursor-pointer h-[25px] rounded-full w-[25px] bg-${item.toLowerCase()}`}></div>
-                            })
+                            }) :
+                            <div className='font-thin'>There is no color options</div>
                         }
                         
                     </div>

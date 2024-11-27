@@ -24,7 +24,7 @@
         }
       },[type,dataDiscounted,validId])
 
-      console.log(currentData)
+      // console.log(currentData)
       
       return (
         <>

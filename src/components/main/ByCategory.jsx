@@ -14,7 +14,7 @@ function ByCategory() {
   const {imgsfordeps,imgsforsubcats,dataCategory}=useContext(DATA)
   // console.log(imgsforsubcats[catid-1])
   const [showQuick,setShowQuick]=useState(false)
-  const [proid,setproid]=useState(1)
+  const [proid,setproid]=useState(null)
   
   return (
     <>
