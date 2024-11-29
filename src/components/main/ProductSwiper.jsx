@@ -7,11 +7,13 @@
   import 'swiper/css/pagination';
   import { getDataByCategory, getDataBySubCategory } from '../../services/api';
   import { Link } from 'react-router-dom';
+import { BsArrowThroughHeart, BsArrowThroughHeartFill, BsBalloonHeart } from 'react-icons/bs';
+import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
   function ProductSwiper({type,validId,setShowQuick,setproid}) {
     
       const [currentData,setCurrentData]=useState(null)
-      const {dataDiscounted}=useContext(DATA)
-      
+      const {dataDiscounted,handleFavorites}=useContext(DATA)
+        
       useEffect(()=>{
         if(type=='discount') {
           setCurrentData(dataDiscounted)
@@ -24,7 +26,7 @@
         }
       },[type,dataDiscounted,validId])
 
-      // console.log(currentData)
+      currentData ?  console.log(currentData[2]?.isFav) : console.log('skdhcb sk')
       
       return (
         <>
@@ -75,7 +77,7 @@
                                 <Link to={`/productbyid/${item.id}`}>
                                   <div key={i} className='my-[20px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
                                       <div 
-                                      className=' relative h-[100%] overflow-hidden group '>
+                                        className=' relative h-[100%] overflow-hidden group '>
                                         <img 
                                           className={`group-hover:hidden transition-opacity duration-300 ease-in-out `} 
                                           src={item.images[0]} alt="" 
@@ -84,7 +86,23 @@
                                         className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`} 
                                         src={item.images[1]} alt="" 
                                         />
-                                      
+                                        {}
+                                        <div  
+                                          onClick={(e)=>{
+                                            e.preventDefault() 
+                                            handleFavorites(item.id)
+                                          }}
+                                        >
+                                            <VscHeartFilled 
+                                          className={`${item.isFav ? 'absolute' : 'hidden'} text-[2em] top-[10px] right-[10px]`}
+                                        />
+                                        <VscHeart  
+                                          
+                                          className={` text-[2em] top-[10px] right-[10px] ${item.isFav ? 'hidden' : 'absolute'}`}
+                                        />
+                                          
+                                        </div>
+                                        
                                         <div className={`${type=='discount' ? 'hidden' : 'block'}`}>
                                           <div 
                                           onClick={(e)=>{

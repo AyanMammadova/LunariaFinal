@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { DATA } from '../../context/DataContext'
 import ProductSwiper from './ProductSwiper'
 import { Autoplay, FreeMode, Pagination } from 'swiper/modules'
@@ -67,10 +67,10 @@ function ByCategory() {
                 return  <SwiperSlide key={i} > 
                           <div className='w-full h-auto relative group overflow-hidden'>
                             <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
-                            <p 
+                            <Link to={`/productsbysubcategory/${dataCategory && dataCategory[catid-1].Subcategory[i].name}/${dataCategory && dataCategory[catid-1].Subcategory[i].id}`}
                             className='z-50 flex justify-center items-center text-white font-serif text-[1.3em] absolute inset-0'>
                               {dataCategory && dataCategory[catid-1].Subcategory[i].name}
-                            </p>
+                            </Link>
                             <img className=" w-full z-30 h-auto cursor-grab object-cover transition-all duration-300 group-hover:scale-110" src={item} alt="" />
                           </div>
                         </SwiperSlide>

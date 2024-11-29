@@ -7,6 +7,8 @@ function DataContext({children}) {
     const [dataAll,setDataAll]=useState(null)
     const [dataDiscounted,setDataDiscounted]=useState(null)
     
+    
+
     useEffect(()=>{
         getDataCategories().then(res=>{setDataCategory(res)})
         getDataAll().then(res=>{setDataAll(res.data)})
@@ -15,9 +17,14 @@ function DataContext({children}) {
     useEffect(()=>{
       setDataDiscounted(dataAll?.filter(item=>item.discount>1)
                           .sort((a,b)=>b.discount-a.discount)
-                          .map((item,i)=>({...item,isHover:false})))
+                          )
     },[dataAll])
-                          
+    function handleFavorites(id){
+      setDataAll(dataAll.map((item,i)=>(
+        item.id==id ? {...item,isFav:!item.isFav} : item
+      )))
+      // console.log(newliked)
+    }          
 
     const imgsforsubcats = [
       [
@@ -94,7 +101,8 @@ function DataContext({children}) {
               imgsforfooter,
               dataDiscounted,
               setDataDiscounted,
-              imgsforsubcats
+              imgsforsubcats,
+              handleFavorites
               
           }}
         >

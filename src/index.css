@@ -13,3 +13,7 @@
   position: absolute;
   top: 80px;
 }
+
+.navlarim:focus {
+  background-color: #e5e7eb;
+}

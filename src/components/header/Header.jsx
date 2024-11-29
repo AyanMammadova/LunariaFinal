@@ -29,9 +29,6 @@ function Header() {
         <div className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[100%]'}`}>
           <ShoppingBag setShowBag={setShowBag} />
         </div>
-        {/* <div className='w-[100vw] bg-[#53525280]  fixed h-[100vh] z-50'>
-          <QuickView/>
-        </div> */}
         <div className={`z-50 absolute w-[100%] transition-all duration-300  ${showSeachBar ? 'top-0' : '-top-[30vh]'}`}>
           <SearchBar setShowSearchBar={setShowSearchBar} />
         </div>
@@ -61,7 +58,7 @@ function Header() {
                     return <div key={i} className='cathead'>
                       <NavLink
                         to={`/productsbycategory/${item.name}/${item.id}`}
-                        className='hover:bg-[#E4E4E4] py-[5px] rounded px-[10px]  text-[1.1em] cursor-pointer' >
+                        className='hover:bg-[#E4E4E4] navlarim py-[5px] rounded px-[10px]  text-[1.1em] cursor-pointer' >
                         {item.name}
                       </NavLink>
                       <div

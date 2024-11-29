@@ -25,7 +25,7 @@ function QuickView({proid,setShowQuick}) {
                 {/* IMAGEDIV */}
                 <div className='flex justify-between'>
                     <img 
-                        className='h-[300px] bp900:h-[300px] object-top object-cover cursor-zoom-in ' 
+                        className='h-[300px] bp900:h-[300px] object-top object-cover ' 
                         src={product &&  product.images[0]}
                         alt="" 
                     />

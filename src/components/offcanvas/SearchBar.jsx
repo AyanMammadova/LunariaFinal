@@ -23,7 +23,7 @@ function SearchBar({setShowSearchBar}) {
               {
                 dataCategory && dataCategory.map((item,i)=>{
                   return  <NavLink 
-                          className='rounded  hover:bg-gray-200 px-[10px] p-[4px]' 
+                          className='rounded navlarim hover:bg-gray-200 px-[10px] p-[4px]' 
                           key={i}>
                             {item.name}
                           </NavLink>

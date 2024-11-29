@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 
-function BasketContext() {
+export const BASKETDATA=createContext(null)
+function BasketContext({children}) {
   return (
+    // const [hello,sethello]=useState(null)
     <>
-      
+      <BASKETDATA.Provider>
+        {children}
+      </BASKETDATA.Provider>
     </>
   )
 }
