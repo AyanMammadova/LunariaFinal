@@ -1,14 +1,21 @@
-import React, { createContext, useState } from 'react'
-
-export const BASKETDATA=createContext(null)
+import React, { createContext } from 'react'
+export const BAKSET=createContext(null)
 function BasketContext({children}) {
+
+
+  function addToBasket(id){
+    console.log(id)
+  }
+
   return (
-    // const [hello,sethello]=useState(null)
-    <>
-      <BASKETDATA.Provider>
-        {children}
-      </BASKETDATA.Provider>
-    </>
+    <BAKSET.Provider
+      value={{
+        addToBasket
+
+      }}
+    >
+      {children}
+    </BAKSET.Provider>
   )
 }
 

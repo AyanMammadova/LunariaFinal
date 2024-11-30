@@ -26,6 +26,9 @@ function DataContext({children}) {
       // console.log(newliked)
     }          
 
+    const dataFilter=[
+      'CATEGORIES','COLORS','DISCOUNT','SIZES','PRICE'
+    ]
     const imgsforsubcats = [
       [
         'https://www.emporium.az/b/home/0609triple-banner-1-.gif?v=2224',
@@ -102,7 +105,8 @@ function DataContext({children}) {
               dataDiscounted,
               setDataDiscounted,
               imgsforsubcats,
-              handleFavorites
+              handleFavorites,
+              dataFilter
               
           }}
         >

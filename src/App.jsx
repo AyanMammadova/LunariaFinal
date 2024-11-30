@@ -22,9 +22,8 @@ function App() {
           <Route index element={<Main/>}/>
           <Route path='/productsbycategory/:catname/:catid' element={<ByCategory/>}/>
           <Route path='/productbyid/:proid' element={<ProductById/>}/>
-          <Route path='/productsbysubcategory/:subname/:subid' element={<BySubCategory/>}/>
+          <Route path='/productsbysubcategory/:catname/:catid/:subname/:subid' element={<BySubCategory/>}/>
           <Route path='/register' element={<RegisterPage/>}/>
-
         </Route>
      </Routes>
     </>

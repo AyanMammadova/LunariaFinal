@@ -26,7 +26,7 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
         }
       },[type,dataDiscounted,validId])
 
-      currentData ?  console.log(currentData[2]?.isFav) : console.log('skdhcb sk')
+      // currentData ?  console.log(currentData[2]?.isFav) : console.log('skdhcb sk')
       
       return (
         <>

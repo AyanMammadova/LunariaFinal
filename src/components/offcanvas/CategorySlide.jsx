@@ -31,7 +31,7 @@ function CategorySlide() {
           </ul>
           <ul className='text-[.8em] flex flex-col  pt-[30px] font-bold'>
             {
-              id ?  <Link>
+              id ?  <Link to={`/productsbycategory/${dataCategory[id-1]?.name}/${dataCategory[id-1]?.id}`}>
                       {dataCategory[id-1]?.name}-HomePage
                     </Link> : ''
             }
@@ -39,7 +39,7 @@ function CategorySlide() {
             {
               dataCategory ? dataCategory[id-1]?.Subcategory?.map((item,i)=>{
                 return  <Link 
-                          to={`/productsbysubcategory/${item.name}/${item.id}`}
+                          to={`/productsbysubcategory/${dataCategory[id-1]?.name}/${dataCategory[id-1]?.id}/${item.name}/${item.id}`}
                           key={i}>
                           {item.name}
                         </Link>

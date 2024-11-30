@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProductById } from '../../services/api'
 import { IoMdHeartEmpty } from 'react-icons/io'
@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Image } from 'antd';
 
 function ProductById() {
+    const {addToBasket}=useContext(BASKET)
     const notify = () => toast(`Product Added to Your Bag ☻`);
     const {proid}=useParams()
     const [product,setProduct]=useState(null)
@@ -53,7 +54,9 @@ function ProductById() {
                         </div>
                         <div className='flex pt-[30px] flex-col gap-[10px] *:w-[100%]'>
                             <div className='h-[45px] items-center flex justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' onClick={notify}>
-                                <button>
+                                <button
+                                    onClick={()=>{addToBasket(product.id)}}
+                                >
                                     ADD TO CARD
                                 </button>
                                 <ToastContainer/>
