@@ -1,13 +1,26 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { getDataAll, getDataByCategory, getDataCategories } from '../services/api'
+import { useLocation } from 'react-router-dom'
+import { Cookies } from 'react-cookie'
 export const DATA=createContext(null)
 function DataContext({children}) {
+    const cookieFav=new Cookies()
+    const loca=useLocation()
     const [dataCategory,setDataCategory]=useState(null)
     const [dataByCategory,setDataByCategory]=useState(null)
     const [dataAll,setDataAll]=useState(null)
     const [dataDiscounted,setDataDiscounted]=useState(null)
+    const [dataFav,setDataFav]=useState(cookieFav.get('dataFav') || '')
+    useEffect(()=>{
+      setDataFav(
+        dataAll?.filter((item,i)=> item.isFav==true)
+      )
+    },[loca.pathname])
+    console.log(dataFav)
     
-    
+    useEffect(()=>{
+      cookieFav.set('dataFav',dataFav)
+  },[dataFav])
 
     useEffect(()=>{
         getDataCategories().then(res=>{setDataCategory(res)})
@@ -106,7 +119,10 @@ function DataContext({children}) {
               setDataDiscounted,
               imgsforsubcats,
               handleFavorites,
-              dataFilter
+              dataFilter,
+              dataFav,
+              setDataFav
+
               
           }}
         >

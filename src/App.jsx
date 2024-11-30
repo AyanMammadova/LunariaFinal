@@ -6,6 +6,7 @@ import ByCategory from './components/main/ByCategory'
 import ProductById from './components/main/ProductById'
 import BySubCategory from './components/main/BySubCategory'
 import RegisterPage from './components/login/RegisterPage'
+import WishList from './components/main/WishList'
 
 function App() {
   const { pathname } = useLocation()
@@ -24,6 +25,7 @@ function App() {
           <Route path='/productbyid/:proid' element={<ProductById/>}/>
           <Route path='/productsbysubcategory/:catname/:catid/:subname/:subid' element={<BySubCategory/>}/>
           <Route path='/register' element={<RegisterPage/>}/>
+          <Route path='/wishlist' element={<WishList/>}/>
         </Route>
      </Routes>
     </>

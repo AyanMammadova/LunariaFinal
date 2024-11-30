@@ -109,7 +109,9 @@ function Header() {
               <IoPersonOutline
               onClick={()=>{setShowLogin(!showLogin)}}
                className='hidden cursor-pointer bp1200:block' />
-              <GoHeart className='cursor-pointer' />
+              <Link to={'/wishlist'}>
+                <GoHeart  className='cursor-pointer' />
+              </Link>
               <BsBag className='cursor-pointer' onClick={() => { setShowBag(true) }} />
             </div>
           </div>

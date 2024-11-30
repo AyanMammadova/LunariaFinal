@@ -6,9 +6,10 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Image } from 'antd';
+import { BAKSET } from '../../context/BasketContext'
 
 function ProductById() {
-    const {addToBasket}=useContext(BASKET)
+    const {addToBasket}=useContext(BAKSET)
     const notify = () => toast(`Product Added to Your Bag ☻`);
     const {proid}=useParams()
     const [product,setProduct]=useState(null)
@@ -18,7 +19,6 @@ function ProductById() {
 
     return (
         <>
-        
             <section className=' pt-[150px]  p-[5px] w-[100%] md:p-[40px] md:pt-[160px]'>
                 <div className='w-full flex flex-col md:flex-row justify-start gap-[50px] '>
                     {/* IMAGEDIV */}
@@ -55,7 +55,7 @@ function ProductById() {
                         <div className='flex pt-[30px] flex-col gap-[10px] *:w-[100%]'>
                             <div className='h-[45px] items-center flex justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' onClick={notify}>
                                 <button
-                                    onClick={()=>{addToBasket(product.id)}}
+                                    onClick={()=>{addToBasket(product.id,product.name,product.description,product.price,product.discount,product.Brands.name)}}
                                 >
                                     ADD TO CARD
                                 </button>

@@ -116,17 +116,17 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
                                         </div>
                                       </div>
                                       <div 
-                                        className={`${type=='discount' ? 'block' : 'hidden'} bg-black text-white w-[40px] text-center rounded absolute top-0 left-0`}>
-                                          {item.discount}%
+                                        className={`${item.discount > 1 ? 'block' : 'hidden'} bg-black text-white w-[40px] text-center rounded absolute top-0 left-0`}>
+                                          {item.discount}% 
                                       </div>
                                       <div className='p-[10px]'>
                                           <p className='font-bold text-[1.1em] z-10'>{item.Brands.name}</p>
                                           <p className=' text-nowrap overflow-hidden font-[600] text-ellipsis text-gray-500'>{item.name}</p>
-                                          <p className={`${type=='discount' ? 'block' : 'hidden'} text-green-700 py-[10px] font-bold`}>
+                                          <p className={`${item.discount > 1 ? 'block' : 'hidden'} text-green-700  font-bold`}>
                                               <del className='text-red-500'>{item.price}</del> 
                                               <span className='px-[10px]'>{((item.price*(100-item.discount))/100).toFixed(2)}$</span>
                                           </p>
-                                          <p className={`${type=='discount' ? 'hidden' : 'block'} font-bold`}>
+                                          <p className={`${item.discount > 2 ? 'hidden' : 'block'} font-bold`}>
                                             {item.price}$
                                           </p>
                                       </div>
