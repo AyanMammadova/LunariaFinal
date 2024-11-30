@@ -46,20 +46,22 @@ function SearchBar({setShowSearchBar}) {
               }
             </ul>
           </div>
-          <div className='w-[280px] mx-[auto] mb-[20px] bp600:w-[450px]'>
+          <div className='w-[280px] max-h-[300px] overflow-hidden mx-[auto] mb-[20px] bp600:w-[450px]'>
             {
               searchedData && searchedData.map((item,i)=>{
                 return  <>
-                          <div key={i} className='flex justify-between h-[60px] items-center w-[100%]'>
-                                    <div className='flex items-center justify-between'>
-                                      <img className='h-[60px] p-[3px]' src={item.images[0]} alt="" />
-                                      <p>{item?.name}</p>
-                                    </div>  
-                                    <div>
-                                      <p>{item?.price}$</p>
-                                    </div>
-                                  </div>
-                                  <hr />
+                        <Link to={`/productbyid/${item.id}`}>
+                            <div key={i} className='flex justify-between h-[60px] items-center w-[100%]'>
+                              <div className='flex items-center justify-between'>
+                                <img className='h-[60px] p-[3px]' src={item.images[0]} alt="" />
+                                <p>{item?.name}</p>
+                              </div>  
+                              <div>
+                                <p>{item?.price}$</p>
+                              </div>
+                            </div>
+                            <hr />
+                          </Link>
                           </>
               })
             }

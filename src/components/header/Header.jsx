@@ -30,7 +30,7 @@ function Header() {
         <div className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[100%]'}`}>
           <ShoppingBag setShowBag={setShowBag} />
         </div>
-        <div className={`z-50 absolute w-[100%] transition-all duration-300  ${showSeachBar ? 'top-0' : '-top-[30vh]'}`}>
+        <div className={`z-50 absolute w-[100%] transition-all duration-300  ${showSeachBar ? 'top-0' : '-top-[100vh]'}`}>
           <SearchBar setShowSearchBar={setShowSearchBar} />
         </div>
 
