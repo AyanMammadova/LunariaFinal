@@ -10,17 +10,26 @@ function DataContext({children}) {
     const [dataByCategory,setDataByCategory]=useState(null)
     const [dataAll,setDataAll]=useState(null)
     const [dataDiscounted,setDataDiscounted]=useState(null)
-    const [dataFav,setDataFav]=useState(cookieFav.get('dataFav') || '')
-    useEffect(()=>{
-      setDataFav(
-        dataAll?.filter((item,i)=> item.isFav==true)
-      )
-    },[loca.pathname])
-    console.log(dataFav)
+    const [dataFav,setDataFav]=useState(cookieFav.get('dataFav') || [])
+
+    // function addToWishlist(id){
+    //   console.log(id)
+    // }
+
+    // useEffect(()=>{
+    //   setDataFav(
+    //     dataAll?.filter((item,i)=> item.isFav==true)
+    //   )
+    //   cookieFav.set('dataFav',dataFav)
+    // },[loca.pathname])
+
     
-    useEffect(()=>{
-      cookieFav.set('dataFav',dataFav)
-  },[dataFav])
+    // console.log(dataFav)
+    
+    // useEffect(()=>{
+    //   cookieFav.set('dataFav',dataFav)
+    // },[dataFav])
+
 
     useEffect(()=>{
         getDataCategories().then(res=>{setDataCategory(res)})
@@ -32,12 +41,12 @@ function DataContext({children}) {
                           .sort((a,b)=>b.discount-a.discount)
                           )
     },[dataAll])
-    function handleFavorites(id){
-      setDataAll(dataAll.map((item,i)=>(
-        item.id==id ? {...item,isFav:!item.isFav} : item
-      )))
-      // console.log(newliked)
-    }          
+    // function handleFavorites(id){
+    //   setDataAll(dataAll.map((item,i)=>(
+    //     item.id==id ? {...item,isFav:!item.isFav} : item
+    //   )))
+    //   // console.log(newliked)
+    // }          
 
     const dataFilter=[
       'CATEGORIES','COLORS','DISCOUNT','SIZES','PRICE'
@@ -109,6 +118,7 @@ function DataContext({children}) {
       <>
         <DATA.Provider
           value={{
+              dataAll,
               dataCategory,
               setDataCategory,
               dataByCategory,
@@ -118,10 +128,10 @@ function DataContext({children}) {
               dataDiscounted,
               setDataDiscounted,
               imgsforsubcats,
-              handleFavorites,
+              // handleFavorites,
               dataFilter,
-              dataFav,
-              setDataFav
+              // dataFav,
+              // setDataFav
 
               
           }}

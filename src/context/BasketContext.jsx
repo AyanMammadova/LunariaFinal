@@ -6,38 +6,37 @@ function BasketContext({children}) {
   // const cookie=new Cookies
 
 
-  function addToBasket(id,name,description,price,discount,brand){
-   console.log(id)
-      if(basket.find(item=>item.id==id)){
-        setBasket( basket.map(item=>{
-          [
-            ...item,
-            item.price+1
-          ]
-        })
-        )
-      }
-      else{
-        setBasket([...basket,
-          {
-            id:id,
-            name:name,
-            description:description,
-            price:price,
-            discount:discount,
-            brand:brand
-          }
-        ])
-      }
-      console.log(basket)
+  // function addToBasket(id,name,description,price,discount,brand){
+  //  console.log(id)
+  //     if(basket.find(item=>item.id==id)){
+  //       setBasket( basket.map(item=>{
+  //         [
+  //           ...item,
+  //           item.price+1
+  //         ]
+  //       })
+  //       )
+  //     }
+  //     else{
+  //       setBasket([...basket,
+  //         {
+  //           id:id,
+  //           name:name,
+  //           description:description,
+  //           price:price,
+  //           discount:discount,
+  //           brand:brand
+  //         }
+  //       ])
+  //     }
+  //     console.log(basket)
   
-  }
+  // }
 
   return (
     <div>
       <BAKSET.Provider
         value={{
-          addToBasket,
           basket,
           setBasket
 

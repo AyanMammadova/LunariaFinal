@@ -12,7 +12,7 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
   function ProductSwiper({type,validId,setShowQuick,setproid}) {
     
       const [currentData,setCurrentData]=useState(null)
-      const {dataDiscounted,handleFavorites}=useContext(DATA)
+      const {dataDiscounted}=useContext(DATA)
         
       useEffect(()=>{
         if(type=='discount') {
@@ -26,7 +26,6 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
         }
       },[type,dataDiscounted,validId])
 
-      // currentData ?  console.log(currentData[2]?.isFav) : console.log('skdhcb sk')
       
       return (
         <>
@@ -90,7 +89,7 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
                                         <div  
                                           onClick={(e)=>{
                                             e.preventDefault() 
-                                            handleFavorites(item.id)
+                                            // handleFavorites(item.id)
                                           }}
                                         >
                                             <VscHeartFilled 

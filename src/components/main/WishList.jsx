@@ -6,7 +6,6 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc'
 
 function WishList() {
     const {dataFav}=useContext(DATA)
-    console.log(dataFav)
   return (
     <>
       <div className='pt-[150px]'>
