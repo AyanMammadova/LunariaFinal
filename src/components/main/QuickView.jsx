@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { IoCloseSharp } from 'react-icons/io5'
 import { getProductById } from '../../services/api'
 
@@ -6,15 +6,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
+import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
+import { DATA } from '../../context/DataContext';
 
 
 function QuickView({proid,setShowQuick}) {
+    const {dataFav,handleFavs}=useContext(DATA)
   const notify = () => toast(`Product Added to Your Bag ☻`);
   const [product,setProduct]=useState(null)
     useEffect(()=>{
         proid && getProductById({proid}).then(res=>{setProduct(res)})
     },[proid])
 
+    // console.log(product?.isFav)
   return (
     <>
       <div className='w-[90%] py-[20px] bp900:w-[60%] font-[600] relative  bp900:h-[60vh] bg-white'>
@@ -60,9 +64,21 @@ function QuickView({proid,setShowQuick}) {
                             </button>
                             <ToastContainer/>
                         </div>
-                        <div>
-                            <FaRegHeart  className='text-[1.5em]'/>
-                        </div>
+                        <div  
+                                          onClick={(e)=>{
+                                            e.preventDefault() 
+                                            handleFavs(product.id)
+                                          }}
+                                        >
+                                            <VscHeartFilled
+                                          // className={`${product.isFav ? 'absolute' : 'hidden'} text-[2em] top-[10px] right-[10px]`}
+                                        />
+                                        <VscHeart
+                                          
+                                          // className={` text-[2em] top-[10px] right-[10px] ${product.isFav ? 'hidden' : 'absolute'}`}
+                                        />
+                                          
+                                        </div>
                         
                     </div>
                     <div className=''>

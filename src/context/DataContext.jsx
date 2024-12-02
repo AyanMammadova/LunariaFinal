@@ -10,43 +10,35 @@ function DataContext({children}) {
     const [dataByCategory,setDataByCategory]=useState(null)
     const [dataAll,setDataAll]=useState(null)
     const [dataDiscounted,setDataDiscounted]=useState(null)
-    const [dataFav,setDataFav]=useState(cookieFav.get('dataFav') || [])
-
-    // function addToWishlist(id){
-    //   console.log(id)
-    // }
-
-    // useEffect(()=>{
-    //   setDataFav(
-    //     dataAll?.filter((item,i)=> item.isFav==true)
-    //   )
-    //   cookieFav.set('dataFav',dataFav)
-    // },[loca.pathname])
+    const [dataFav,setDataFav]=useState(cookieFav.get('dataFav') || null)
 
     
-    // console.log(dataFav)
     
-    // useEffect(()=>{
-    //   cookieFav.set('dataFav',dataFav)
-    // },[dataFav])
-
-
     useEffect(()=>{
         getDataCategories().then(res=>{setDataCategory(res)})
-        getDataAll().then(res=>{setDataAll(res.data)})
+        getDataAll().then(res=>{setDataAll(
+          res.data.map(item=> ({
+            ...item,
+            isFav:false
+          }))
+        )})
       },[]
     )
+    function handleFavs(id){
+      setDataAll(dataAll.map(item=>
+        item.id==id ? {...item,isFav:!item.isFav} : item
+        )
+      )
+      
+      setDataFav(dataAll.filter(item=>item.isFav==true))
+      cookieFav.set('dataFav',dataFav)
+    }
     useEffect(()=>{
       setDataDiscounted(dataAll?.filter(item=>item.discount>1)
                           .sort((a,b)=>b.discount-a.discount)
                           )
     },[dataAll])
-    // function handleFavorites(id){
-    //   setDataAll(dataAll.map((item,i)=>(
-    //     item.id==id ? {...item,isFav:!item.isFav} : item
-    //   )))
-    //   // console.log(newliked)
-    // }          
+            
 
     const dataFilter=[
       'CATEGORIES','COLORS','DISCOUNT','SIZES','PRICE'
@@ -128,10 +120,10 @@ function DataContext({children}) {
               dataDiscounted,
               setDataDiscounted,
               imgsforsubcats,
-              // handleFavorites,
               dataFilter,
-              // dataFav,
-              // setDataFav
+              handleFavs,
+              setDataFav,
+              dataFav
 
               
           }}

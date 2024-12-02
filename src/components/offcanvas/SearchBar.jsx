@@ -6,14 +6,12 @@ import { DATA } from '../../context/DataContext'
 
 function SearchBar({setShowSearchBar}) {
   const {dataCategory,dataAll}=useContext(DATA)
-  // console.log(dataAll)
   const [searchedData,setSearchedData]=useState(null)
 
   function handleSearch(inputt){
     const trimmedInput=inputt.trim()
     setSearchedData(dataAll.filter((item => item.name.includes(trimmedInput))))
   }
-  console.log(searchedData)
   return (
     <>
     <div className='relative'>

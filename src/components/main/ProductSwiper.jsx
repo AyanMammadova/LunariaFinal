@@ -7,12 +7,10 @@
   import 'swiper/css/pagination';
   import { getDataByCategory, getDataBySubCategory } from '../../services/api';
   import { Link } from 'react-router-dom';
-import { BsArrowThroughHeart, BsArrowThroughHeartFill, BsBalloonHeart } from 'react-icons/bs';
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
   function ProductSwiper({type,validId,setShowQuick,setproid}) {
-    
       const [currentData,setCurrentData]=useState(null)
-      const {dataDiscounted}=useContext(DATA)
+      const {dataDiscounted,handleFavs}=useContext(DATA)
         
       useEffect(()=>{
         if(type=='discount') {
@@ -89,7 +87,7 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
                                         <div  
                                           onClick={(e)=>{
                                             e.preventDefault() 
-                                            // handleFavorites(item.id)
+                                            handleFavs(item.id)
                                           }}
                                         >
                                             <VscHeartFilled 
