@@ -12,17 +12,17 @@ import LoginPopUp from '../login/LoginPopUp'
 
 
 function Header() {
-  const location =useLocation()
+  const location = useLocation()
   const [showCategorySlide, setShowCategorySlide] = useState(false)
-  const { dataCategory } = useContext(DATA)
-  const { imgsformenu } = useContext(DATA)
+  const { dataCategory, imgsformenu, dataFav ,basket} = useContext(DATA)
   const [showSeachBar, setShowSearchBar] = useState(false)
   const [showBag, setShowBag] = useState(false)
-  const [showLogin,setShowLogin]=useState(false)
-  useEffect(()=>{
+  const [showLogin, setShowLogin] = useState(false)
+
+  useEffect(() => {
     setShowLogin(false)
     setShowCategorySlide(false)
-  },[location.pathname])
+  }, [location.pathname])
   return (
     <>
       <header className=' fixed w-[100%] bg-white z-50'>
@@ -96,7 +96,7 @@ function Header() {
 
             <div className='text-[1.6em] relative w-[43%] justify-end flex gap-[10px]'>
               <div className={`${showLogin ? 'absolute' : 'hidden'}  top-[50px] ring-0`}>
-                <LoginPopUp/>
+                <LoginPopUp />
               </div>
               <div className='hidden bp1200:flex  justify-end  pr-[40px] '>
                 <div
@@ -107,12 +107,29 @@ function Header() {
                 </div>
               </div>
               <IoPersonOutline
-              onClick={()=>{setShowLogin(!showLogin)}}
-               className='hidden cursor-pointer bp1200:block' />
+                onClick={() => { setShowLogin(!showLogin) }}
+                className='hidden cursor-pointer bp1200:block' />
               <Link to={'/wishlist'}>
-                <GoHeart  className='cursor-pointer' />
+                <div className='relative'>
+                  <GoHeart className='cursor-pointer' />
+                  { dataFav ? <div
+                    className='absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white'>
+                    <p>{dataFav.length}</p>
+                  </div> : ''
+                  }
+                </div>
               </Link>
-              <BsBag className='cursor-pointer' onClick={() => { setShowBag(true) }} />
+              <div className='relative'>
+                <BsBag  className='cursor-pointer' onClick={() => { setShowBag(true) }} />
+                
+                { basket ?
+                  <div
+                  className='absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white'>
+                  <p>{basket.length}</p>
+                </div>
+                : ''
+                }
+              </div>
             </div>
           </div>
         </section>

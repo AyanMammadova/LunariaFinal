@@ -9,8 +9,10 @@
   import { Link } from 'react-router-dom';
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
   function ProductSwiper({type,validId,setShowQuick,setproid}) {
+      
+      const {dataDiscounted,handleFavs,dataFav}=useContext(DATA)
+
       const [currentData,setCurrentData]=useState(null)
-      const {dataDiscounted,handleFavs}=useContext(DATA)
         
       useEffect(()=>{
         if(type=='discount') {
@@ -89,14 +91,14 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
                                             e.preventDefault() 
                                             handleFavs(item.id)
                                           }}
-                                        >
-                                            <VscHeartFilled 
-                                          className={`${item.isFav ? 'absolute' : 'hidden'} text-[2em] top-[10px] right-[10px]`}
-                                        />
-                                        <VscHeart  
                                           
-                                          className={` text-[2em] top-[10px] right-[10px] ${item.isFav ? 'hidden' : 'absolute'}`}
-                                        />
+                                        >
+                                          {
+                                            (dataFav && dataFav.find(itema=>itema.id==item.id)) ?  <VscHeartFilled className={`absolute text-[2em] top-[10px] right-[10px]`} /> 
+                                            : <VscHeart  className={`absolute text-[2em] top-[10px] right-[10px] `} />
+                                          }
+                                            
+                                        
                                           
                                         </div>
                                         

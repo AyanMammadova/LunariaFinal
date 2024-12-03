@@ -3,9 +3,10 @@ import { TiHeartOutline } from 'react-icons/ti'
 import { DATA } from '../../context/DataContext'
 import { Link } from 'react-router-dom'
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc'
+import { IoCloseSharp } from 'react-icons/io5'
 
 function WishList() {
-  const {dataFav}=useContext(DATA)
+  const {dataFav,handleFavs}=useContext(DATA)
   return (
     <>
       <div className='pt-[150px]'>
@@ -30,17 +31,10 @@ function WishList() {
                                     <div  
                                       onClick={(e)=>{
                                         e.preventDefault() 
-                                        handleFavorites(item.id)
+                                        handleFavs(item.id)
                                       }}
                                     >
-                                        <VscHeartFilled
-                                      className={`${item.isFav ? 'absolute' : 'hidden'} text-[2em] top-[10px] right-[10px]`}
-                                    />
-                                    <VscHeart  
-                                      
-                                      className={` text-[2em] top-[10px] right-[10px] ${item.isFav ? 'hidden' : 'absolute'}`}
-                                    />
-                                      
+                                        <IoCloseSharp className={`absolute text-[2em] top-[10px] right-[10px] `}/>
                                     </div>
                                     
                                     <div className={`${item.discount > 1 ? 'hidden' : 'block'}`}>

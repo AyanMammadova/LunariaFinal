@@ -10,7 +10,7 @@ function DataContext({children}) {
     const [dataByCategory,setDataByCategory]=useState(null)
     const [dataAll,setDataAll]=useState(null)
     const [dataDiscounted,setDataDiscounted]=useState(null)
-    const [dataFav,setDataFav]=useState(cookieFav.get('dataFav') || null)
+    const [dataFav,setDataFav]=useState(cookieFav.get('favCookie') || null)
 
     
     
@@ -25,14 +25,26 @@ function DataContext({children}) {
       },[]
     )
     function handleFavs(id){
-      setDataAll(dataAll.map(item=>
-        item.id==id ? {...item,isFav:!item.isFav} : item
-        )
-      )
+      if(dataFav) {
+        if(!dataFav.find(item=>item.id==id)){
+          setDataFav([
+            ...dataFav,
+            ...dataAll.filter((item,i)=>item.id==id)
+            ]
+          )}
+        
+        else{
+          setDataFav(dataFav.filter(item=>item.id!=id))
+        }
+      }
       
-      setDataFav(dataAll.filter(item=>item.isFav==true))
-      cookieFav.set('dataFav',dataFav)
+      else{
+        setDataFav(dataAll.filter((item,i)=>item.id==id))
+      }
+      cookieFav.set('favCookie',dataFav)
     }
+
+
     useEffect(()=>{
       setDataDiscounted(dataAll?.filter(item=>item.discount>1)
                           .sort((a,b)=>b.discount-a.discount)
