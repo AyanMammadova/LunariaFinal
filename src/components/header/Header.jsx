@@ -9,12 +9,14 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import SearchBar from '../offcanvas/SearchBar'
 import ShoppingBag from '../offcanvas/ShoppingBag'
 import LoginPopUp from '../login/LoginPopUp'
+import { BASKET } from '../../context/BasketContext'
 
 
 function Header() {
   const location = useLocation()
   const [showCategorySlide, setShowCategorySlide] = useState(false)
-  const { dataCategory, imgsformenu, dataFav ,basket} = useContext(DATA)
+  const { dataCategory, imgsformenu, dataFav} = useContext(DATA)
+  const {basket}=useContext(BASKET)
   const [showSeachBar, setShowSearchBar] = useState(false)
   const [showBag, setShowBag] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
@@ -35,7 +37,7 @@ function Header() {
         </div>
 
 
-        <div className={`absolute top-[90px] translate-x-0 duration-300 ${showCategorySlide ? 'left-0' : '-left-[120%]'}  bp1200:hidden`}>
+        <div className={`absolute top-[90px] translate-x-0 duration-300 ${showCategorySlide ? 'left-0' : '-left-[170%]'}  bp1200:hidden`}>
           <CategorySlide />
         </div>
 
@@ -112,7 +114,7 @@ function Header() {
               <Link to={'/wishlist'}>
                 <div className='relative'>
                   <GoHeart className='cursor-pointer' />
-                  { dataFav ? <div
+                  { dataFav.length>0 ? <div
                     className='absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white'>
                     <p>{dataFav.length}</p>
                   </div> : ''
@@ -122,7 +124,7 @@ function Header() {
               <div className='relative'>
                 <BsBag  className='cursor-pointer' onClick={() => { setShowBag(true) }} />
                 
-                { basket ?
+                { basket.length>0 ?
                   <div
                   className='absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white'>
                   <p>{basket.length}</p>

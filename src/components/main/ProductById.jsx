@@ -14,7 +14,6 @@ function ProductById() {
     const { dataFav, handleFavs } = useContext(DATA)
     const { proid } = useParams()
     const [product, setProduct] = useState(null)
-    console.log(dataFav)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })
     }, [proid])
@@ -63,7 +62,8 @@ function ProductById() {
                                         product.description,
                                         product.price,
                                         product.discount,
-                                        product.Brands.name
+                                        product.Brands.name,
+                                        product.images
                                     );
                                     toast.success('dskjcbskj')
                                 }}

@@ -1,5 +1,4 @@
 import axios from "axios"
-import { TbSquareForbid2 } from "react-icons/tb"
 
 async function getDataCategories() {
     const res=await axios.get('https://ecommerce.ibradev.me/categories/all')

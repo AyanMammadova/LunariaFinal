@@ -11,9 +11,6 @@ function DataContext({ children }) {
   const [dataFav, setDataFav] = useState(JSON.parse(localStorage.getItem('favData')) || [])
 
 
-
-
-
   useEffect(() => {
     getDataCategories().then(res => { setDataCategory(res) })
     getDataAll().then(res => {

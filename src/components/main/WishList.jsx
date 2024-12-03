@@ -1,31 +1,38 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { TiHeartOutline } from 'react-icons/ti'
 import { DATA } from '../../context/DataContext'
 import { Link } from 'react-router-dom'
-import { VscHeart, VscHeartFilled } from 'react-icons/vsc'
 import { IoCloseSharp } from 'react-icons/io5'
 
 function WishList() {
-  const {dataFav,handleFavs}=useContext(DATA)
+
+  const { dataFav, handleFavs } = useContext(DATA)
+  console.log('datafav', dataFav)
+
+
   return (
     <>
       <div className='pt-[150px]'>
-        
 
-        <div className='flex p-[40px] gap-[30px]'>
-            {
-                dataFav ? dataFav.map((item,i)=>{
+
+        <div className='flex flex-wrap justify-center p-[40px] gap-[30px]'>
+          <div className={`${dataFav.length>0 ? 'hidden' : 'block'} w-[100%]`}>
+            <TiHeartOutline className='text-[7em] text-center w-[100%] text-red-600' />
+            <p className='text-center text-red-600'>Your wishList is empty</p>
+          </div>
+          {
+                dataFav && dataFav.map((item,i)=>{
                     return  <Link key={i} to={`/productbyid/${item.id}`}>
-                              <div  className='my-[20px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
+                              <div  className='my-[20px] max-h-[400px] max-w-[200px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
                                   <div 
                                     className=' relative h-[100%] overflow-hidden group '>
                                     <img 
                                       className={` group-hover:hidden transition-opacity duration-300 ease-in-out `} 
-                                      src={item.images[0]} alt="" 
+                                      src={item.images?.[0]} alt="" 
                                     />
                                     <img 
                                     className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`} 
-                                    src={item.images[1]} alt="" 
+                                    src={item.images?.[1]} alt="" 
                                     />
                                     {}
                                     <div  
@@ -54,7 +61,7 @@ function WishList() {
                                       {item.discount}% 
                                   </div>
                                   <div className='p-[10px]'>
-                                      <p className='font-bold text-[1.1em] z-10'>{item.Brands.name}</p>
+                                      <p className='font-bold text-[1.1em] z-10'>{item?.Brands?.name}</p>
                                       <p className=' text-nowrap overflow-hidden font-[600] text-ellipsis text-gray-500'>{item.name}</p>
                                       <p className={`${item.discount > 1 ? 'block' : 'hidden'} text-green-700  font-bold`}>
                                           <del className='text-red-500'>{item.price}</del> 
@@ -66,16 +73,13 @@ function WishList() {
                                   </div>
                               </div>
                             </Link>
-                }) : 
-                <div className={`${dataFav ? 'hidden' : 'block'} w-[100%]`}>
-                    <TiHeartOutline className='text-[7em] text-center w-[100%] text-red-600' />
-                    <p className='text-center text-red-600'>Your wishList is empty</p>
-                </div>
+                })  
+                
             }
         </div>
       </div>
     </>
   )
-} 
+}
 
 export default WishList
