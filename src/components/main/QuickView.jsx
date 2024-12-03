@@ -18,7 +18,6 @@ function QuickView({ proid, setShowQuick }) {
     proid && getProductById({ proid }).then(res => { setProduct(res) })
   }, [proid])
 
-  // console.log(product?.isFav)
   return (
     <>
       <div className='w-[90%] py-[20px] bp900:w-[60%] font-[600] relative  bp900:h-[60vh] bg-white'>

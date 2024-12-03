@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')).render(
   >
     <DataContext>
       <BasketContext>
-        <App />
+      <App />
       </BasketContext>
     </DataContext>
   </BrowserRouter>
