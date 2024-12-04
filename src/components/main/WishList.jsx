@@ -7,7 +7,6 @@ import { IoCloseSharp } from 'react-icons/io5'
 function WishList() {
 
   const { dataFav, handleFavs } = useContext(DATA)
-  console.log('datafav', dataFav)
 
 
   return (

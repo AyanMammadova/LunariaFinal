@@ -31,11 +31,11 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
         <>
           <div className='relative w-[100%] flex flex-col h-[100%]'>
             <div className='flex '>
-              <div className={`${type=='category' ? 'block' : 'hidden'} flex flex-col mx-[20px] gap-[20px] text-center pt-[80px] w-[300px]`}>
+              {/* <div className={`${type=='category' ? 'block' : 'hidden'} flex flex-col mx-[20px] gap-[20px] text-center pt-[80px] w-[300px]`}>
                 <p>NEW ARRIVALS</p>
                 <p>{currentData?.length}</p>
                 <button className='text-white border-[1px] border-black bg-black p-[10px] hover:bg-white  hover:text-black transition-all duration-300'>SHOP NOW</button>
-              </div>
+              </div> */}
               <Swiper
                 slidesPerView={ 2 }
                 spaceBetween={10}

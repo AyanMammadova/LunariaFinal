@@ -6,7 +6,6 @@ import { BASKET } from '../../context/BasketContext'
 
 function ShoppingBag({ setShowBag }) {
   const { basket ,removeFromBasket} = useContext(BASKET)
-  console.log('baket', basket)
   return (
     <>
       <div className='w-full relative h-[100vh] bg-white z-50 shadow-lg'>
@@ -25,7 +24,6 @@ function ShoppingBag({ setShowBag }) {
         </div>
         {
           basket && basket.map((item, i) => {
-            console.log(item)
             return <div className='flex border-b-2 mx-[5px] p-[4px] gap-[40px] relative' key={i}>
                     <img className='h-[100px]' src={item?.images?.[0]} alt="" />
                     <IoCloseSharp 
