@@ -39,7 +39,7 @@ function ByCategory() {
         </div>
       </section>
       <section>
-        <div className='p-[40px]'>
+        <div className='p-[10px] bp600:p-[40px]'>
           <Swiper
             slidesPerView={2}
             spaceBetween={10}
