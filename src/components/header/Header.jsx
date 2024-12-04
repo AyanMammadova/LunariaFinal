@@ -70,7 +70,7 @@ function Header() {
                           <ul className='flex flex-col gap-[5px]'>
                             {
                               item.Subcategory.map((subitem, subi) => {
-                                return <NavLink key={subi} to={`/productsbysubcategory/${item.name}/${item.id}/${subitem.name}/${subitem.id}`} className="relative  w-max mx-[10px] cursor-pointer group">
+                                return <NavLink key={subi} to={`/`} className="relative  w-max mx-[10px] cursor-pointer group">
                                   <span className=''>{subitem.name}</span>
                                   <span className="absolute  -bottom-1 left-1/2 w-0 transition-all h-[1px] bg-black group-hover:w-3/6"></span>
                                   <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-[1px] bg-black group-hover:w-3/6"></span>

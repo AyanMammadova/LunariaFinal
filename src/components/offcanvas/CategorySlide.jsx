@@ -39,7 +39,7 @@ function CategorySlide() {
             {
               dataCategory ? dataCategory[id-1]?.Subcategory?.map((item,i)=>{
                 return  <Link 
-                          to={`/productsbysubcategory/${dataCategory[id-1]?.name}/${dataCategory[id-1]?.id}/${item.name}/${item.id}`}
+                          to={`/`}
                           key={i}>
                           {item.name}
                         </Link>

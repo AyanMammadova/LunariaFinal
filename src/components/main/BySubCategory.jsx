@@ -15,7 +15,7 @@ function BySubCategory() {
             {
               dataCategory && dataCategory[catid-1]?.Subcategory.map((item,i)=>{
                 return  <Link 
-                          to={`/productsbysubcategory/${catname}/${catid}/${item.name}/${item.id}`}
+                          to={`/`}
                           key={i}>
                           {item.name}
                         </Link>
@@ -33,7 +33,7 @@ function BySubCategory() {
                     {
                       dataCategory ?  dataCategory[catid-1]?.Subcategory.map((item,i)=>{
                         return  <Link 
-                                    to={`/productsbysubcategory/${catname}/${catid}/${item.name}/${item.id}`}
+                                    to={`/`}
                                     key={i}>
                                     {item.name}
                                 </Link>

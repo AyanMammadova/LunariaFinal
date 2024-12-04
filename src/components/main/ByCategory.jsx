@@ -67,7 +67,7 @@ function ByCategory() {
                 return <SwiperSlide key={i} >
                   <div className='w-full h-auto relative group overflow-hidden'>
                     <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
-                    <Link to={`/productsbysubcategory/${catname}/${catid}/${dataCategory && dataCategory[catid - 1].Subcategory[i].name}/${dataCategory && dataCategory[catid - 1].Subcategory[i].id}`}
+                    <Link to={`/`}
                       className='z-50 flex justify-center items-center text-white font-serif text-[1.3em] absolute inset-0'>
                       {dataCategory && dataCategory[catid - 1].Subcategory[i].name}
                     </Link>
