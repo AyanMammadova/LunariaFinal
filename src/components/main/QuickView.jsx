@@ -5,7 +5,6 @@ import { getProductById } from '../../services/api'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
-import { FaRegHeart } from 'react-icons/fa';
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
 import { DATA } from '../../context/DataContext';
 
@@ -20,7 +19,7 @@ function QuickView({ proid, setShowQuick }) {
 
   return (
     <>
-      <div className='w-[90%] py-[20px] bp900:w-[60%] font-[600] relative  bp900:h-[60vh] bg-white'>
+      <div className='w-[90%] py-[20px] bp900:w-[80%] font-[600] relative  bp900:h-[85vh] bg-white'>
         <IoCloseSharp
           onClick={() => { setShowQuick(false) }}
           className='absolute cursor-pointer top-[20px] right-[20px]' />

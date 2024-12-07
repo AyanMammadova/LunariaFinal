@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProductById } from '../../services/api'
-import { FaWhatsapp } from 'react-icons/fa'
+import { FaMinus, FaPlus, FaWhatsapp } from 'react-icons/fa'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css';
 import { Image } from 'antd';
@@ -12,12 +12,16 @@ import { BASKET } from '../../context/BasketContext'
 function ProductById() {
     const {addToBasket}=useContext(BASKET)
     const { dataFav, handleFavs } = useContext(DATA)
+    const [size,setSize]=useState('')
     const { proid } = useParams()
     const [product, setProduct] = useState(null)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })
     }, [proid])
 
+    function handleSize(size){
+        setSize(size)
+    }
     return (
         <>
             <section className=' pt-[150px]  p-[5px] w-[100%] md:p-[40px] md:pt-[160px]'>
@@ -48,24 +52,36 @@ function ProductById() {
                         {/* SIZE */}
                         <div className='flex gap-[5px] flex-wrap'>
                             {
-                                product?.Size.map((item, i) => {
-                                    return <div className='px-[26px] py-[2px] border-2 cursor-pointer border-gray-800 hover:text-white hover:bg-black transition-all duration-300' key={i}>{item}</div>
-                                })
+                                product?.Size.map((item, i) => (
+                                    <div 
+                                    onClick={()=>{handleSize(item)}}
+                                    className={`${item==size ? 'bg-black text-white' : ''} px-[26px] py-[2px] border-2 cursor-pointer border-gray-800 hover:text-white hover:bg-black transition-all duration-300`}
+                                    key={i}>
+                                        {item}
+                                    </div>)
+                                )
                             }
                         </div>
+                        {/* BUTTONS */}
                         <div className='flex pt-[30px] flex-col gap-[10px] *:w-[100%]'>
                             <div
                                 onClick={() => { 
-                                    addToBasket(
-                                        product?.id,
-                                        product.name,
-                                        product.description,
-                                        product.price,
-                                        product.discount,
-                                        product.Brands.name,
-                                        product.images
-                                    );
-                                    toast.success('dskjcbskj')
+                                    if(size){
+                                        addToBasket(
+                                            product?.id,
+                                            product.name,
+                                            product.description,
+                                            product.price,
+                                            product.discount,
+                                            product.Brands.name,
+                                            product.images,
+                                            size  
+                                        );    
+                                        toast.success('dskjcbskj')
+                                    }
+                                    else{
+                                        return toast.error('Select Size pls')
+                                    }
                                 }}
                                 className='h-[45px] items-center flex justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' >
                                 <button

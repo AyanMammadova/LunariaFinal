@@ -9,6 +9,9 @@ import RegisterPage from './components/login/RegisterPage'
 import WishList from './components/main/WishList'
 import ForgotPassword from './components/login/ForgotPassword'
 import Login from './components/login/Login'
+import About from './components/main/About'
+import ShoppingBagPage from './components/main/ShoppingBagPage'
+import CheckOut from './components/main/CheckOut'
 
 function App() {
   const { pathname } = useLocation()
@@ -30,6 +33,10 @@ function App() {
           <Route path='/wishlist' element={<WishList/>}/>
           <Route path='/remind' element={<ForgotPassword/>}/>
           <Route path='/login' element={<Login/>}/>
+          <Route path='/about' element={<About/>}/>
+          <Route path='/checkout' element={<CheckOut/>}/>
+          <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
+
         </Route>
      </Routes>
     </>

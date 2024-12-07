@@ -5,7 +5,7 @@ function BasketContext({ children }) {
 
 
 
-    function addToBasket(id, name, description, price, discount, brand, images) {
+    function addToBasket(id, name, description, price, discount, brand, images,size,quantity) {
         if (basket?.find(item => item.id == id)) {
             setBasket(basket?.map(item =>
                 item.id == id
@@ -23,11 +23,14 @@ function BasketContext({ children }) {
                 discount: discount,
                 brand: brand,
                 images: images,
-                quantity: 1
+                size:size,
+                quantity:1
+
             }
             ])
         }
     }
+    
     function removeFromBasket(id){
         setBasket(basket.filter(item=>item.id!=id))
     }

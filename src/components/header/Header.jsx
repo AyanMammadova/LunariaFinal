@@ -15,8 +15,8 @@ import { BASKET } from '../../context/BasketContext'
 function Header() {
   const location = useLocation()
   const [showCategorySlide, setShowCategorySlide] = useState(false)
-  const { dataCategory, imgsformenu, dataFav} = useContext(DATA)
-  const {basket}=useContext(BASKET)
+  const { dataCategory, imgsformenu, dataFav } = useContext(DATA)
+  const { basket } = useContext(BASKET)
   const [showSeachBar, setShowSearchBar] = useState(false)
   const [showBag, setShowBag] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
@@ -24,11 +24,15 @@ function Header() {
   useEffect(() => {
     setShowLogin(false)
     setShowCategorySlide(false)
+    setShowBag(false)
   }, [location.pathname])
   return (
     <>
+    
       <header className=' fixed w-[100%] bg-white z-50'>
-        <div className={`${showBag || showSeachBar ? 'block' : 'hidden'} w-full h-full bg-[#53525280] fixed z-30`}></div>
+        <div
+          onClick={() => { setShowSearchBar(false);setShowBag(false) }}
+          className={`${showBag || showSeachBar ? 'block' : 'hidden'} w-full h-full bg-[#53525280] fixed z-30`}></div>
         <div className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${showBag ? 'right-0' : '-right-[100%]'}`}>
           <ShoppingBag setShowBag={setShowBag} />
         </div>
@@ -55,7 +59,7 @@ function Header() {
                   <MdOutlineSearch onClick={() => { setShowSearchBar(true) }} />
                 </li>
               </ul>
-              <ul className='bp1200:flex hidden'>
+              <ul className='bp1200:flex hidden font-montserrat'>
                 {
                   dataCategory && dataCategory.map((item, i) => {
                     return <div key={i} className='cathead'>
@@ -114,22 +118,22 @@ function Header() {
               <Link to={'/wishlist'}>
                 <div className='relative'>
                   <GoHeart className='cursor-pointer' />
-                  { dataFav.length>0 ? <div
+                  {dataFav.length > 0 ? <div  
                     className='absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white'>
                     <p>{dataFav.length}</p>
                   </div> : ''
                   }
                 </div>
               </Link>
-              <div className='relative'>
-                <BsBag  className='cursor-pointer' onClick={() => { setShowBag(true) }} />
-                
-                { basket.length>0 ?
+              <div onClick={() => { setShowBag(true) }} className='cursor-pointer relative'>
+                <BsBag className='cursor-pointer'  />
+
+                {basket.length > 0 ?
                   <div
-                  className='absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white'>
-                  <p>{basket.length}</p>
-                </div>
-                : ''
+                    className='absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white'>
+                    <p>{basket.length}</p>
+                  </div>
+                  : ''
                 }
               </div>
             </div>

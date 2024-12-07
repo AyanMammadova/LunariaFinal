@@ -15,3 +15,17 @@
   background-color: #e5e7eb;
 }
 
+@font-face {
+  font-family: 'Montserrat Ace Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Montserrat Ace Regular'), url('./fonts/Montserrat-Ace-Regular.woff') format('woff');
+  }
+
+@font-face {
+  font-family: 'Montserrat Ace Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Montserrat Ace Medium'), url('./fonts/Montserrat-Ace-Medium.woff') format('woff');
+  }
+

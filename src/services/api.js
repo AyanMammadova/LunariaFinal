@@ -19,8 +19,8 @@ async function getProductById({proid}) {
     const res=await axios.get(`https://ecommerce.ibradev.me/products/get/${proid}`)
     return res.data
 }
-async function getDataBySubCategory(subid) {
-    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}`)
+async function getDataBySubCategory(subid,page=2) {
+    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}&page=${page}`)
     return res.data
 }
 

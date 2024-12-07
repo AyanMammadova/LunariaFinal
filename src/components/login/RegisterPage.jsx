@@ -20,7 +20,6 @@ function RegisterPage() {
 
 
   const [registerData, setRegisterData] = useState(initialObj)
-  console.log(registerData)
   return (
     <>
     <Toaster

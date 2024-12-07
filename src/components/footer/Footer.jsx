@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { FaFacebookF, FaInstagram, FaWhatsapp } from 'react-icons/fa'
 import FooterSwiper from './FooterSwiper'
+import { Link } from 'react-router-dom'
 
 
 function Footer() {
@@ -23,14 +24,14 @@ function Footer() {
             </div>
           </div>
         </section>
-        <section className='flex flex-wrap gap-[20px] justify-between    py-[20px]'>
-          <div>
+        <section className='flex flex-wrap gap-[20px] justify-between text-[.9em]  font-montserrat   py-[20px]'>
+          <div className='*:py-[10px]'>
             <p className='text-[1.4em]'>Emporium</p>
-            <p className='text-[1.2em]'>About us</p>
+            <Link to={'/about'} className='text-[1.2em]' >About Us</Link>
             <p  className='text-[1.2em]'>Store Information</p>
           </div>
 
-          <div>
+          <div className='*:py-[8px]'>
             <p className="text-[1.4em]">Customer Service</p>
             <p className="text-[1.2em]">Gift Cards</p>
             <p className="text-[1.2em]">Loyalty Program</p>
@@ -38,19 +39,19 @@ function Footer() {
             <p className="text-[1.2em]">Contact Us</p>
           </div>
 
-          <div>
+          <div className='*:py-[8px]'>
             <p className="text-[1.4em]">Online Shopping</p>
             <p className="text-[1.2em]">Delivery Terms</p>
             <p className="text-[1.2em]">Return and Exchange</p>
             <p className="text-[1.2em]">Payment Methods</p>
           </div>
 
-          <div>
+          <div className='*:py-[8px]'>
             <p className="text-[1.4em]">Store Contact</p>
             <p className="text-[1.2em]">+994 51 225 96 96</p>
             <p className="text-[1.2em]">51, 153 Neftchiler Avenue</p>
           </div>
-          <div>
+          <div  className='*:py-[8px]'>
             <p>LUNARIUN ACCEPTS</p>
            <img src="/img/visacards.png" alt="" />
            <p>SOCIAL MEDIA</p>
