@@ -6,9 +6,9 @@ import { BASKET } from '../../context/BasketContext'
 import { Link } from 'react-router-dom'
 
 function ShoppingBag({ setShowBag }) {
-  const { basket, removeFromBasket } = useContext(BASKET)
+  const { basket, removeFromBasket,SubTotal } = useContext(BASKET)
 
-  const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
+  
 
   return (
     <>

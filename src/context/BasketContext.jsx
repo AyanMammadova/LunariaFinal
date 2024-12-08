@@ -3,6 +3,7 @@ export const BASKET = createContext(null)
 function BasketContext({ children }) {
     const [basket, setBasket] = useState(JSON.parse(localStorage.getItem('basketLocal')) || [])
 
+    const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
 
 
     function addToBasket(id, name, description, price, discount, brand, images,size,quantity) {
@@ -44,7 +45,8 @@ function BasketContext({ children }) {
                 value={{
                     addToBasket,
                     basket,
-                    removeFromBasket
+                    removeFromBasket,
+                    SubTotal
                 }}
 
             >

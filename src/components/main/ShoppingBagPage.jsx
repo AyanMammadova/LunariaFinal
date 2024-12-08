@@ -4,12 +4,12 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
 function ShoppingBagPage() {
-    const { basket,removeFromBasket } = useContext(BASKET)
+    const { basket, removeFromBasket } = useContext(BASKET)
     const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
 
     return (
         <>
-            <div className='w-[100%] flex flex-col bp800:flex-row pt-[150px] gap-[40px] text-[.9em] text-gray-800 p-[10px] bp600:px-[40px]'>
+            <div className='w-[100%] flex flex-col bp800:flex-row pt-[150px] gap-[40px] text-[.9em] text-gray-800 p-[10px] '>
                 <div className='w-[100%] bp800:w-[70%]'>
                     <div className=''>
                         <p className='font-cormorant text-[3em]'>Shopping Bag</p>
@@ -52,6 +52,7 @@ function ShoppingBagPage() {
                     </Link>
                 </div>
             </div>
+            
         </>
     )
 }

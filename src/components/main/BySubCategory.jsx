@@ -33,7 +33,7 @@ function BySubCategory() {
   }, [subid, page])
   console.log(sizeData)
 
-  function changeUrlPage(pagen) {
+  function changeUrlPage(page) {
     window.scrollTo({
       behavior: 'smooth',
       top: 0
