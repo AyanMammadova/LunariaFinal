@@ -12,7 +12,7 @@ function ShoppingBagPage() {
             <div className='w-[100%] flex flex-col bp800:flex-row pt-[150px] gap-[40px] text-[.9em] text-gray-800 p-[10px] '>
                 <div className='w-[100%] bp800:w-[70%]'>
                     <div className=''>
-                        <p className='font-cormorant text-[3em]'>Shopping Bag</p>
+                        <p className='font-cormorant  text-[2em] bp600:text-[3em]'>Shopping Bag</p>
                         <p className='font-montserrat'>{basket.length} items</p>
                     </div>
                     {

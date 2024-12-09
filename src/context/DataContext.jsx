@@ -108,11 +108,11 @@ function DataContext({ children }) {
   ]
   const imgsfordeps = [
     'https://www.emporium.az/i/maincard/cat_65.jpg?v=1.8.23',
-    'https://www.emporium.az/b/cat/32-26-men-watches.jpg?v=140324',
+    'https://www.emporium.az/i/maincard/cat_1.jpg?v=1.8.23',
     'https://www.emporium.az/i/maincard/cat_189.jpg?v=1.8.23',
     'https://www.emporium.az/i/maincard/cat_297.jpg?v=1.8.23',
     'https://www.emporium.az/b/beauty-page-main-banner-desktop.jpg?v=140324',
-    'https://www.emporium.az/b/cat/2-235-bedroom.jpg?v=140324',
+    'https://www.emporium.az/i/maincard/cat_228.jpg?v=1.8.23',
   ]
 
   return (

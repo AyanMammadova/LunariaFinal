@@ -13,7 +13,7 @@ function Login() {
                 </div>
                 <div className='w-[100%]  my-[10px] border-[1px] border-gray-400 flex justify-between'>
                     <input 
-                    type={hidePassword ? 'password' : 'text'} 
+                    type={hidePassword ? 'password' : 'text'}  
                     placeholder='Password' />
                     
                     <div
