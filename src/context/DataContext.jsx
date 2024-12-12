@@ -50,28 +50,33 @@ function DataContext({ children }) {
   const dataFilter = [
     {
       name: "categories",
-      isOpen: false,
+      isOpen: true,
       id: 1
     },
     {
       name: "colors",
-      isOpen: false,
+      isOpen: true,
       id: 2
     },
     {
-      name: "discount",
-      isOpen: false,
+      name: "brands",
+      isOpen: true,
       id: 3
     },
     {
-      name: "sizes",
-      isOpen: false,
+      name: "discount",
+      isOpen: true,
       id: 4
     },
     {
-      name: "price",
-      isOpen: false,
+      name: "sizes",
+      isOpen: true,
       id: 5
+    },
+    {
+      name: "price",
+      isOpen: true,
+      id: 6   
     }
   ];
   const imgsforsubcats = [

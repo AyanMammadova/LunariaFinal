@@ -7,9 +7,12 @@ import {
   IoIosArrowBack,
   IoIosArrowDown,
   IoIosArrowForward,
+  IoIosCheckmark,
 } from "react-icons/io";
 import { BsCheck } from "react-icons/bs";
 import { IoFilterSharp } from "react-icons/io5";
+import { MdCircle } from "react-icons/md";
+import { GoCheck } from "react-icons/go";
 
 function BySubCategory() {
   const { catname, catid, subname, subid } = useParams();
@@ -20,17 +23,15 @@ function BySubCategory() {
     handleFavs,
     showFilter,
     setShowFilter,
-  } = useContext(DATA);
+  } = useContext(DATA)
 
-  const [dataByCategory, setDataByCategory] = useState(null);
-  const [totalPage, setTotalPage] = useState(1);
-  const [colorData, setColorData] = useState(null);
-  const [sizeData, setSizeData] = useState(null);
-  const [brandData, setBrandData] = useState(null);
+  const [dataByCategory, setDataByCategory] = useState(null)
+  const [totalPage, setTotalPage] = useState(1)
+  const [colorData, setColorData] = useState(null)
+  const [sizeData, setSizeData] = useState(null)
+  const [brandData, setBrandData] = useState(null)
   const [page, setPage] = useState(1);
-  const [sfilter, setSFilter] = useState(null);
-  const [showDiscount, setShowDiscount] = useState(false);
-  const [showCats, setShowCats] = useState(false);
+  const [showDiscount, setShowDiscount] = useState(false)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter);
   function handleSubFilter(id) {
     setnewdatafilter(
@@ -39,29 +40,28 @@ function BySubCategory() {
       )
     );
   }
+  console.log(newdatafilter)
+  const [subData, setSubData] = useState(null)
+  useEffect(() => {
+    setnewdatafilter(
+      newdatafilter.map((item, i) =>
+        // item.name == 'categories' ? { ...item, subfilter: [dataCategory?.[catid - 1]?.Subcategory.map(item => item.name)] } :
+        item.name == 'colors' ? { ...item, subfilter: [colorData] } :
+          item.name == 'brands' ? { ...item, subfilter: [brandData] } :
+            item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
+      ))
+  }, [dataCategory, colorData, sizeData, brandData])
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   useEffect(() => {
     getDataBySubCategory(subid, page).then((res) => {
-      setDataByCategory(res.data);
-      setTotalPage(res.meta.totalPages);
-      setColorData([...new Set(res.data.flatMap((item) => item.Colors))]);
-      setSizeData([...new Set(res.data.flatMap((item) => item.Size))]);
-      setBrandData([...new Set(res.data.flatMap((item) => item.Brands.name))]);
-    });
-    setnewdatafilter(
-      newdatafilter.map((item, i) => ({ ...item, subfilter: colorData }))
-    );
-  }, [subid, page]);
-
-  // function handleSizeSelect(index) {
-  //   setSizeData(
-  //     sizeData.map((item, i) =>
-  //       i == index ? { ...item, isSelected: true } : item
-  //     )
-  //   );
-  //   console.log(index);
-  // }
+      setDataByCategory(res.data)
+      setTotalPage(res.meta.totalPages)
+      setColorData([...new Set(res.data.flatMap((item) => item.Colors))])
+      setSizeData([...new Set(res.data.flatMap((item) => item.Size))])
+      setBrandData([...new Set(res.data.flatMap((item) => item.Brands.name))])
+    })
+  }, [subid, page])
 
   function changeUrlPage(page) {
     window.scrollTo({
@@ -115,112 +115,44 @@ function BySubCategory() {
                   return (
                     <div key={i} className="">
                       <div
-                        className={`text-[.9em]  bg-white transition-all duration-300  ${
-                          item.isOpen ? "h-[150px]" : "h-[40px]"
-                        }   relative font-bold p-[10px]  mx-[10px] border-t-4 flex justify-between w-[100%] cursor-pointer`}
-                      >
+                        className={`text-[.9em]  bg-white  relative font-bold p-[10px]  mx-[10px] border-t-4 flex justify-between w-[100%] cursor-pointer`}>
                         <p
                           onClick={() => {
                             handleSubFilter(item.id);
                           }}
-                          className="flex justify-between w-[100%]"
-                        >
+                          className="flex z-0 justify-between w-[100%]">
                           {item.name}
                           <IoIosArrowDown
-                            className={`transition-all duration-300 ${
-                              item.name == "price" ? "hidden" : "block"
-                            } ${item.isOpen ? "rotate-180" : ""}`}
-                          />
+                            className={`transition-all duration-300 ${item.name == "price" ? "hidden" : "block"
+                              } ${item.isOpen ? "rotate-180" : ""}`} />
                         </p>
-                        <div
-                          className={`absolute transition-all duration-300 pt-[10px]  right-0 w-[100%] top-[30px] `}
-                        >
-                          {item.name == "categories" ? (
-                            <div className={`  transition-all duration-300  `}>
-                              <ul className="flex flex-col pl-[30px] uppercase">
-                                {dataCategory
-                                  ? dataCategory[catid - 1]?.Subcategory.map(
-                                      (item, i) => {
-                                        return (
-                                          <Link to={``} key={i}>
-                                            {item.name}
-                                          </Link>
-                                        );
-                                      }
-                                    )
-                                  : ""}
-                              </ul>
-                            </div>
-                          ) : item.name == "colors" ? (
-                            colorData ? (
-                              colorData.map((item, i) => {
+                      </div>
+
+                      <div className={` pt-[10px]  w-[100%] `}>
+                        <div>
+                          <ul className={` pl-[30px] lowercase flex flex-col ${item.isOpen ? "block" : "hidden"}`}>
+                            {
+                              item.subfilter && item.subfilter[0]?.map((subitem, subi) => {
                                 return (
-                                  <div key={i} className="flex cursor-pointer">
-                                    <div
-                                      className={`h-[20px] mr-[5px] border-[1px] border-black rounded-full w-[20px] `}
-                                      style={{
-                                        backgroundColor: item.toLowerCase(),
-                                      }}
-                                    ></div>
-                                    {item}
-                                  </div>
-                                );
+                                  <li key={subi} 
+                                  className={`p-[5px] flex gap-[10px]  items-center  ${item.name=='colors' ? 'uppercase' : ' capitalize'}`}>
+                                    {item.name == 'colors'
+                                      ? <div className="relative w-[25px] border-[1px] border-black rounded-full h-[25px]"
+                                      style={{backgroundColor : subitem}}
+                                      >
+                                        <IoIosCheckmark className="absolute -top-[3px]  -right-[4px] text-[2em]  text-white" />
+                                      </div>
+                                      : ''
+                                    }
+                                    {subitem}</li>
+                                )
                               })
-                            ) : (
-                              ""
-                            )
-                          ) : item.name == "discount" ? (
-                            <div className="flex h-[30px] items-center pl-[30px]">
-                              <div
-                                onClick={() => {
-                                  setShowDiscount(!showDiscount);
-                                }}
-                                className={`h-[20px] w-[20px] flex items-center justify-center cursor-pointer ${
-                                  showDiscount ? "bg-blue-900" : ""
-                                } border-[1px]`}
-                              >
-                                <BsCheck className="text-[1.6em] text-white" />
-                              </div>
-                              <p className="px-[10px] text-[1.1em]">
-                                Discounted
-                              </p>
-                            </div>
-                          ) : item.name == "sizes" ? (
-                            sizeData ? (
-                              sizeData.map((item, i) => {
-                                return (
-                                  <div
-                                    key={i}
-                                    onClick={() => {
-                                      handleSizeSelect(i);
-                                    }}
-                                    className="flex cursor-pointer"
-                                  >
-                                    {/* <div
-                                      className={`h-[20px] w-[20px] flex items-center justify-center cursor-pointer ${
-                                        item.isSelected
-                                          ? "bg-blue-900"
-                                          : "bg-white"
-                                      } border-[1px]`}
-                                    >
-                                      <BsCheck className="text-[1.6em] text-white" />
-                                    </div> */}
-                                    {item}
-                                  </div>
-                                );
-                              })
-                            ) : (
-                              ""
-                            )
-                          ) : item.name == "price" ? (
-                            <p>price</p>
-                          ) : (
-                            ""
-                          )}
+                            }
+                          </ul>
                         </div>
                       </div>
                     </div>
-                  );
+                  )
                 })}
             </div>
           </div>
@@ -244,7 +176,7 @@ function BySubCategory() {
                             src={item.images[1]}
                             alt=""
                           />
-                          {}
+                          { }
                           <div
                             onClick={(e) => {
                               e.preventDefault();
@@ -252,7 +184,7 @@ function BySubCategory() {
                             }}
                           >
                             {dataFav &&
-                            dataFav.find((itema) => itema.id == item.id) ? (
+                              dataFav.find((itema) => itema.id == item.id) ? (
                               <VscHeartFilled
                                 className={`absolute text-[2em] top-[10px] right-[10px]`}
                               />
@@ -277,9 +209,8 @@ function BySubCategory() {
                           </div>
                         </div>
                         <div
-                          className={`${
-                            item.discount > 1 ? "block" : "hidden"
-                          } bg-black text-white w-[40px] text-center rounded absolute top-0 left-0`}
+                          className={`${item.discount > 1 ? "block" : "hidden"
+                            } bg-black text-white w-[40px] text-center rounded absolute top-0 left-0`}
                         >
                           {item.discount}%
                         </div>
@@ -291,9 +222,8 @@ function BySubCategory() {
                             {item.name}
                           </p>
                           <p
-                            className={`${
-                              item.discount > 1 ? "block" : "hidden"
-                            } text-green-700  font-bold`}
+                            className={`${item.discount > 1 ? "block" : "hidden"
+                              } text-green-700  font-bold`}
                           >
                             <del className="text-red-500">{item.price}</del>
                             <span className="px-[10px]">
@@ -305,9 +235,8 @@ function BySubCategory() {
                             </span>
                           </p>
                           <p
-                            className={`${
-                              item.discount > 2 ? "hidden" : "block"
-                            } font-bold`}
+                            className={`${item.discount > 2 ? "hidden" : "block"
+                              } font-bold`}
                           >
                             {item.price}$
                           </p>
