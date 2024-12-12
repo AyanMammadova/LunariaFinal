@@ -140,7 +140,7 @@ function CheckOut() {
               </div>
             </div>
             <button
-              
+
               className="bg-black text-white transition-all font-montserrat duration-200 hover:bg-white hover:text-black text-center w-[95%] rounded mt-[20px] h-[40px] border-[1px] border-black"
             >
               {onlinepay ? 'Go to payment' : 'Complete Order'}
@@ -170,9 +170,8 @@ function CheckOut() {
                     setDelivery(!delivery);
                     setPickup(!pickup);
                   }}
-                  className={`border-[1px] transition-all duration-200 rounded border-black h-[50px] px-[10px] ${
-                    delivery ? "bg-black text-white" : "bg-white text-black"
-                  }`}
+                  className={`border-[1px] transition-all duration-200 rounded border-black h-[50px] px-[10px] ${delivery ? "bg-black text-white" : "bg-white text-black"
+                    }`}
                 >
                   Delivery
                 </button>
@@ -181,9 +180,8 @@ function CheckOut() {
                     setPickup(!pickup);
                     setDelivery(!delivery);
                   }}
-                  className={`border-[1px] transition-all duration-200 rounded border-black h-[50px] px-[5px] ${
-                    pickup ? "bg-black text-white" : "bg-white text-black"
-                  }`}
+                  className={`border-[1px] transition-all duration-200 rounded border-black h-[50px] px-[5px] ${pickup ? "bg-black text-white" : "bg-white text-black"
+                    }`}
                 >
                   Pickup From the Store
                 </button>
@@ -191,9 +189,8 @@ function CheckOut() {
             </div>
             {/* DELİVERY DİV */}
             <div
-              className={`${
-                delivery ? "block" : "hidden"
-              } p-[10px] bp600:p-[40px] font-montserrat`}
+              className={`${delivery ? "block" : "hidden"
+                } p-[10px] bp600:p-[40px] font-montserrat`}
             >
               <div
                 onClick={() => {
@@ -244,9 +241,8 @@ function CheckOut() {
             </div>
             {/* PİCKUP DİV */}
             <div
-              className={`${
-                pickup ? "block" : "hidden"
-              } p-[10px] bp600:p-[40px] font-montserrat`}
+              className={`${pickup ? "block" : "hidden"
+                } p-[10px] bp600:p-[40px] font-montserrat`}
             >
               <p className="uppercase text-[1.2em]">Collection point</p>
               <div className="border-[1px] border-gray-300">
@@ -327,9 +323,8 @@ function CheckOut() {
                   />
                 </div>
                 <div
-                  className={`${
-                    delivery ? "block" : "hidden"
-                  } w-[100%] py-[5px] `}
+                  className={`${delivery ? "block" : "hidden"
+                    } w-[100%] py-[5px] `}
                 >
                   <p className=" text-[.9em] py-[5px]  uppercase font-montserrat">
                     city
@@ -342,9 +337,8 @@ function CheckOut() {
                   />
                 </div>
                 <div
-                  className={`${
-                    delivery ? "block" : "hidden"
-                  } w-[100%] py-[5px] `}
+                  className={`${delivery ? "block" : "hidden"
+                    } w-[100%] py-[5px] `}
                 >
                   <p className=" text-[.9em] py-[5px]  uppercase font-montserrat">
                     Address
@@ -358,9 +352,8 @@ function CheckOut() {
                 </div>
               </div>
               <div
-                className={`${
-                  delivery ? "block" : "hidden"
-                } w-[100%] py-[5px] `}
+                className={`${delivery ? "block" : "hidden"
+                  } w-[100%] py-[5px] `}
               >
                 <p className="text-[1.3em] font-cormorant pt-[20px] ">
                   Gifting options
@@ -371,17 +364,15 @@ function CheckOut() {
                 </p>
               </div>
               <div
-                className={`${
-                  delivery ? "block" : "hidden"
-                } flex items-center gap-[10px]`}
+                className={`${delivery ? "block" : "hidden"
+                  } flex items-center gap-[10px]`}
               >
                 <div
                   onClick={() => {
                     setGift(!gift);
                   }}
-                  className={`text-white flex border-[1px] cursor-pointer border-black w-[20px] rounded = ${
-                    gift ? "bg-black" : "bg-white"
-                  }  `}
+                  className={`text-white flex border-[1px] cursor-pointer border-black w-[20px] rounded = ${gift ? "bg-black" : "bg-white"
+                    }  `}
                 >
                   <BsCheck className="font-bold text-[1.2em]" />
                 </div>
@@ -391,9 +382,8 @@ function CheckOut() {
               </div>
               {/* GIFT INPUT */}
               <div
-                className={`${
-                  gift ? "block" : "hidden"
-                } flex w-[100%] flex-wrap border-b-[1px] pb-[30px] justify-between`}
+                className={`${gift ? "block" : "hidden"
+                  } flex w-[100%] flex-wrap border-b-[1px] pb-[30px] justify-between`}
               >
                 <div className="w-[100%] bp600:w-[50%] py-[5px] ">
                   <p className=" text-[.9em] py-[5px]  uppercase font-montserrat">

@@ -1,18 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
-import { getDataBySubCategory } from "../../services/api";
+import { getDataBySubBrand, getDataBySubCategory } from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 import {
   IoIosArrowBack,
   IoIosArrowDown,
   IoIosArrowForward,
   IoIosCheckmark,
-} from "react-icons/io";
-import { BsCheck } from "react-icons/bs";
-import { IoFilterSharp } from "react-icons/io5";
-import { MdCircle } from "react-icons/md";
-import { GoCheck } from "react-icons/go";
+} from "react-icons/io"
+import { IoFilterSharp } from "react-icons/io5"
 
 function BySubCategory() {
   const { catname, catid, subname, subid } = useParams();
@@ -27,40 +24,64 @@ function BySubCategory() {
 
   const [dataByCategory, setDataByCategory] = useState(null)
   const [totalPage, setTotalPage] = useState(1)
+  const [selectedColors,setSelectedColors] =useState(null)
+  const [selectedBrand,setSelectedBrand] =useState(null)
+  const [selectedSizes,setSelectedSizes] =useState(null)
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
-  const [page, setPage] = useState(1);
+  const [currentSub, setCurrentSub] = useState(null)
+  const [page, setPage] = useState(1)
   const [showDiscount, setShowDiscount] = useState(false)
-  const [newdatafilter, setnewdatafilter] = useState(dataFilter);
+  const [newdatafilter, setnewdatafilter] = useState(dataFilter)
+  const navigate = useNavigate()
+
+
   function handleSubFilter(id) {
     setnewdatafilter(
       newdatafilter.map((item, i) =>
         item.id == id ? { ...item, isOpen: !item.isOpen } : item
       )
+    )
+  }
+
+  function handleCheckedFilters(filtername, filteri, filtertype) {
+    filtertype == 'colors' ? setSelectedColors(filtername) :
+      filtertype == 'brands' ?  setSelectedBrand(filtername) :
+        filtertype == 'sizes' ? setSelectedSizes(filtername) : 
+        filtertype == 'discount' ? setShowDiscount(true) : ''
+
+        getDataBySubBrand(selectedBrand,selectedColors,selectedSizes).then(res => console.log(res.data))
+    console.log(selectedBrand)
+    navigate(
+      `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}&brandId=${selectedBrand}`
     );
   }
-  console.log(newdatafilter)
-  const [subData, setSubData] = useState(null)
+
+
   useEffect(() => {
+
     setnewdatafilter(
       newdatafilter.map((item, i) =>
         // item.name == 'categories' ? { ...item, subfilter: [dataCategory?.[catid - 1]?.Subcategory.map(item => item.name)] } :
         item.name == 'colors' ? { ...item, subfilter: [colorData] } :
           item.name == 'brands' ? { ...item, subfilter: [brandData] } :
-            item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
+            item.name == 'discount' ? { ...item, subfilter: [['discount']] } :
+              item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
       ))
   }, [dataCategory, colorData, sizeData, brandData])
 
-  const navigate = useNavigate()
+
+
   useEffect(() => {
-    getDataBySubCategory(subid, page).then((res) => {
+    getDataBySubCategory(subid, page,selectedBrand).then((res) => {
       setDataByCategory(res.data)
       setTotalPage(res.meta.totalPages)
       setColorData([...new Set(res.data.flatMap((item) => item.Colors))])
       setSizeData([...new Set(res.data.flatMap((item) => item.Size))])
-      setBrandData([...new Set(res.data.flatMap((item) => item.Brands.name))])
+      setBrandData([...new Set(res.data.flatMap((item) => item.Brands.id))])
     })
+    console.log(brandData)
   }, [subid, page])
 
   function changeUrlPage(page) {
@@ -134,16 +155,22 @@ function BySubCategory() {
                             {
                               item.subfilter && item.subfilter[0]?.map((subitem, subi) => {
                                 return (
-                                  <li key={subi} 
-                                  className={`p-[5px] flex gap-[10px]  items-center  ${item.name=='colors' ? 'uppercase' : ' capitalize'}`}>
-                                    {item.name == 'colors'
-                                      ? <div className="relative w-[25px] border-[1px] border-black rounded-full h-[25px]"
-                                      style={{backgroundColor : subitem}}
-                                      >
-                                        <IoIosCheckmark className="absolute -top-[3px]  -right-[4px] text-[2em]  text-white" />
-                                      </div>
-                                      : ''
-                                    }
+                                  <li key={subi}
+                                    className={`p-[5px] cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
+                                    <div
+                                      onClick={() => { handleCheckedFilters(subitem, subi, item.name) }}
+                                      className={`relative  border-[1px] border-black
+                                      ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
+                                          : 'rounded h-[15px] w-[15px]'}
+                                      `}
+                                      style={{ backgroundColor: subitem }}
+                                    >
+                                      <IoIosCheckmark className={`-right-[5px] 
+                                      ${item.name == "colors" ? '-top-[3px]  text-[2em] text-white' : 'text-black -top-[6px]  text-[1.5em]'}   
+                                      ${subitem.isChecked ? 'absolute' : 'hidden'}  `}
+                                      />
+                                    </div>
+
                                     {subitem}</li>
                                 )
                               })
