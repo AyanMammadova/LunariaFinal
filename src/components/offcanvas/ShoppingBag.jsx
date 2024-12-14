@@ -32,11 +32,17 @@ function ShoppingBag({ setShowBag }) {
             return <div className='flex border-b-2 mx-[5px] p-[4px] gap-[40px] relative' key={i}>
               <img className='h-[100px]' src={item?.images?.[0]} alt="" />
               <IoCloseSharp
-                onClick={() => { removeFromBasket(item.id) }}
+                onClick={() => { removeFromBasket(item.id,item.size,item.color) }}
                 className='absolute cursor-pointer top-[10px] right-[10px]' />
               <div>
-                <p className='uppercase'>{item?.brand}</p>
+                {/* <p className='uppercase'>{item?.brand}</p> */}
                 <p>{item.name}</p>
+                <p className='flex items-center  gap-[5px]'>Color: 
+                  <span
+                  className={`cursor-pointer h-[15px] rounded-full w-[15px] `}
+                  style={{ backgroundColor: item.color }}>
+                    </span>    
+                </p>
                 <p>Size:{item.size}</p>
 
                 <p>Price: {item.price}$</p>

@@ -1,39 +1,42 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { IoCloseSharp } from 'react-icons/io5'
 import { getProductById } from '../../services/api'
-
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css';
+
 import { Link } from 'react-router-dom';
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
 import { DATA } from '../../context/DataContext';
+import { BASKET } from '../../context/BasketContext';
 
 
 function QuickView({ proid, setShowQuick }) {
   const { dataFav, handleFavs } = useContext(DATA)
-  const notify = () => toast(`Product Added to Your Bag ☻`);
+  const { addToBasket,handleSize,size,setSize } = useContext(BASKET)
+  
   const [product, setProduct] = useState(null)
   useEffect(() => {
     proid && getProductById({ proid }).then(res => { setProduct(res) })
   }, [proid])
+  
 
   return (
     <>
-      <div className='w-[90%] py-[20px] bp900:w-[80%] font-[600] relative  bp900:h-[85vh] bg-white'>
+      <div className='w-[100%] md:w-[90%] py-[20px] overflow-y-auto  font-[600] relative h-[100vh]  md:h-[85vh] bg-white'>
         <IoCloseSharp
           onClick={() => { setShowQuick(false) }}
           className='absolute cursor-pointer top-[20px] right-[20px]' />
-        {product ? <div className='w-full h-full flex items-center pt-[20px] flex-col bp900:flex-row justify-start gap-[50px] '>
+        {product ? <div className='w-full h-full flex items-center pt-[20px] flex-col md:flex-row justify-start gap-[50px] '>
           {/* IMAGEDIV */}
           <div className='flex justify-between'>
             <img
-              className='h-[300px] bp900:h-[300px] object-top object-cover '
+              className=' object-top object-cover '
               src={product && product.images[0]}
               alt=""
             />
           </div>
           {/* DETAILSDIV */}
-          <div className='text-black flex flex-col gap-[10px] px-[20px] md:w-[70%]'>
+          <div className='text-black flex flex-col gap-[10px] px-[20px] w-[100%]'>
             <p className='font-bold'>{product?.Brands.name}</p>
             <p className=''>{product?.name}</p>
             <p className=''>{product?.price} USD</p>
@@ -48,19 +51,44 @@ function QuickView({ proid, setShowQuick }) {
 
             </div>
             {/* SIZE */}
-            <div className='flex gap-[5px] flex-wrap'>
+            <div className='flex gap-[5px]  flex-wrap'>
               {
-                product?.Size.map((item, i) => {
-                  return <div className='px-[26px] py-[2px] border-2 cursor-pointer border-gray-800 hover:text-white hover:bg-black transition-all duration-300' key={i}>{item}</div>
-                })
-              }
+                product?.Size.map((item, i) => (
+                  <div
+                    onClick={() => { handleSize(item) }}
+                    
+                    className={`${item==size ? 'border-black' : 'border-gray-200'} px-[26px] py-[2px] border-2 cursor-pointer   transition-all duration-300`}
+                    key={i}>
+                    {item}
+                  </div>)
+                )
+              }   
             </div>
             <div className='flex  pt-[30px] items-center justify-between   gap-[10px] w-[100%]'>
-              <div className='h-[45px] w-[90%] items-center flex justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' onClick={notify}>
-                <button>
+              <div
+                onClick={() => {
+                  if (size) {
+                    addToBasket(
+                      product?.id,
+                      product.name,
+                      product.description,
+                      product.price,
+                      product.discount,
+                      product.Brands.name,
+                      product.images,
+                      size
+                    );
+                    toast.success('dhello xalqim')
+                  }
+                  else {
+                    return toast.error('Select Size pls')
+                  }
+                }}
+                className='h-[45px] w-[100%] items-center flex justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' >
+                <button
+                >
                   ADD TO CARD
                 </button>
-                <ToastContainer />
               </div>
               <div
                 onClick={(e) => {

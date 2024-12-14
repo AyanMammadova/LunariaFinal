@@ -10,18 +10,22 @@ import { GoHeart, GoHeartFill } from 'react-icons/go'
 import { BASKET } from '../../context/BasketContext'
 
 function ProductById() {
-    const {addToBasket}=useContext(BASKET)
+    const { addToBasket, handleSize, size, setSize, color, handleColor } = useContext(BASKET)
     const { dataFav, handleFavs } = useContext(DATA)
-    const [size,setSize]=useState('')
+
+    // const { proid:ayan } = useParams()
+    // const proid = ayan.slice("-").at(-1)
+    // console.log(proid);
+    // const proid = useParams().proid.slice("-").at(-1)
     const { proid } = useParams()
     const [product, setProduct] = useState(null)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })
+        // product?.color ? ' ' : handleColor('WHITE')
     }, [proid])
 
-    function handleSize(size){
-        setSize(size)
-    }
+
+
     return (
         <>
             <section className=' pt-[150px]  p-[5px] w-[100%] md:p-[40px] md:pt-[160px]'>
@@ -31,7 +35,6 @@ function ProductById() {
                         <Image
                             className='h-[70vh] w-[100%] object-top object-cover cursor-zoom-in '
                             src={product && product.images[0]}
-                            alt=""
                         />
                     </div>
                     {/* DETAILSDIV */}
@@ -40,10 +43,20 @@ function ProductById() {
                         <p className=''>{product?.name}</p>
                         <p className=''>{product?.price} USD</p>
                         {/* COLOR */}
-                        <div className=''>Color:
+                        <div className='flex gap-[10px]'>Color:
                             {
                                 product?.Colors.length > 1 ? product?.Colors.map((item, i) => {
-                                    return <div key={i} className={`cursor-pointer h-[25px] rounded-full w-[25px] bg-${item.toLowerCase()}`}></div>
+                                    return <div
+                                        key={i}
+                                        className={` flex items-center justify-center w-[30px] h-[30px] border-2 rounded-full`}
+                                        style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
+                                        >
+                                        <div
+                                            className={`cursor-pointer h-[20px] rounded-full w-[20px] `}
+                                            style={{ backgroundColor: item }}
+                                            onClick={() => { handleColor(item) }}
+                                        ></div>
+                                    </div>
                                 }) :
                                     <div className='font-thin'>There is no color options</div>
                             }
@@ -53,10 +66,10 @@ function ProductById() {
                         <div className='flex gap-[5px] flex-wrap'>
                             {
                                 product?.Size.map((item, i) => (
-                                    <div 
-                                    onClick={()=>{handleSize(item)}}
-                                    className={`${item==size ? 'bg-black text-white' : ''} px-[26px] py-[2px] border-2 cursor-pointer border-gray-800 hover:text-white hover:bg-black transition-all duration-300`}
-                                    key={i}>
+                                    <div
+                                        onClick={() => { handleSize(item) }}
+                                        className={`${item == size ? 'border-black' : 'border-gray-200'} px-[26px] py-[2px] border-2 cursor-pointer   transition-all duration-300`}
+                                        key={i}>
                                         {item}
                                     </div>)
                                 )
@@ -65,8 +78,8 @@ function ProductById() {
                         {/* BUTTONS */}
                         <div className='flex pt-[30px] flex-col gap-[10px] *:w-[100%]'>
                             <div
-                                onClick={() => { 
-                                    if(size){
+                                onClick={() => {
+                                    if (size && color) {
                                         addToBasket(
                                             product?.id,
                                             product.name,
@@ -75,12 +88,13 @@ function ProductById() {
                                             product.discount,
                                             product.Brands.name,
                                             product.images,
-                                            size  
-                                        );    
-                                        toast.success('dskjcbskj')
+                                            size,
+                                            color
+                                        );
+                                        toast.success('Product added to basket succesfully')
                                     }
-                                    else{
-                                        return toast.error('Select Size pls')
+                                    else {
+                                        return toast.error(size ? 'Select Color pls' : 'Select Size pls')
                                     }
                                 }}
                                 className='h-[45px] items-center flex justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black ' >

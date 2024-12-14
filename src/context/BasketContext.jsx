@@ -1,13 +1,22 @@
 import React, { createContext, useEffect, useState } from 'react'
 export const BASKET = createContext(null)
 function BasketContext({ children }) {
+    const [size, setSize] = useState('')
+    const [color, setColor] = useState('')
     const [basket, setBasket] = useState(JSON.parse(localStorage.getItem('basketLocal')) || [])
 
     const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
 
 
-    function addToBasket(id, name, description, price, discount, brand, images,size,quantity) {
-        if (basket?.find(item => item.id == id)) {
+    function handleSize(size) {
+        setSize(size)
+    }
+    function handleColor(color) {
+        setColor(color)
+    }
+
+    function addToBasket(id, name, description, price, discount, brand, images, size, color, quantity) {
+        if (basket?.find(item => item.id == id && item.color == color && item.size == size)) {
             setBasket(basket?.map(item =>
                 item.id == id
                     ? { ...item, quantity: item.quantity + 1 }
@@ -24,16 +33,23 @@ function BasketContext({ children }) {
                 discount: discount,
                 brand: brand,
                 images: images,
-                size:size,
-                quantity:1
+                size: size,
+                color: color,
+                quantity: 1
 
             }
             ])
         }
+
+        setSize('')
+        setColor('')
     }
-    
-    function removeFromBasket(id){
-        setBasket(basket.filter(item=>item.id!=id))
+    console.log(basket)
+
+    function removeFromBasket(id,size,color) {
+        setBasket(
+            basket.filter(item => !(item.id == id && item.color==color && item.size==size))
+        )
     }
 
     useEffect(() => {
@@ -46,7 +62,13 @@ function BasketContext({ children }) {
                     addToBasket,
                     basket,
                     removeFromBasket,
-                    SubTotal
+                    handleSize,
+                    SubTotal,
+                    size,
+                    setSize,
+                    color,
+                    setColor,
+                    handleColor
                 }}
 
             >
