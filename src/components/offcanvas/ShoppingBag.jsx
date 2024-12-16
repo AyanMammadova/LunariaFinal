@@ -50,7 +50,7 @@ function ShoppingBag({ setShowBag }) {
                 <p className='flex gap-[5px] items-center'>Quantity:
                   <FaRegSquareMinus onClick={()=>{handleCount(item.id,item.color,item.size,-1)}}/>
                   {item.quantity}
-                  <FaRegSquarePlus onClick={()=>{handleCount(item.id,item.color,item.size+1)}}/>
+                  <FaRegSquarePlus onClick={()=>{handleCount(item.id,item.color,item.size,+1)}}/>
                 </p>
                 <p className='font-bold w-[230px] text-right'>ItemTotal: {item.quantity * item.price}$</p>
               </div>
