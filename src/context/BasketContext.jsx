@@ -7,6 +7,13 @@ function BasketContext({ children }) {
 
     const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
 
+    function handleCount(id,color,size, count) {
+        setBasket(basket?.map(item =>
+            item.id == id && item.color== color && item.size == size
+                ? { ...item, quantity: item.quantity + count }
+                : item
+        ))
+    }
 
     function handleSize(size) {
         setSize(size)
@@ -45,9 +52,9 @@ function BasketContext({ children }) {
         setColor('')
     }
 
-    function removeFromBasket(id,size,color) {
+    function removeFromBasket(id, size, color) {
         setBasket(
-            basket.filter(item => !(item.id == id && item.color==color && item.size==size))
+            basket.filter(item => !(item.id == id && item.color == color && item.size == size))
         )
     }
 
@@ -67,7 +74,8 @@ function BasketContext({ children }) {
                     setSize,
                     color,
                     setColor,
-                    handleColor
+                    handleColor,
+                    handleCount
                 }}
 
             >
