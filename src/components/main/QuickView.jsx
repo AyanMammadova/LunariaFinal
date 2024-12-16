@@ -8,17 +8,18 @@ import { Link } from 'react-router-dom';
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
 import { DATA } from '../../context/DataContext';
 import { BASKET } from '../../context/BasketContext';
+import EcommerceSwiper from './EcommerceSwiper';
 
 
 function QuickView({ proid, setShowQuick }) {
   const { dataFav, handleFavs } = useContext(DATA)
-  const { addToBasket,handleSize,size,setSize } = useContext(BASKET)
-  
+  const { addToBasket, handleSize, size, setSize,color,setColor } = useContext(BASKET)
+
   const [product, setProduct] = useState(null)
   useEffect(() => {
     proid && getProductById({ proid }).then(res => { setProduct(res) })
   }, [proid])
-  
+
 
   return (
     <>
@@ -29,11 +30,9 @@ function QuickView({ proid, setShowQuick }) {
         {product ? <div className='w-full h-full flex items-center pt-[20px] flex-col md:flex-row justify-start gap-[50px] '>
           {/* IMAGEDIV */}
           <div className='flex justify-between'>
-            <img
-              className=' object-top object-cover '
-              src={product && product.images[0]}
-              alt=""
-            />
+            <div className="h-[90%] w-[300px]">
+              <EcommerceSwiper images={product?.images} />
+            </div>
           </div>
           {/* DETAILSDIV */}
           <div className='text-black flex flex-col gap-[10px] px-[20px] w-[100%]'>
@@ -41,10 +40,20 @@ function QuickView({ proid, setShowQuick }) {
             <p className=''>{product?.name}</p>
             <p className=''>{product?.price} USD</p>
             {/* COLOR */}
-            <div className=' '>Color:
+            <div className='flex gap-[10px]'>Color:
               {
-                product?.Colors.length > 1 ? product?.Colors.map((item, i) => {
-                  return <div key={i} className={`cursor-pointer h-[25px] rounded-full w-[25px] bg-${item.toLowerCase()}`}></div>
+                product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
+                  return <div
+                    key={i}
+                    className={` flex items-center justify-center w-[30px] h-[30px] border-2 rounded-full`}
+                    style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
+                  >
+                    <div
+                      className={`cursor-pointer h-[20px] rounded-full w-[20px] `}
+                      style={{ backgroundColor: item }}
+                      onClick={() => { handleColor(item) }}
+                    ></div>
+                  </div>
                 }) :
                   <div className='font-thin'>There is no color options</div>
               }
@@ -56,13 +65,13 @@ function QuickView({ proid, setShowQuick }) {
                 product?.Size.map((item, i) => (
                   <div
                     onClick={() => { handleSize(item) }}
-                    
-                    className={`${item==size ? 'border-black' : 'border-gray-200'} px-[26px] py-[2px] border-2 cursor-pointer   transition-all duration-300`}
+
+                    className={`${item == size ? 'border-black' : 'border-gray-200'} px-[26px] py-[2px] border-2 cursor-pointer   transition-all duration-300`}
                     key={i}>
                     {item}
                   </div>)
                 )
-              }   
+              }
             </div>
             <div className='flex  pt-[30px] items-center justify-between   gap-[10px] w-[100%]'>
               <div

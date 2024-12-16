@@ -44,7 +44,6 @@ function BasketContext({ children }) {
         setSize('')
         setColor('')
     }
-    console.log(basket)
 
     function removeFromBasket(id,size,color) {
         setBasket(

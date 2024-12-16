@@ -10,6 +10,7 @@ import {
   IoIosCheckmark,
 } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
+import EcommerceSwiper from "./EcommerceSwiper";
 
 function BySubCategory() {
   const { catname, catid, subname, subid } = useParams();
@@ -52,7 +53,6 @@ function BySubCategory() {
         filtertype == 'discount' ? setShowDiscount(true) : ''
 
         getDataBySubBrand(selectedBrand,selectedColors,selectedSizes).then(res => console.log(res.data))
-    console.log(selectedBrand)
     navigate(
       `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}&brandId=${selectedBrand}`
     );
@@ -97,6 +97,7 @@ function BySubCategory() {
   return (
     <>
       <div className=" pt-[150px]">
+        
         <p className="text-[3em] font-serif text-center">{subname}</p>
         <ul className="underline flex  gap-[20px] justify-center">
           {dataCategory &&

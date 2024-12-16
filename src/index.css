@@ -29,3 +29,31 @@
   src: local('Montserrat Ace Medium'), url('./fonts/Montserrat-Ace-Medium.woff') format('woff');
   }
 
+  .mySwiper2 img {
+    width: 100%;
+    height: auto;
+}
+
+.mySwiper {
+    margin-top: 10px;
+}
+
+.thumbnail-slide {
+    cursor: pointer;
+    border: 2px solid transparent; /* Default border */
+    transition: border 0.3s;
+}
+
+.thumbnail-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Highlight active thumbnail */
+.swiper-slide-thumb-active {
+    border: 2px solid #000; /* Black border for active slide */
+    border-radius: 4px;
+}
+
+

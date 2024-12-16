@@ -8,6 +8,7 @@ import { Image } from 'antd';
 import { DATA } from '../../context/DataContext'
 import { GoHeart, GoHeartFill } from 'react-icons/go'
 import { BASKET } from '../../context/BasketContext'
+import EcommerceSwiper from './EcommerceSwiper'
 
 function ProductById() {
     const { addToBasket, handleSize, size, setSize, color, handleColor } = useContext(BASKET)
@@ -24,6 +25,7 @@ function ProductById() {
         // product?.color ? ' ' : handleColor('WHITE')
     }, [proid])
 
+    console.log(product?.Colors)
 
 
     return (
@@ -32,10 +34,9 @@ function ProductById() {
                 <div className='w-full flex flex-col md:flex-row justify-start gap-[50px] '>
                     {/* IMAGEDIV */}
                     <div className='flex justify-center'>
-                        <Image
-                            className='h-[70vh] w-[100%] object-top object-cover cursor-zoom-in '
-                            src={product && product.images[0]}
-                        />
+                        <div className="h-[80%] w-[400px]">
+                            <EcommerceSwiper  images={product?.images}/>
+                        </div>
                     </div>
                     {/* DETAILSDIV */}
                     <div className='text-black flex flex-col gap-[10px] md:w-[50%]'>
@@ -45,12 +46,12 @@ function ProductById() {
                         {/* COLOR */}
                         <div className='flex gap-[10px]'>Color:
                             {
-                                product?.Colors.length > 1 ? product?.Colors.map((item, i) => {
+                                product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
                                     return <div
                                         key={i}
                                         className={` flex items-center justify-center w-[30px] h-[30px] border-2 rounded-full`}
                                         style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
-                                        >
+                                    >
                                         <div
                                             className={`cursor-pointer h-[20px] rounded-full w-[20px] `}
                                             style={{ backgroundColor: item }}
