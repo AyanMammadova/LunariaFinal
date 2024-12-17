@@ -1,10 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import FooterSwiper from "./FooterSwiper";
 import { Link } from "react-router-dom";
+import { DATA } from "../../context/DataContext";
+import { IoIosArrowDown } from "react-icons/io";
+import { GoCreditCard } from "react-icons/go";
+import { FaTruckFast } from "react-icons/fa6";
+import { GiBoxUnpacking } from "react-icons/gi";
 
 function Footer() {
   const date = new Date();
+  const { footerData } = useContext(DATA)
+  const [dataF, setDataF] = useState(footerData)
+
+  function handleSubcats(id) {
+    setDataF(dataF.map((item, i) =>
+      id == i ? { ...item, shown: !item.shown } : item
+    ))
+  }
+
   return (
     <>
       <footer className="p-[10px] bp600:p-[40px] bg-white">
@@ -33,40 +47,46 @@ function Footer() {
             </div>
           </div>
         </section>
-        <section className="flex flex-wrap gap-[20px] justify-between text-[.9em]  font-montserrat   py-[20px]">
-          <div className="*:py-[10px]">
-            <p className="text-[1.4em]">Emporium</p>
-            <Link to={"/about"} className="text-[1.2em]">
-              About Us
-            </Link>
-            <p className="text-[1.2em]">Store Information</p>
+        <section className="flex font-montserrat justify-around flex-wrap">
+          <div className="h-[70px] border-2  my-[10px] flex items-center w-[100%] bp700:w-[30%]">
+            <GoCreditCard className="mx-[10px]"/> Safe & Easy payment
           </div>
+          <div className="h-[70px] border-2 my-[10px]  flex items-center w-[100%] bp700:w-[30%]">
+            <FaTruckFast className="mx-[10px]"/> Express delivery
+          </div>
+          <div className="h-[70px] border-2 my-[10px]  flex items-center w-[100%] bp700:w-[30%]">
+            <GiBoxUnpacking className="mx-[10px]"/> Quick & Easy returns
+          </div>
+        </section>
+        <section className="flex flex-col bp700:flex-row flex-wrap gap-[15px] justify-between text-[.9em]  font-montserrat   py-[20px]">
+          {
+            dataF.map((item, i) => {
+              return <div key={i} className="*:py-[5px] ">
+                <p className="text-[1.2em] bp700:text-[1.1em] flex uppercase justify-between">
+                  {item.category}
+                  <IoIosArrowDown
+                    className={`transition-all duration-300 block bp700:hidden ${item.shown ? 'rotate-180' : ''}`}
+                    onClick={() => { handleSubcats(i) }}
+                  />
+                </p>
+                {item?.subcats?.map((subitem, subi) => {
+                  return <p
+                    key={subi}
+                    className={` ${item.shown ? 'block' : 'hidden'} bp700:block text-[1.2em] bp700:text-[1em]`}>
+                    {subitem}
+                  </p>
+                })
+                }
 
-          <div className="*:py-[8px]">
-            <p className="text-[1.4em]">Customer Service</p>
-            <p className="text-[1.2em]">Gift Cards</p>
-            <p className="text-[1.2em]">Loyalty Program</p>
-            <p className="text-[1.2em]">FAQ</p>
-            <p className="text-[1.2em]">Contact Us</p>
-          </div>
+              </div>
+            })
+          }
 
-          <div className="*:py-[8px]">
-            <p className="text-[1.4em]">Online Shopping</p>
-            <p className="text-[1.2em]">Delivery Terms</p>
-            <p className="text-[1.2em]">Return and Exchange</p>
-            <p className="text-[1.2em]">Payment Methods</p>
-          </div>
-
-          <div className="*:py-[8px]">
-            <p className="text-[1.4em]">Store Contact</p>
-            <p className="text-[1.2em]">+994 51 225 96 96</p>
-            <p className="text-[1.2em]">51, 153 Neftchiler Avenue</p>
-          </div>
-          <div className="*:py-[8px]">
+          <div>
             <p>LUNARIUN ACCEPTS</p>
             <img src="/img/visacards.png" alt="" />
             <p>SOCIAL MEDIA</p>
-            <div className="flex text-[2em] justify-between">
+            <div className="flex text-[2em] gap-[20px]">
               <FaFacebookF className="border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]" />
               <FaInstagram className="border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]" />
               <FaWhatsapp className="border-2 border-black h-[40px] w-[40px] rounded-full p-[5px]" />
@@ -76,7 +96,7 @@ function Footer() {
         <p className="pb-[20px] text-center">
           © Copyright {date.getFullYear()} Lunaira.
         </p>
-      </footer>
+      </footer >
     </>
   );
 }

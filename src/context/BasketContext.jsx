@@ -3,16 +3,20 @@ export const BASKET = createContext(null)
 function BasketContext({ children }) {
     const [size, setSize] = useState('')
     const [color, setColor] = useState('')
+
     const [basket, setBasket] = useState(JSON.parse(localStorage.getItem('basketLocal')) || [])
 
     const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
 
     function handleCount(id,color,size, count) {
         setBasket(basket?.map(item =>
-            item.id == id && item.size==size && item.color==color
+                item.id == id && item.size==size && item.color==color && item.quantity >0
                 ? { ...item, quantity: item.quantity + count }
                 : item
-        ))
+        )
+    )
+
+        
     }
 
     function handleSize(size) {
@@ -25,7 +29,7 @@ function BasketContext({ children }) {
     function addToBasket(id, name, description, price, discount, brand, images, size, color, quantity) {
         if (basket?.find(item => item.id == id && item.color == color && item.size == size)) {
             setBasket(basket?.map(item =>
-                item.id == id
+                item.id == id && item.color == color && item.size == size
                     ? { ...item, quantity: item.quantity + 1 }
                     : item
             ))
@@ -60,6 +64,7 @@ function BasketContext({ children }) {
 
     useEffect(() => {
         localStorage.setItem('basketLocal', JSON.stringify(basket));
+
     }, [basket])
     return (
         <div>

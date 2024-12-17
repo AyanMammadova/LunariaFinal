@@ -47,6 +47,29 @@ function DataContext({ children }) {
         .sort((a, b) => b.discount - a.discount)
     );
   }, [dataAll]);
+  const footerData = [
+    {
+      "category": "Emporium",
+      "shown":false,
+      "subcats": ["About us", "Store Information"]
+    },
+    {
+      "category": "Customer service",
+      "shown":false,
+      "subcats": ["Gift cards", "Loyalty program", "FAQ", "Contact us"]
+    },
+    {
+      "category": "Online shopping",
+      "shown":false,
+      "subcats": ["Delivery terms", "Return and exchange", "Payment methods"]
+    },
+    {
+      "category": "Store Contact",
+      "shown":false,
+      "subcats": ["+994 51 225 96 96", "51, 153 Neftchiler Avenue"]
+    }
+  ]
+
   const dataFilter = [
     {
       name: "categories",
@@ -76,7 +99,7 @@ function DataContext({ children }) {
     {
       name: "price",
       isOpen: true,
-      id: 6   
+      id: 6
     }
   ];
   const imgsforsubcats = [
@@ -161,6 +184,7 @@ function DataContext({ children }) {
           dataFav,
           showFilter,
           setShowFilter,
+          footerData
         }}
       >
         {children}

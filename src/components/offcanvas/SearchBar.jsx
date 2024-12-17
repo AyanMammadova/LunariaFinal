@@ -9,8 +9,8 @@ function SearchBar({ setShowSearchBar }) {
   const [searchedData, setSearchedData] = useState(null)
 
   function handleSearch(inputt) {
-    const trimmedInput = inputt.trim()
-    setSearchedData(dataAll.filter((item => item.name.includes(trimmedInput))))
+    const trimmedInput = inputt.toLowerCase().trim()
+    setSearchedData(dataAll.filter((item => item.name.toLowerCase().includes(trimmedInput))))
   }
   return (
     <>
@@ -44,7 +44,7 @@ function SearchBar({ setShowSearchBar }) {
               }
             </ul>
           </div>
-          <div className='w-[280px] max-h-[300px] overflow-hidden mx-[auto] mb-[20px] bp600:w-[450px]'>
+          <div className='w-[280px] max-h-[300px] overflow-y-scroll  mx-[auto] mb-[20px] bp600:w-[450px]'>
             {
               searchedData && searchedData.map((item, i) => {
                 return <>

@@ -48,9 +48,16 @@ function ShoppingBag({ setShowBag }) {
 
                 <p>Price: {item.price}$</p>
                 <p className='flex gap-[5px] items-center'>Quantity:
-                  <FaRegSquareMinus onClick={()=>{handleCount(item.id,item.color,item.size,-1)}}/>
+                  <FaRegSquareMinus 
+                  className={`${item.quantity==1 ? 'text-gray-400' : ''} cursor-pointer `}
+                  onClick={(e)=>{
+                    handleCount(item.id,item.color,item.size,-1)
+                    e.preventDefault()
+                    }}/>
                   {item.quantity}
-                  <FaRegSquarePlus onClick={()=>{handleCount(item.id,item.color,item.size,+1)}}/>
+                  <FaRegSquarePlus  
+                  className='cursor-pointer'
+                  onClick={()=>{handleCount(item.id,item.color,item.size,+1)}}/>
                 </p>
                 <p className='font-bold w-[230px] text-right'>ItemTotal: {item.quantity * item.price}$</p>
               </div>

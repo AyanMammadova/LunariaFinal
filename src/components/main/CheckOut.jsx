@@ -250,7 +250,7 @@ function CheckOut() {
                   className="w-[100%] h-[300px] rounded"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.629058470098!2d49.80693117514747!3d40.37274865831632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4030634e4ec45f67%3A0xa1628495e445ab6a!2sDiv%20Academy!5e0!3m2!1sen!2saz!4v1733600111389!5m2!1sen!2saz"
                   loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
+                  referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
                 <p className="font-cormorant font-bold text-[1.3em] p-[10px] bp600:p-[40px]">
                   Lunaria Port Baku

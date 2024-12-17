@@ -11,6 +11,7 @@ export default {
         'bp600':'600px',
         sm: '640px', 
         md: '768px',
+        'bp700':'700px', 
         'bp900':'900px', 
         'bp800':'800px', 
         lg: '1024px',

@@ -81,7 +81,6 @@ function BySubCategory() {
       setSizeData([...new Set(res.data.flatMap((item) => item.Size))])
       setBrandData([...new Set(res.data.flatMap((item) => item.Brands.id))])
     })
-    console.log(brandData)
   }, [subid, page])
 
   function changeUrlPage(page) {

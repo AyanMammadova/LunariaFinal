@@ -14,18 +14,12 @@ function ProductById() {
     const { addToBasket, handleSize, size, setSize, color, handleColor } = useContext(BASKET)
     const { dataFav, handleFavs } = useContext(DATA)
 
-    // const { proid:ayan } = useParams()
-    // const proid = ayan.slice("-").at(-1)
-    // console.log(proid);
-    // const proid = useParams().proid.slice("-").at(-1)
     const { proid } = useParams()
     const [product, setProduct] = useState(null)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })
         // product?.color ? ' ' : handleColor('WHITE')
     }, [proid])
-
-    console.log(product?.Colors)
 
 
     return (
