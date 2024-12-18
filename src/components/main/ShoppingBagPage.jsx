@@ -2,9 +2,10 @@ import React, { useContext } from 'react'
 import { BASKET } from '../../context/BasketContext'
 import { IoCloseSharp } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
+import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6'
 
 function ShoppingBagPage() {
-    const { basket, removeFromBasket } = useContext(BASKET)
+    const { basket, removeFromBasket,handleCount } = useContext(BASKET)
     const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
 
     return (
@@ -25,10 +26,25 @@ function ShoppingBagPage() {
                                 <div>
                                     <p className='uppercase'>{item?.brand}</p>
                                     <p>{item.name}</p>
+                                    <p className='flex items-center  gap-[5px]'>Color:
+                                        <span
+                                            className={`cursor-pointer h-[15px] rounded-full w-[15px] `}
+                                            style={{ backgroundColor: item.color }}>
+                                        </span>
+                                    </p>
                                     <p>Size:{item.size}</p>
-
                                     <p>Price: {item.price}$</p>
-                                    <p>Quantity: {item.quantity}</p>
+                                    <p className='flex gap-[5px] items-center'>Quantity:
+                                        <FaRegSquareMinus
+                                            className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
+                                            onClick={(e) => {
+                                                handleCount(item.id, item.color, item.size, -1)
+                                            }} />
+                                        {item.quantity}
+                                        <FaRegSquarePlus
+                                            className='cursor-pointer'
+                                            onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
+                                    </p>
                                     <p className='font-bold'>ItemTotal: {item.quantity * item.price}$</p>
                                 </div>
                             </div>
@@ -52,7 +68,7 @@ function ShoppingBagPage() {
                     </Link>
                 </div>
             </div>
-            
+
         </>
     )
 }

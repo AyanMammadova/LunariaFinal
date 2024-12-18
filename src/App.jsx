@@ -15,12 +15,12 @@ import CheckOut from './components/main/CheckOut'
 
 function App() {
   const { pathname } = useLocation()
-  useEffect(() => {
-    window.scrollTo({
-      behavior: 'smooth',
-      top: 0
-    })
-  }, [pathname])
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     behavior: 'smooth',
+  //     top: 0
+  //   })
+  // }, [pathname])
   return (
     <>
      <Routes>

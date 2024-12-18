@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom'
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6'
 
 function ShoppingBag({ setShowBag }) {
-  const { basket, removeFromBasket, SubTotal,handleCount } = useContext(BASKET)
+  const { basket, removeFromBasket, SubTotal, handleCount } = useContext(BASKET)
 
 
 
   return (
     <>
       <div
-        className='w-full relative overflow-y-scroll h-[100vh] bg-white z-50 shadow-lg'>
+        className='w-full relative overflow-y-scroll h-[150vh] bg-white z-50 shadow-lg'>
 
         <IoCloseSharp
           className='absolute top-[20px] right-[20px] cursor-pointer text-[1.2em]'
@@ -30,36 +30,40 @@ function ShoppingBag({ setShowBag }) {
         </div>
         {
           basket && basket.map((item, i) => {
-            return <div className='flex border-b-2 mx-[5px] p-[4px] gap-[40px] relative' key={i}>
-              <img className='h-[100px]' src={item?.images?.[0]} alt="" />
+            return <div className='flex border-b-2 mx-[5px] p-[4px] gap-[10px] relative' key={i}>
+              <div className='h-[200px]  w-[200px] flex items-center justify-center'>
+                <img className=' object-cover ' src={item?.images?.[0]} alt="" />
+              </div>
               <IoCloseSharp
                 onClick={() => { removeFromBasket(item.id, item.size, item.color) }}
-                className='absolute cursor-pointer top-[10px] right-[10px]' />
-              <div>
-                {/* <p className='uppercase'>{item?.brand}</p> */}
+                className='absolute bg-white cursor-pointer top-[10px] right-[10px]' />
+              
+              <div className='w-[100%] pt-[30px]'>
                 <p>{item.name}</p>
-                <p className='flex items-center  gap-[5px]'>Color:
-                  <span
-                    className={`cursor-pointer h-[15px] rounded-full w-[15px] `}
-                    style={{ backgroundColor: item.color }}>
-                  </span>
-                </p>
-                <p>Size:{item.size}</p>
+                <div className='flex gap-[20px]'>
+                  <p className='flex items-center  gap-[5px]'>Color:
+                    <span
+                      className={`cursor-pointer h-[15px] rounded-full w-[15px] `}
+                      style={{ backgroundColor: item.color }}>
+                    </span>
+                  </p>
+                  <p>Size:{item.size}</p>
+                </div>
 
                 <p>Price: {item.price}$</p>
                 <p className='flex gap-[5px] items-center'>Quantity:
-                  <FaRegSquareMinus 
-                  className={`${item.quantity==1 ? 'text-gray-400' : ''} cursor-pointer `}
-                  onClick={(e)=>{
-                    handleCount(item.id,item.color,item.size,-1)
-                    e.preventDefault()
-                    }}/>
+                  <FaRegSquareMinus
+                    className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
+                    onClick={(e) => {
+                      handleCount(item.id, item.color, item.size, -1);
+                      e.stopPropagation()
+                    }} />
                   {item.quantity}
-                  <FaRegSquarePlus  
-                  className='cursor-pointer'
-                  onClick={()=>{handleCount(item.id,item.color,item.size,+1)}}/>
+                  <FaRegSquarePlus
+                    className='cursor-pointer'
+                    onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
                 </p>
-                <p className='font-bold w-[230px] text-right'>ItemTotal: {item.quantity * item.price}$</p>
+                <p className='font-bold text-right'>ItemTotal: {item.quantity * item.price}$</p>
               </div>
               <hr />
             </div>

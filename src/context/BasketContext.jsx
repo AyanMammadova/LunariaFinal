@@ -10,7 +10,7 @@ function BasketContext({ children }) {
 
     function handleCount(id,color,size, count) {
         setBasket(basket?.map(item =>
-                item.id == id && item.size==size && item.color==color && item.quantity >0
+                item.id == id && item.size==size && item.color==color && (item.quantity >1 || count>0)
                 ? { ...item, quantity: item.quantity + count }
                 : item
         )

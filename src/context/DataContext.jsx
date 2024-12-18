@@ -72,11 +72,6 @@ function DataContext({ children }) {
 
   const dataFilter = [
     {
-      name: "categories",
-      isOpen: true,
-      id: 1
-    },
-    {
       name: "colors",
       isOpen: true,
       id: 2

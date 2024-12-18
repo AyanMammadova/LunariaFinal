@@ -29,7 +29,7 @@ function ProductById() {
                     {/* IMAGEDIV */}
                     <div className='flex justify-center'>
                         <div className="h-[80%] w-[400px]">
-                            <EcommerceSwiper  images={product?.images}/>
+                            <EcommerceSwiper images={product?.images} />
                         </div>
                     </div>
                     {/* DETAILSDIV */}

@@ -12,46 +12,50 @@ function EcommerceSwiper({ images }) {
 
     return (
         <>
-            <Swiper
-                style={{
-                    '--swiper-navigation-color': '#fff',
-                    '--swiper-pagination-color': '#fff',
-                }}
-                spaceBetween={10}
-                navigation={true}
-                thumbs={{ swiper: thumbsSwiper }}
-                modules={[FreeMode, Navigation, Thumbs]}
-                className="mySwiper2"
-            >
-                {
-                    images && images.map((item, i) => {
-                        return  <SwiperSlide key={i}>
-                                    <img src={item} />
-                                </SwiperSlide>
-                    })
-                }
+            <div className='flex'>
+                <Swiper
+                    onSwiper={setThumbsSwiper}
+                    spaceBetween={10}
+                    slidesPerView={4}
+                    freeMode={true}
+                    direction='vertical'
+                    watchSlidesProgress={true}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className="mySwiper1 h-[300px]"
+                >
+                    {
+                        images && images.map((item, i) => {
+                            return <SwiperSlide key={i}>
+                                <img src={item}  />
+                            </SwiperSlide>
+                        })
+                    }
+
+                </Swiper>
+                <Swiper
+                    style={{
+                        '--swiper-navigation-color': '#fff',
+                        '--swiper-pagination-color': '#fff',
+                    }}
+                    spaceBetween={10}
+                    navigation={true}
+                    thumbs={{ swiper: thumbsSwiper }}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className="mySwiper2"
+                >
+                    {
+                        images && images.map((item, i) => {
+                            return <SwiperSlide key={i}>
+                                <img className='h-full w-[600px] object-cover' src={item} />
+                            </SwiperSlide>
+                        })
+                    }
 
 
 
-            </Swiper>
-            <Swiper
-                onSwiper={setThumbsSwiper}
-                spaceBetween={10}
-                slidesPerView={4}
-                freeMode={true}
-                watchSlidesProgress={true}
-                modules={[FreeMode, Navigation, Thumbs]}
-                className="mySwiper "
-            >
-                {
-                    images && images.map((item, i) => {
-                        return  <SwiperSlide key={i}>
-                                    <img src={item} />
-                                </SwiperSlide>
-                    })
-                }
+                </Swiper>
+            </div>
 
-            </Swiper>
         </>
     );
 }

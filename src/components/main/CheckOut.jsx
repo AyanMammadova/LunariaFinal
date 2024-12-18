@@ -1,23 +1,30 @@
 import React, { useContext, useState } from "react";
-import { MdCircle, MdOutlineModeEdit } from "react-icons/md";
+import { MdCircle, MdKeyboardArrowUp, MdOutlineModeEdit } from "react-icons/md";
 import { BASKET } from "../../context/BasketContext";
-import { IoCloseSharp } from "react-icons/io5";
 import { BsCheck } from "react-icons/bs";
 import { Link, NavLink } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
+import OrderSummary from "./OrderSummary";
+import { IoIosArrowBack, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 function CheckOut() {
+  const { basket, SubTotal, removeFromBasket, handleCount } = useContext(BASKET);
   const [summaryFixed, setSummaryFixed] = useState(true);
   const [delivery, setDelivery] = useState(true);
   const [standart, setStandart] = useState(true);
   const [urgent, setUrgent] = useState(false);
-
   const [gift, setGift] = useState(false);
   const [onlinepay, setOnlinePay] = useState(true);
-
   const [pickup, setPickup] = useState(false);
-  const { basket, SubTotal } = useContext(BASKET);
 
+  const [showOrderSumFull, setShowOrderSumFull] = useState(false)
+  onscroll = function () {
+    if (window.scrollY >= 850) {
+      setSummaryFixed(false)
+    } else {
+      setSummaryFixed(true)
+    }
+  }
   const [payment, setPayment] = useState(false);
   function handleProceedtoPayment(status) {
     setPayment(status);
@@ -27,11 +34,12 @@ function CheckOut() {
     });
   }
 
+
   return (
     <>
-      <div className="bp900:flex mx-[auto] relative w-[100%] bp900:justify-center pt-[130px]">
+      <div className="lg:flex mx-[auto] relative w-[100%] lg:justify-center pt-[130px]">
         <div
-          className={` w-[100%] bp600:w-[80%] mx-[auto] bp900:w-[60%] bp900:ml-[10px]`}
+          className={` w-[100%] bp600:w-[80%] mx-[auto] lg:w-[70%] lg:ml-[10px]`}
         >
           <p className="font-cormorant text-[1.3em] text-center">
             Secure Checkout
@@ -464,61 +472,47 @@ function CheckOut() {
             </div>
           </div>
         </div>
-        <div>
-          <div
-            className={`bg-[#F7F7F2] mt-[10px]   h-[70vh] bp900:w-[400px] bp900:fixed bp900:right-0 bp900:top-[160px] overflow-y-auto z-50`}
-          >
-            <p className="text-[1.3em] font-cormorant py-[20px] border-b-[1px]  mx-[40px]">
-              Order Summary
-            </p>
-            <div className="h-[50%] overflow-y-scroll">
-              {basket &&
-                basket.map((item, i) => {
-                  return (
-                    <div
-                      className="flex  border-b-2 mx-[15px] items-center  p-[4px] gap-[20px] relative"
-                      key={i}
-                    >
-                      <img
-                        className="h-[100px]"
-                        src={item?.images?.[0]}
-                        alt=""
-                      />
-                      <IoCloseSharp
-                        onClick={() => {
-                          removeFromBasket(item.id);
-                        }}
-                        className="absolute cursor-pointer top-[10px] right-[10px]"
-                      />
-                      <div>
-                        <p className="uppercase">{item?.brand}</p>
-                        <p>{item.name}</p>
-                        <p>Size:{item.size}</p>
-
-                        <p>Price: {item.price}$</p>
-                        <p>Quantity: {item.quantity}</p>
-                        <p className="font-bold">
-                          ItemTotal: {item.quantity * item.price}$
-                        </p>
-                      </div>
-                      <hr />
-                    </div>
-                  );
-                })}
+        {/* ORDER DIV */}
+        <div className={`${showOrderSumFull ? 'hidden' : 'block'} hidden lg:block lg:w-[30%]`}>
+          <OrderSummary urgent={urgent} setShowOrderSumFull={setShowOrderSumFull} />
+        </div>
+        {/* FIXED ORDER DIV */}
+        <div className={`lg:hidden ${showOrderSumFull ? 'hidden' : 'relative'} w-[100%] h-[100px] mt-[20px]  bg-[#F7F7F2]`}>
+          <IoIosArrowUp
+            onClick={() => { setShowOrderSumFull(true) }}
+            className="text-[1.3em] cursor-pointer absolute top-[10px] right-[10px]"
+          />
+          <div className="flex justify-between w-[100%]">
+            <div className="flex max-w-[200px] overflow-hidden mx-[20px] items-center ">
+              {
+                basket && basket.map((item, i) => {
+                  return <img className="h-[90px] p-[10px] object-cover w-[70px]" key={i} src={item.images[0]} />
+                })
+              }
+              <div className="w-[30px]  text-center font-montserrat bg-black text-white">
+                +{basket.length}
+              </div>
             </div>
-            <p className="flex px-[15px] w-full  justify-between">
-              ItemsTotal:{" "}
-              <span>${urgent ? `${SubTotal + 15}` : `${SubTotal}`}$</span>{" "}
-            </p>
-            <p className="flex px-[15px] w-full justify-between py-[5px]">
-              Delivery: <span>{urgent ? `15$` : `FREE`}</span>
-            </p>
-            <p className="flex px-[15px] w-full justify-between">
-              SubTotal:{" "}
-              <span>${urgent ? `${SubTotal + 15}` : `${SubTotal}`}</span>
-            </p>
+            <div className="absolute text-[.9em] top-[40px] font-montserrat right-[10px]">
+              <p className="">SUBTOTAL</p>
+              <p>{urgent ? `${SubTotal + 15}` : `${SubTotal}`} AZN</p>
+            </div>
           </div>
         </div>
+        <div className={`${showOrderSumFull ? 'relative' : 'hidden'} lg:hidden w-[100%]  z-40`}>
+
+          <div 
+          className="fixed w-[100%] top-0 h-[100vh] bg-[#53525280] "
+          onClick={()=>{setShowOrderSumFull(false)}}
+          >
+            <div 
+            onClick={(e)=>e.stopPropagation()}
+            className="fixed w-[100%]  bottom-0">
+              <OrderSummary urgent={urgent} setShowOrderSumFull={setShowOrderSumFull} />
+            </div>
+          </div>
+        </div>
+
       </div>
     </>
   );

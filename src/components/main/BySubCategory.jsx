@@ -10,7 +10,6 @@ import {
   IoIosCheckmark,
 } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
-import EcommerceSwiper from "./EcommerceSwiper";
 
 function BySubCategory() {
   const { catname, catid, subname, subid } = useParams();
@@ -31,13 +30,10 @@ function BySubCategory() {
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
-  const [currentSub, setCurrentSub] = useState(null)
   const [page, setPage] = useState(1)
   const [showDiscount, setShowDiscount] = useState(false)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter)
   const navigate = useNavigate()
-
-
   function handleSubFilter(id) {
     setnewdatafilter(
       newdatafilter.map((item, i) =>
@@ -53,9 +49,9 @@ function BySubCategory() {
         filtertype == 'discount' ? setShowDiscount(true) : ''
 
         getDataBySubBrand(selectedBrand,selectedColors,selectedSizes).then(res => console.log(res.data))
-    navigate(
-      `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}&brandId=${selectedBrand}`
-    );
+    // navigate(
+    //   `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}&brandId=${selectedBrand}`
+    // );
   }
 
 
@@ -63,7 +59,6 @@ function BySubCategory() {
 
     setnewdatafilter(
       newdatafilter.map((item, i) =>
-        // item.name == 'categories' ? { ...item, subfilter: [dataCategory?.[catid - 1]?.Subcategory.map(item => item.name)] } :
         item.name == 'colors' ? { ...item, subfilter: [colorData] } :
           item.name == 'brands' ? { ...item, subfilter: [brandData] } :
             item.name == 'discount' ? { ...item, subfilter: [['discount']] } :
