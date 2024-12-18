@@ -67,7 +67,7 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
               className="mySwiper z-30"
             >
               {
-                currentData && currentData.map((item, i) => {
+                currentData.map((item, i) => {
                   return <SwiperSlide key={i} className=''>
                     <Link to={`/productbyid/${item.id}`}>
                       <div key={i} className='my-[20px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
@@ -81,7 +81,6 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
                             className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`}
                             src={item.images[1]} alt=""
                           />
-                          { }
                           <div
                             onClick={(e) => {
                               e.preventDefault()
@@ -133,12 +132,23 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
 
 
             </Swiper>
-          </div> : (
-            <div>
-              <p className='text-center pt-[30px] font-montserrat text-[1.3em] bp600:text-[2em]'>
-                We're sorry, there are no products available in this category right now. Please check back later!
-              </p>
-            </div>)
+          </div> : <div className='flex overflow-hidden gap-[10px]'>
+            {Array(3).fill('sdjb').map((_, i) => {
+              return  <div key={i} className='my-[20px] p-[20px]  h-[300px] w-[300px] border-2 items-center  gap-[20px] shadow-lg bg-white  relative flex cursor-pointer flex-col'>
+                  <div className='bg-gray-400 h-[70%] w-[90%] animate-pulse'></div>
+                  <div className='bg-gray-400 h-[10%] w-[90%] animate-pulse'></div>
+                  <div className='bg-gray-400 h-[10%] w-[90%] animate-pulse'></div>
+                </div>
+            })}
+          </div>
+
+
+          // (
+          //   <div>
+          //     <p className='text-center pt-[30px] font-montserrat text-[1.3em] bp600:text-[2em]'>
+          //       We're sorry, there are no products available in this category right now. Please check back later!
+          //     </p>
+          //   </div>)
         }
       </div>
 

@@ -22,7 +22,9 @@ function ByCategory() {
           <QuickView setShowQuick={setShowQuick} proid={proid} />
         </div>
         <div className='overflow-hidden h-[100vh]  w-[95%] mx-[auto] relative group'>
+          
           <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
+
           <img className=' absolute pt-[100px] top-0 object-top lg:w-full object-cover h-full  transition-all duration-500 group-hover:scale-110'
             src={imgsfordeps[catid - 1]} alt="MainPhoto" />
           <p className='absolute text-[3em] font-serif left-[60px] text-white bottom-[100px] z-10'>{catname}</p>

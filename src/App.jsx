@@ -13,15 +13,16 @@ import About from './components/main/About'
 import ShoppingBagPage from './components/main/ShoppingBagPage'
 import CheckOut from './components/main/CheckOut'
 import NotFound from './NotFound'
+import ImageWithLoader from './components/main/ImageWithLoader'
 
 function App() {
   const { pathname } = useLocation()
-  useEffect(() => {
-    window.scrollTo({
-      behavior: 'smooth',
-      top: 0
-    })
-  }, [pathname])
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     behavior: 'smooth',
+  //     top: 0
+  //   })
+  // }, [pathname])
   return (
     <>
      <Routes>
@@ -38,6 +39,7 @@ function App() {
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>
+          <Route path='/img' element={<ImageWithLoader/>}/>
         </Route>       
      </Routes>
     </>

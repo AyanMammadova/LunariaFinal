@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
 import { getDataBySubBrand, getDataBySubCategory } from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
@@ -12,6 +12,7 @@ import {
 import { IoFilterSharp } from "react-icons/io5"
 
 function BySubCategory() {
+  const pathname=useLocation()
   const { catname, catid, subname, subid } = useParams()
   const [sortSelection, showSortSelection] = useState(false)
   const { dataCategory, dataFilter, dataFav, handleFavs, showFilter, setShowFilter } = useContext(DATA)
@@ -44,7 +45,7 @@ function BySubCategory() {
         filtertype == 'sizes' ? setSelectedSizes(filtername) :
           filtertype == 'discount' ? setShowDiscount(true) : ''
 
-    getDataBySubBrand(selectedBrand, selectedColors, selectedSizes).then(res => console.log(res.data))
+    // getDataBySubBrand(selectedBrand, selectedColors, selectedSizes).then(res => console.log(res.data))
     // navigate(
     //   `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}&brandId=${selectedBrand}`
     // );
@@ -87,6 +88,11 @@ function BySubCategory() {
     );
   }
 
+  useEffect(()=>{
+    setSelectedSort('RECOMMENDED')
+  },[pathname])
+
+  console.log(useLocation())
   return (
     <>
       <div className=" pt-[150px]">
