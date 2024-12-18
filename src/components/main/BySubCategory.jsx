@@ -12,21 +12,17 @@ import {
 import { IoFilterSharp } from "react-icons/io5"
 
 function BySubCategory() {
-  const { catname, catid, subname, subid } = useParams();
-  const {
-    dataCategory,
-    dataFilter,
-    dataFav,
-    handleFavs,
-    showFilter,
-    setShowFilter,
-  } = useContext(DATA)
-
+  const { catname, catid, subname, subid } = useParams()
+  const [sortSelection, showSortSelection] = useState(false)
+  const { dataCategory, dataFilter, dataFav, handleFavs, showFilter, setShowFilter } = useContext(DATA)
+  const sortData = ['RECOMMENDED ', 'PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
+  const [selectedSort, setSelectedSort] = useState('RECOMMENDED')
+  // const [sortedData,setSortedData]=useState()
   const [dataByCategory, setDataByCategory] = useState(null)
   const [totalPage, setTotalPage] = useState(1)
-  const [selectedColors,setSelectedColors] =useState(null)
-  const [selectedBrand,setSelectedBrand] =useState(null)
-  const [selectedSizes,setSelectedSizes] =useState(null)
+  const [selectedColors, setSelectedColors] = useState(null)
+  const [selectedBrand, setSelectedBrand] = useState(null)
+  const [selectedSizes, setSelectedSizes] = useState(null)
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
@@ -44,17 +40,15 @@ function BySubCategory() {
 
   function handleCheckedFilters(filtername, filteri, filtertype) {
     filtertype == 'colors' ? setSelectedColors(filtername) :
-      filtertype == 'brands' ?  setSelectedBrand(filtername) :
-        filtertype == 'sizes' ? setSelectedSizes(filtername) : 
-        filtertype == 'discount' ? setShowDiscount(true) : ''
+      filtertype == 'brands' ? setSelectedBrand(filtername) :
+        filtertype == 'sizes' ? setSelectedSizes(filtername) :
+          filtertype == 'discount' ? setShowDiscount(true) : ''
 
-        getDataBySubBrand(selectedBrand,selectedColors,selectedSizes).then(res => console.log(res.data))
+    getDataBySubBrand(selectedBrand, selectedColors, selectedSizes).then(res => console.log(res.data))
     // navigate(
     //   `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}&brandId=${selectedBrand}`
     // );
   }
-
-
   useEffect(() => {
 
     setnewdatafilter(
@@ -66,17 +60,22 @@ function BySubCategory() {
       ))
   }, [dataCategory, colorData, sizeData, brandData])
 
-
-
   useEffect(() => {
-    getDataBySubCategory(subid, page,selectedBrand).then((res) => {
-      setDataByCategory(res.data)
+    showSortSelection(false)
+    getDataBySubCategory(subid, page, selectedBrand).then((res) => {
+      setDataByCategory(res.data.sort(() => Math.random() - 0.5))
       setTotalPage(res.meta.totalPages)
       setColorData([...new Set(res.data.flatMap((item) => item.Colors))])
       setSizeData([...new Set(res.data.flatMap((item) => item.Size))])
       setBrandData([...new Set(res.data.flatMap((item) => item.Brands.id))])
     })
   }, [subid, page])
+  function handleSort(type){
+    setSelectedSort(type)
+    if(type=='PRICE LOW TO HIGH')  dataByCategory?.sort(function(a, b){return a.price - b.price}) 
+    else if( type=='PRICE HIGH TO LOW') dataByCategory?.sort(function(a, b){return b.price - a.price}) 
+    else setDataByCategory(dataByCategory?.sort(() => Math.random() - 0.5)) 
+  }
 
   function changeUrlPage(page) {
     window.scrollTo({
@@ -91,20 +90,20 @@ function BySubCategory() {
   return (
     <>
       <div className=" pt-[150px]">
-        
+
         <p className="text-[3em] font-serif text-center">{subname}</p>
         <ul className="underline flex  gap-[20px] justify-center">
           {dataCategory &&
             dataCategory[catid - 1]?.Subcategory.map((item, i) => {
               return (
-                <Link to={`/`} key={i}>
+                <Link to={`/productsbysubcategory/${catname}/${catid}/${item.name}/${item.id}`} key={i}>
                   {item.name}
                 </Link>
               );
             })}
         </ul>
 
-        <div className="flex  justify-between mx-[40px]">
+        <div className={`${dataByCategory?.length>1 ? 'flex' :'hidden'}  justify-between mx-[40px]`}>
           <div
             onClick={() => {
               setShowFilter(true);
@@ -114,15 +113,34 @@ function BySubCategory() {
             <IoFilterSharp /> FILTERS
           </div>
           <div></div>
-          <div>
-            <div>
-              <p className="font-montserrat flex items-center">
-                RECOMMENDED <IoIosArrowDown />
+          <div className="relative z-30 bg-white h-[50px]">
+            <div className="absolute text-[.9em] right-0 w-[200px]">
+              <p
+                onClick={() => { showSortSelection(!sortSelection) }}
+                className="font-montserrat my-[3px] p-[3px]  [100%] border-[1px] flex px-[10px] justify-between items-center">
+                {selectedSort}
+
+                <IoIosArrowDown
+                  className={`cursor-pointer transition-all duration-300 ${sortSelection ? 'rotate-180' : ''}`}
+                />
               </p>
+              <div className={`${sortSelection ? 'block' : 'hidden'} py-[10px] bg-white border-[1px] z-40`}>
+                {
+                  sortData && sortData.map((item, i) => {
+                    return (
+                      <p key={i}
+                        onClick={() => { handleSort(item); showSortSelection(false) }}
+                        className="font-montserrat mx-[10px] p-[3px] cursor-pointer flex items-center hover:bg-black hover:text-white transition-all duration-300">
+                        {item}
+                      </p>)
+                  })
+                }
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex p-[30px] justify-between">
+        {
+          dataByCategory?.length>1 ? <div className="flex p-[30px] justify-between">
           {/* FILTERDIV */}
           <div className="hidden lg:block w-[500px] mr-[20px]">
             <div>
@@ -190,14 +208,10 @@ function BySubCategory() {
                         <div className=" relative h-[100%] overflow-hidden group ">
                           <img
                             className={`group-hover:hidden transition-opacity duration-300 ease-in-out `}
-                            src={item.images[0]}
-                            alt=""
-                          />
+                            src={item.images[0]} />
                           <img
                             className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`}
-                            src={item.images[1]}
-                            alt=""
-                          />
+                            src={item.images[1]} />
                           { }
                           <div
                             onClick={(e) => {
@@ -207,13 +221,9 @@ function BySubCategory() {
                           >
                             {dataFav &&
                               dataFav.find((itema) => itema.id == item.id) ? (
-                              <VscHeartFilled
-                                className={`absolute text-[2em] top-[10px] right-[10px]`}
-                              />
+                              <VscHeartFilled className={`absolute text-[2em] top-[10px] right-[10px]`} />
                             ) : (
-                              <VscHeart
-                                className={`absolute text-[2em] top-[10px] right-[10px] `}
-                              />
+                              <VscHeart className={`absolute text-[2em] top-[10px] right-[10px] `} />
                             )}
                           </div>
 
@@ -257,7 +267,7 @@ function BySubCategory() {
                             </span>
                           </p>
                           <p
-                            className={`${item.discount > 2 ? "hidden" : "block"
+                            className={`${item.discount > 1 ? "hidden" : "block"
                               } font-bold`}
                           >
                             {item.price}$
@@ -292,7 +302,13 @@ function BySubCategory() {
               </div>
             </div>
           </div>
-        </div>
+        </div> : (
+            <div>
+              <p className='text-center pt-[30px] bp600:px-[40px] font-montserrat text-[1.3em] bp600:text-[2em]'>
+                We're sorry, there are no products available for "{subname}" category right now. Please check back later!
+              </p>
+            </div>)
+        }
       </div>
     </>
   );
