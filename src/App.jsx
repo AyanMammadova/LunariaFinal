@@ -12,15 +12,16 @@ import Login from './components/login/Login'
 import About from './components/main/About'
 import ShoppingBagPage from './components/main/ShoppingBagPage'
 import CheckOut from './components/main/CheckOut'
+import NotFound from './NotFound'
 
 function App() {
   const { pathname } = useLocation()
-  // useEffect(() => {
-  //   window.scrollTo({
-  //     behavior: 'smooth',
-  //     top: 0
-  //   })
-  // }, [pathname])
+  useEffect(() => {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0
+    })
+  }, [pathname])
   return (
     <>
      <Routes>
@@ -36,8 +37,8 @@ function App() {
           <Route path='/about' element={<About/>}/>
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
-
-        </Route>
+          <Route path='*' element={<NotFound/>}/>
+        </Route>       
      </Routes>
     </>
   )
