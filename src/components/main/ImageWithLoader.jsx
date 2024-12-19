@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const ImageWithLoader = () => {
     const [loading, setLoading] = useState(true);
 
-    console.log(loading)
     const handleImageLoad = () => {
         setLoading(false);
 

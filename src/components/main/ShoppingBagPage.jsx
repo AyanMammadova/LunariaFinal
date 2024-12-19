@@ -3,13 +3,17 @@ import { BASKET } from '../../context/BasketContext'
 import { IoCloseSharp } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6'
+import { Helmet } from 'react-helmet'
 
 function ShoppingBagPage() {
-    const { basket, removeFromBasket,handleCount } = useContext(BASKET)
+    const { basket, removeFromBasket, handleCount } = useContext(BASKET)
     const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
 
     return (
         <>
+            <Helmet>
+                <title>ShoppingBag | Lunaria</title>
+            </Helmet>
             <div className='w-[100%] flex flex-col bp800:flex-row pt-[150px] gap-[40px] text-[.9em] text-gray-800 p-[10px] '>
                 <div className='w-[100%] bp800:w-[70%]'>
                     <div className=''>

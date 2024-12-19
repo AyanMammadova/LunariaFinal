@@ -28,9 +28,15 @@ async function getDataBySubBrand(brandId,color,size) {
     return res.data
 }
 
+async function getbooks() {
+    const res=await axios.get(`https://raw.githubusercontent.com/M-X-3112/Patagonia-data/refs/heads/main/ProductData.json`)
+    return res.data
+}
+
 
 export {
     getDataCategories,
+    getbooks,
     getDataByCategory,
     getDataBySubCategory,
     getDataAll,

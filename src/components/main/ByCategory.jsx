@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import QuickView from './QuickView'
+import { Helmet } from 'react-helmet'
 
 function ByCategory() {
   const { catname, catid } = useParams()
@@ -17,6 +18,9 @@ function ByCategory() {
 
   return (
     <>
+    <Helmet>
+    <title>{catname} | Lunaria</title>
+    </Helmet>
       <section>
         <div className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
           <QuickView setShowQuick={setShowQuick} proid={proid} />

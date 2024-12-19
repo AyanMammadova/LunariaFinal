@@ -13,7 +13,6 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
   const { dataDiscounted, handleFavs, dataFav } = useContext(DATA)
 
   const [currentData, setCurrentData] = useState(null)
-  console.log(currentData)
   useEffect(() => {
     if (type == 'discount') {
       setCurrentData(dataDiscounted)

@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { LuEye, LuEyeOff } from 'react-icons/lu'
-import { MdOutlineRemoveRedEye } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 function RegisterPage() {
   const [hidePassword1, setHidePassword1] = useState(true)
   const [hidePassword2, setHidePassword2] = useState(true)
+
   const initialObj = {
     name: "",
     lastname: "",
@@ -17,15 +17,19 @@ function RegisterPage() {
     password: "",
     repeatpass: "",
   }
-
-
   const [registerData, setRegisterData] = useState(initialObj)
+  console.log(registerData)
+
+  // useEffect(() => {
+  //   localStorage.setItem('RegisterLocal', JSON.stringify(registerData));
+
+  // }, [registerData])
   return (
     <>
-    <Toaster
-            position="top-right"
-            reverseOrder={false}
-          />
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
       <form className='pt-[150px] '>
         <p className='text-[2em] font-serif text-center'>Sign Up</p>
         <div className=' w-[400px] text-[.8em]  mx-[auto] *:py-[5px]  p-[10px]'>
@@ -56,7 +60,7 @@ function RegisterPage() {
             }}
             type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[95%]' placeholder='Email' />
 
-          <p className=' font-bold'>MOBILE NUMBERS</p>
+          <p className=' font-bold'>MOBILE NUMBER</p>
           <input
             required
             value={registerData.number}
@@ -92,7 +96,11 @@ function RegisterPage() {
             <input
               required
               type={hidePassword1 ? 'password' : 'text'}
-              className='w-[100%]' placeholder='Password' />
+              className='w-[100%]' placeholder='Password'
+              onChange={(e) => {
+                setRegisterData({ ...registerData, password: e.target.value })
+              }}
+            />
             <div
               className='cursor-pointer'
               onClick={() => { setHidePassword1(!hidePassword1) }}>
@@ -109,7 +117,11 @@ function RegisterPage() {
             <input
               required
               type={hidePassword2 ? 'password' : 'text'}
-              className='w-[100%]' placeholder='Repeat Password' />
+              className='w-[100%]' placeholder='Repeat Password'
+              onChange={(e) => {
+                setRegisterData({ ...registerData, repeatpass: e.target.value })
+              }}
+            />
             <div
               className='cursor-pointer'
               onClick={() => { setHidePassword2(!hidePassword2) }}>
@@ -125,22 +137,25 @@ function RegisterPage() {
               type='checkbox' className='mb-[15px] mr-[5px]' name="" id="" />
             <p>By registering, your account will be subjected to the Terms & Conditions and Privacy Policy</p>
           </div>
-          <button 
-          className='bg-black my-[20px] h-[40px]  text-[1.2em] rounded text-white font-serif w-[96%] hover:bg-white hover:text-black border-[1px] border-black transition-all duration-200'
-          onClick={(e)=>{
-            e.preventDefault()
-            if( registerData.name && registerData.lastname && registerData.email && registerData.birthday && registerData.number
-              && registerData.password==registerData.repeatpass){
-              toast.success('Successfully toasted!')
-            }
-            else{
-              toast.error('your passwords dont match!')
-            }
-          }}
+          <button
+            className='bg-black my-[20px] h-[40px]  text-[1.2em] rounded text-white font-serif w-[96%] hover:bg-white hover:text-black border-[1px] border-black transition-all duration-200'
+            onClick={(e) => {
+              e.preventDefault()
+              if (registerData.name && registerData.lastname && registerData.email && registerData.birthday && registerData.number
+                && registerData.password == registerData.repeatpass) {
+                toast.success('Successfully toasted!')
+              }
+              else if (registerData.password == registerData.repeatpass) {
+                toast.error('fill all the inputs dear!')
+              }
+              else {
+                toast.error('your passwords dont match!')
+              }
+            }}
           >
             Register
           </button>
-          
+
           <hr />
           <p className='text-center font-serif'>Already have an account?</p>
           <Link to={'/login'}>

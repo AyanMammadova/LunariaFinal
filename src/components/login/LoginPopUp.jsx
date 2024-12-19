@@ -7,9 +7,9 @@ function LoginPopUp() {
   const [hidePassword, setHidePassword] = useState(false)
   const [loginData,setLoginData]=useState({
     name:'',
-    padssword: ''
+    password: ''
   })
-  
+  // console.log(loginData)
   return (
     <>
     
@@ -31,7 +31,7 @@ function LoginPopUp() {
             className=' w-[90%]  text-gray-300 font-serif px-[4px]' 
             placeholder='Password' 
             onChange={(e)=>{
-              setLoginData({...loginData,padssword:e.target.value})
+              setLoginData({...loginData,password:e.target.value})
             }}
           />
 
@@ -50,11 +50,11 @@ function LoginPopUp() {
           />
         <button 
         onClick={()=>{
-          if(loginData.padssword.trim() && loginData.name.trim() ){
-            toast.success('Successfully toasted!')
+          if(loginData.password.trim() && loginData.name.trim() ){
+            toast.success('Successfully Signed in!')
           }
           else{
-            toast.error('fill them all honey!')
+            toast.error('fill them all pls!')
           }
         }}
         className='bg-black h-[40px] mx-[5%] rounded text-white font-serif w-[90%]'>

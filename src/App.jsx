@@ -14,6 +14,7 @@ import ShoppingBagPage from './components/main/ShoppingBagPage'
 import CheckOut from './components/main/CheckOut'
 import NotFound from './NotFound'
 import ImageWithLoader from './components/main/ImageWithLoader'
+import { Helmet } from 'react-helmet'
 
 function App() {
   const { pathname } = useLocation()
@@ -25,6 +26,9 @@ function App() {
   // }, [pathname])
   return (
     <>
+    <Helmet>
+    <title>Lunaria | Home</title>
+    </Helmet>
      <Routes>
         <Route path='/' element={<Layout/>}>
           <Route index element={<Main/>}/>

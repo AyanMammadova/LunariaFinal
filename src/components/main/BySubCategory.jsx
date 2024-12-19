@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
-import { getDataBySubBrand, getDataBySubCategory } from "../../services/api";
+import { getbooks, getDataBySubBrand, getDataBySubCategory } from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 import {
   IoIosArrowBack,
@@ -10,6 +10,8 @@ import {
   IoIosCheckmark,
 } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
+import axios from "axios";
+import { Helmet } from "react-helmet";
 
 function BySubCategory() {
   const pathname=useLocation()
@@ -30,6 +32,7 @@ function BySubCategory() {
   const [page, setPage] = useState(1)
   const [showDiscount, setShowDiscount] = useState(false)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter)
+  const [booksData,setBooksData]=useState(null)
   const navigate = useNavigate()
   function handleSubFilter(id) {
     setnewdatafilter(
@@ -45,11 +48,8 @@ function BySubCategory() {
         filtertype == 'sizes' ? setSelectedSizes(filtername) :
           filtertype == 'discount' ? setShowDiscount(true) : ''
 
-    // getDataBySubBrand(selectedBrand, selectedColors, selectedSizes).then(res => console.log(res.data))
-    // navigate(
-    //   `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}&brandId=${selectedBrand}`
-    // );
   }
+
   useEffect(() => {
 
     setnewdatafilter(
@@ -87,16 +87,21 @@ function BySubCategory() {
       `/productsbysubcategory/${catname}/${catid}/${subname}/${subid}?page=${page}`
     );
   }
-
   useEffect(()=>{
     setSelectedSort('RECOMMENDED')
   },[pathname])
+  
+  // useEffect(() => {
+  //   axios.get('https://raw.githubusercontent.com/M-X-3112/Patagonia-data/refs/heads/main/ProductData.json')
+  //     .then(res => console.log(res.data.all[4].books));
+  // }, []);
 
-  console.log(useLocation())
   return (
     <>
+    <Helmet>
+    <title>{subname} | Lunaria</title>
+    </Helmet>
       <div className=" pt-[150px]">
-
         <p className="text-[3em] font-serif text-center">{subname}</p>
         <ul className="underline flex  gap-[20px] justify-center">
           {dataCategory &&
