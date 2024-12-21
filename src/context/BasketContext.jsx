@@ -6,7 +6,7 @@ function BasketContext({ children }) {
 
     const [basket, setBasket] = useState(JSON.parse(localStorage.getItem('basketLocal')) || [])
 
-    const SubTotal = basket.reduce((total, item) => total + item.price * item.quantity, 0)
+    const SubTotal = basket.reduce((total, item) => total + ((item.discount>1 ?  ((item?.price * (100 - item?.discount)) / 100).toFixed(1) : item.price) * item.quantity), 0)
 
     function handleCount(id,color,size, count) {
         setBasket(basket?.map(item =>
@@ -14,10 +14,7 @@ function BasketContext({ children }) {
                 ? { ...item, quantity: item.quantity + count }
                 : item
         )
-    )
-
-        
-    }
+    )}
 
     function handleSize(size) {
         setSize(size)

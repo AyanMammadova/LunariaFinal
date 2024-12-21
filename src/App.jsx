@@ -18,12 +18,12 @@ import { Helmet } from 'react-helmet'
 
 function App() {
   const { pathname } = useLocation()
-  // useEffect(() => {
-  //   window.scrollTo({
-  //     behavior: 'smooth',
-  //     top: 0
-  //   })
-  // }, [pathname])
+  useEffect(() => {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0
+    })
+  }, [pathname])
   return (
     <>
     <Helmet>

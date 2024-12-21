@@ -73,12 +73,12 @@ function DataContext({ children }) {
   const dataFilter = [
     {
       name: "colors",
-      isOpen: true,
+      isOpen: false,
       id: 2
     },
     {
       name: "brands",
-      isOpen: true,
+      isOpen: false,
       id: 3
     },
     {
@@ -88,12 +88,12 @@ function DataContext({ children }) {
     },
     {
       name: "sizes",
-      isOpen: true,
+      isOpen: false,
       id: 5
     },
     {
       name: "price",
-      isOpen: true,
+      isOpen: false,
       id: 6
     }
   ];

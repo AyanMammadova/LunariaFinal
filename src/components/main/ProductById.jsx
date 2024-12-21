@@ -4,11 +4,11 @@ import { getProductById } from '../../services/api'
 import { FaMinus, FaPlus, FaWhatsapp } from 'react-icons/fa'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css';
-import { Image } from 'antd';
 import { DATA } from '../../context/DataContext'
 import { GoHeart, GoHeartFill } from 'react-icons/go'
 import { BASKET } from '../../context/BasketContext'
 import EcommerceSwiper from './EcommerceSwiper'
+import { Helmet } from 'react-helmet'
 
 function ProductById() {
     const { addToBasket, handleSize, size, setSize, color, handleColor } = useContext(BASKET)
@@ -18,12 +18,12 @@ function ProductById() {
     const [product, setProduct] = useState(null)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })
-        // product?.color ? ' ' : handleColor('WHITE')
     }, [proid])
-
-
     return (
         <>
+            <Helmet>
+                <title>Lunaria | {product ? product.name : 'Loading...'}</title>
+            </Helmet>
             <section className=' pt-[150px]  p-[5px] w-[100%] md:p-[40px] md:pt-[160px]'>
                 <div className='w-full flex flex-col md:flex-row justify-start gap-[50px] '>
                     {/* IMAGEDIV */}
@@ -36,7 +36,13 @@ function ProductById() {
                     <div className='text-black flex flex-col gap-[10px] md:w-[50%]'>
                         <p className='font-bold'>{product?.Brands.name}</p>
                         <p className=''>{product?.name}</p>
-                        <p className=''>{product?.price} USD</p>
+                        <p className={`${product?.discount > 1 ? 'block' : 'hidden'} text-black text-[1.4em]`}>
+                            <span className='pr-[10px]'>{((product?.price * (100 - product?.discount)) / 100).toFixed(1)}$</span>
+                            <del className='text-gray-600 text-[.8em]'>{product?.price}</del>
+                        </p>
+                        <p className={`${product?.discount > 1 ? 'hidden' : 'block'} font-bold`}>
+                            {product?.price}$
+                        </p>
                         {/* COLOR */}
                         <div className='flex gap-[10px]'>Color:
                             {

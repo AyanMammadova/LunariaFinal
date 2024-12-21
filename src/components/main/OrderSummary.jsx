@@ -5,7 +5,7 @@ import { BASKET } from '../../context/BasketContext';
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6';
 import { IoIosArrowDown } from 'react-icons/io';
 
-function OrderSummary({ urgent, setShowOrderSumFull }) {
+function OrderSummary({ urgent, setShowOrderSumFull,pickup }) {
 
     const { basket, SubTotal, removeFromBasket, handleCount } = useContext(BASKET);
     return (
@@ -80,7 +80,7 @@ function OrderSummary({ urgent, setShowOrderSumFull }) {
                         ItemsTotal:{" "}
                         <span>${urgent ? `${SubTotal + 15}` : `${SubTotal}`}$</span>{" "}
                     </p>
-                    <p className="flex px-[15px] w-full justify-between py-[5px]">
+                    <p className={`${pickup ? 'hidden' : 'block'} flex px-[15px] w-full justify-between py-[5px]`}>
                         Delivery: <span>{urgent ? `15$` : `FREE`}</span>
                     </p>
                     <p className="flex px-[15px] w-full justify-between">

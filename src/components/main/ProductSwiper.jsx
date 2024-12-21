@@ -103,21 +103,21 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
                                 setproid(item.id)
                                 e.preventDefault()
                               }}
-                              className={` group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]  text-center text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}>
+                              className={` group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]   text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}>
                               QUICK VIEW
                             </div>
                           </div>
                         </div>
                         <div
-                          className={`${item.discount > 1 ? 'block' : 'hidden'} bg-black text-white w-[40px] text-center rounded absolute top-0 left-0`}>
+                          className={`${item.discount > 1 ? 'block' : 'hidden'} bg-black text-white w-[40px]  rounded absolute top-0 left-0`}>
                           {item.discount}%
                         </div>
-                        <div className='p-[10px]'>
+                        <div className='p-[10px] text-start'>
                           <p className='font-bold text-[1.1em] z-10'>{item.Brands.name}</p>
                           <p className=' text-nowrap overflow-hidden font-[600] text-ellipsis text-gray-500'>{item.name}</p>
-                          <p className={`${item.discount > 1 ? 'block' : 'hidden'} text-green-700  font-bold`}>
-                            <del className='text-red-500'>{item.price}</del>
-                            <span className='px-[10px]'>{((item.price * (100 - item.discount)) / 100).toFixed(2)}$</span>
+                          <p className={`${item.discount > 1 ? 'block' : 'hidden'} text-black text-[1.2em]`}>
+                            <span>{((item.price * (100 - item.discount)) / 100).toFixed(1)}$</span>
+                            <del className='text-gray-600 px-[10px] text-[.8em]'>{item.price}</del>
                           </p>
                           <p className={`${item.discount > 2 ? 'hidden' : 'block'} font-bold`}>
                             {item.price}$
@@ -133,11 +133,11 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
             </Swiper>
           </div> : <div className='flex overflow-hidden gap-[10px]'>
             {Array(3).fill('sdjb').map((_, i) => {
-              return  <div key={i} className='my-[20px] p-[20px]  h-[300px] w-[300px] border-2 items-center  gap-[20px] shadow-lg bg-white  relative flex cursor-pointer flex-col'>
-                  <div className='bg-gray-400 h-[70%] w-[90%] animate-pulse'></div>
-                  <div className='bg-gray-400 h-[10%] w-[90%] animate-pulse'></div>
-                  <div className='bg-gray-400 h-[10%] w-[90%] animate-pulse'></div>
-                </div>
+              return <div key={i} className='my-[20px] p-[20px]  h-[300px] w-[300px] border-2 items-center  gap-[20px] shadow-lg bg-white  relative flex cursor-pointer flex-col'>
+                <div className='bg-gray-400 h-[70%] w-[90%] animate-pulse'></div>
+                <div className='bg-gray-400 h-[10%] w-[90%] animate-pulse'></div>
+                <div className='bg-gray-400 h-[10%] w-[90%] animate-pulse'></div>
+              </div>
             })}
           </div>
 

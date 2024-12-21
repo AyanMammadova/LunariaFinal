@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdCircle, MdKeyboardArrowUp, MdOutlineModeEdit } from "react-icons/md";
 import { BASKET } from "../../context/BasketContext";
 import { BsCheck } from "react-icons/bs";
@@ -17,6 +17,9 @@ function CheckOut() {
   const [onlinepay, setOnlinePay] = useState(true);
   const [pickup, setPickup] = useState(false);
 
+  useEffect(()=>{
+    setUrgent(false)
+  },[pickup])
   const [showOrderSumFull, setShowOrderSumFull] = useState(false)
   onscroll = function () {
     if (window.scrollY >= 850) {
@@ -474,7 +477,7 @@ function CheckOut() {
         </div>
         {/* ORDER DIV */}
         <div className={`${showOrderSumFull ? 'hidden' : 'block'} hidden lg:block lg:w-[30%]`}>
-          <OrderSummary urgent={urgent} setShowOrderSumFull={setShowOrderSumFull} />
+          <OrderSummary urgent={urgent}  setShowOrderSumFull={setShowOrderSumFull} pickup={pickup} />
         </div>
         {/* FIXED ORDER DIV */}
         <div className={`lg:hidden ${showOrderSumFull ? 'hidden' : 'relative'} w-[100%] h-[100px] mt-[20px]  bg-[#F7F7F2]`}>
