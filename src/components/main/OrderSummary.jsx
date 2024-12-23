@@ -5,7 +5,7 @@ import { BASKET } from '../../context/BasketContext';
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6';
 import { IoIosArrowDown } from 'react-icons/io';
 
-function OrderSummary({ urgent, setShowOrderSumFull,pickup }) {
+function OrderSummary({ urgent, setShowOrderSumFull, pickup }) {
 
     const { basket, SubTotal, removeFromBasket, handleCount } = useContext(BASKET);
     return (
@@ -54,8 +54,13 @@ function OrderSummary({ urgent, setShowOrderSumFull,pickup }) {
                                                     </span>
                                                 </p>
                                             </div>
-
-                                            <p>Price: {item.price}$</p>
+                                            <p className={`${item?.discount > 1 ? 'block' : 'hidden'} text-black text-[1.2em]`}>
+                                                <span>{((item?.price * (100 - item?.discount)) / 100).toFixed(1)}$</span>
+                                                <del className='text-gray-600 px-[5px] text-[.8em]'>{item?.price}</del>
+                                            </p>
+                                            <p className={`${item?.discount > 1 ? 'hidden' : 'block'} text-[1.2em]`}>
+                                                {item?.price}$
+                                            </p>
                                             <p className='flex gap-[5px] items-center'>Quantity:
                                                 <FaRegSquareMinus
                                                     className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
@@ -67,9 +72,8 @@ function OrderSummary({ urgent, setShowOrderSumFull,pickup }) {
                                                     className='cursor-pointer'
                                                     onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
                                             </p>
-                                            <p className="font-bold text-end w-[100%]">
-                                                ItemTotal: {item.quantity * item.price}$
-                                            </p>
+                                            <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price}$</p>
+                                            <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
                                         </div>
                                         <hr />
                                     </div>

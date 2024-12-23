@@ -11,7 +11,6 @@ function CheckOut() {
   const { basket, SubTotal, removeFromBasket, handleCount } = useContext(BASKET);
   const [summaryFixed, setSummaryFixed] = useState(true);
   const [delivery, setDelivery] = useState(true);
-  const [standart, setStandart] = useState(true);
   const [urgent, setUrgent] = useState(false);
   const [gift, setGift] = useState(false);
   const [onlinepay, setOnlinePay] = useState(true);
@@ -207,7 +206,6 @@ function CheckOut() {
             >
               <div
                 onClick={() => {
-                  setStandart(!standart);
                   setUrgent(!urgent);
                 }}
                 className="flex w-[100%] justify-between items-start cursor-pointer"
@@ -215,7 +213,7 @@ function CheckOut() {
                 <div className="flex items-start gap-[20px]">
                   <div className="p-[2px] border-[1px] text-[.8em] border-black  flex items-center justify-center rounded-full">
                     <MdCircle
-                      className={`${standart ? "text-black" : "text-white"}`}
+                      className={`${urgent ? "text-white" : "text-black"}`}
                     />
                   </div>
                   <div>
@@ -231,7 +229,6 @@ function CheckOut() {
               </div>
               <div
                 onClick={() => {
-                  setStandart(!standart);
                   setUrgent(!urgent);
                 }}
                 className="flex w-[100%] pt-[20px] justify-between items-start cursor-pointer"

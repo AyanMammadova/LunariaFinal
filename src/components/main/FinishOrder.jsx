@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { BASKET } from '../../context/BasketContext'
 
 function FinishOrder() {
+  const {clearBasket,basket}=useContext(BASKET)
+  useEffect(()=>{
+    clearBasket()
+    
+  },[])
+  console.log(basket)
   return (
     <>
       <div className='text-center w-[100%] h-[100vh]'>

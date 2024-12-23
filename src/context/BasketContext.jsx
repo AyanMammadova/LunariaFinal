@@ -15,6 +15,10 @@ function BasketContext({ children }) {
                 : item
         )
     )}
+    function clearBasket(){
+
+       setBasket(basket.filter(item=>!item))
+    }
 
     function handleSize(size) {
         setSize(size)
@@ -22,7 +26,7 @@ function BasketContext({ children }) {
     function handleColor(color) {
         setColor(color)
     }
-
+    console.log(SubTotal)
     function addToBasket(id, name, description, price, discount, brand, images, size, color, quantity) {
         if (basket?.find(item => item.id == id && item.color == color && item.size == size)) {
             setBasket(basket?.map(item =>
@@ -76,7 +80,8 @@ function BasketContext({ children }) {
                     color,
                     setColor,
                     handleColor,
-                    handleCount
+                    handleCount,
+                    clearBasket
                 }}
 
             >
