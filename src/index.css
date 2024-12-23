@@ -29,6 +29,12 @@
   src: local('Montserrat Ace Medium'), url('./fonts/Montserrat-Ace-Medium.woff') format('woff');
   }
 
+
+.cvvcardgroup:hover .cvvcard{
+  position: absolute;
+  display: block;
+}
+
 .swiper {
   width: 100%;
   height: 100%;
