@@ -1,23 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
-import { getbooks, getDataBySubBrand, getDataBySubCategory } from "../../services/api";
+import { getDataBySubCategory, getFilteredData } from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
-import {
-  IoIosArrowBack,
-  IoIosArrowDown,
-  IoIosArrowForward,
-  IoIosCheckmark,
-} from "react-icons/io"
+import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosCheckmark, } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
 import { Helmet } from "react-helmet";
 
 function BySubCategory() {
   const pathname = useLocation()
-  const { catname, subname} = useParams()
+  const { catname, subname } = useParams()
   const [sortSelection, showSortSelection] = useState(false)
   const { dataCategory, dataFilter, dataFav, handleFavs, showFilter, setShowFilter } = useContext(DATA)
-  const sortData = ['RECOMMENDED' , 'PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
+  const sortData = ['RECOMMENDED', 'PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
   const [selectedSort, setSelectedSort] = useState('RECOMMENDED ')
   const [dataByCategory, setDataByCategory] = useState(null)
   const [totalPage, setTotalPage] = useState(1)
@@ -29,9 +24,9 @@ function BySubCategory() {
   const [brandData, setBrandData] = useState(null)
   const [page, setPage] = useState(1)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter)
-  const catid=dataCategory?.find((item,i)=>item.name==catname).id
-  const subid=dataCategory?.[catid-1]?.Subcategory?.find((item,i)=>item.name==subname).id
-  const navigate=useNavigate()
+  const catid = dataCategory?.find((item, i) => item.name == catname).id
+  const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
+  const navigate = useNavigate()
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -44,22 +39,16 @@ function BySubCategory() {
   }
 
   function handleCheckedFilters(filtername, filteri, filtertype, filtertypeid) {
-    // setnewdatafilter(
-    //   newdatafilter[filtertypeid].subfilter.map((item, i) =>
-    //     item.name ? { ...item, isselecte: true } : ''
-    //   ))
-
-    filtertype == 'colors' ? setSelectedColors(filtername) :  ''
-    // filtertype == 'brands' ? setSelectedBrand(filtername) : 
-    //   filtertype == 'sizes' ? setSelectedSizes(filtername) :
-    //     filtertype == 'discount' ? setSearchParams({ discounted: true }) : ''
-    
+    filtertype == 'colors' ? setSelectedColors(filtername) :
+      filtertype == 'brands' ? setSelectedBrand(filtername) :
+        filtertype == 'sizes' ? setSelectedSizes(filtername) : " "
   }
-  // console.log(newdatafilter)
 
   useEffect(() => {
-    getDataBySubBrand(selectedColors).then(res => setDataByCategory(res.data))
-  }, [selectedColors])
+    getFilteredData(subid, selectedColors, selectedBrand, selectedSizes).then(res => setDataByCategory(res.data))
+    navigate(`?${selectedColors ? `&color=${selectedColors}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${selectedSizes ? `&size=${selectedSizes}` : ''}`)
+  }, [selectedColors, selectedBrand, selectedSizes])
+
 
   useEffect(() => {
     setnewdatafilter(
@@ -80,6 +69,9 @@ function BySubCategory() {
       setSizeData([...new Set(res.data.flatMap((item) => item.Size))])
       setBrandData([...new Set(res.data.flatMap((item) => item.Brands.id))])
     })
+    setSelectedBrand('')
+    setSelectedColors('')
+    setSelectedSizes('')
   }, [subid, page])
   function handleSort(type) {
     setSelectedSort(type)
@@ -96,7 +88,7 @@ function BySubCategory() {
   }
   useEffect(() => {
     setSelectedSort('RECOMMENDED')
-    
+
   }, [pathname])
 
   return (
@@ -110,7 +102,7 @@ function BySubCategory() {
           {dataCategory &&
             dataCategory[catid - 1]?.Subcategory.map((item, i) => {
               return (
-                <Link to={`/productsbysubcategory/${catname}/${catid}/${item.name}/${item.id}`} key={i}>
+                <Link to={`/products/${catname}/${item.name}`} key={i}>
                   {item.name}
                 </Link>
               );
@@ -156,7 +148,7 @@ function BySubCategory() {
         {
           dataByCategory && <div className="flex p-[30px] justify-between">
             {/* FILTERDIV */}
-            <div className="hidden lg:block w-[500px] mr-[20px]">
+            <div className="hidden lg:block w-[40%] mr-[20px]">
               <div>
                 {newdatafilter &&
                   newdatafilter.map((item, i) => {
@@ -214,9 +206,9 @@ function BySubCategory() {
             </div>
 
             {/* PAGINATIONDIV */}
-            <div className="flex flex-col ">
-              <div className="flex w-[100%] gap-[20px] flex-wrap justify-around">
-                {dataByCategory &&
+            <div className="flex flex-col  w-[100%] ">
+              <div className="flex w-[100%]  gap-[20px] flex-wrap justify-around">
+                {dataByCategory?.length > 1 ?
                   dataByCategory.map((item, i) => {
                     return (
                       <Link key={i} to={`/productbyid/${item.id}`}>
@@ -292,9 +284,15 @@ function BySubCategory() {
                         </div>
                       </Link>
                     );
-                  })}
+                  }) : <div className="">
+                    <p className='text-center pt-[100px] font-montserrat text-[1.3em] bp600:text-[2em]'>
+                      We're sorry, there are no products available in this category right now. Please check back later!
+                    </p>
+                  </div>
+                }
               </div>
-              <div className={`flex mx-[auto] gap-[10px] h-[70px] items-center w-[300px] *:cursor-pointer `}>
+
+              <div className={`${dataByCategory.length > 1 ? 'block' : 'hidden'} flex mx-[auto] gap-[10px] h-[70px] items-center w-[300px] *:cursor-pointer `}>
                 <div
                   onClick={(e) => {
                     if (page == 1) {
@@ -341,7 +339,7 @@ function BySubCategory() {
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
           // : (
           //   <div>
           //     <p className='text-center pt-[30px] bp600:px-[40px] font-montserrat text-[1.3em] bp600:text-[2em]'>

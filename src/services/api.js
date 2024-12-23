@@ -19,12 +19,12 @@ async function getProductById({proid}) {
     const res=await axios.get(`https://ecommerce.ibradev.me/products/get/${proid}`)
     return res.data
 }
-async function getDataBySubCategory(subid,page=2) {
+async function getDataBySubCategory(subid,page=1) {
     const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}&page=${page}}`)
     return res.data
 }
-async function getDataBySubBrand(color) {
-    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=2&color=${color}`)
+async function getFilteredData(subid,color,brand,size) {
+    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}${color ? `&color=${color}` : ''}${brand ? `&brandId=${brand}` : ''}${size ? `&size=${size}` : ''} `)
     return res.data
 }
 
@@ -41,5 +41,5 @@ export {
     getDataBySubCategory,
     getDataAll,
     getProductById,
-    getDataBySubBrand
+    getFilteredData
 }
