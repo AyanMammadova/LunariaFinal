@@ -42,13 +42,14 @@ function App() {
           <Route path='/remind' element={<ForgotPassword/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/about' element={<About/>}/>
-          <Route path='/payment' element={<Payment/>}/>
+          
           <Route path='/finishorder' element={<FinishOrder/>}/>
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>
           <Route path='/img' element={<ImageWithLoader/>}/>
-        </Route>       
+        </Route>  
+        <Route path='/payment' element={<Payment/>}/>     
      </Routes>
     </>
   )

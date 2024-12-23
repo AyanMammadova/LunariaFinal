@@ -180,8 +180,8 @@ function CheckOut() {
               <div className=" flex gap-[10px]">
                 <button
                   onClick={() => {
-                    setDelivery(!delivery);
-                    setPickup(!pickup);
+                    setDelivery(true);
+                    setPickup(false);
                   }}
                   className={`border-[1px] transition-all duration-200 rounded border-black h-[50px] px-[10px] ${delivery ? "bg-black text-white" : "bg-white text-black"
                     }`}
@@ -190,8 +190,8 @@ function CheckOut() {
                 </button>
                 <button
                   onClick={() => {
-                    setPickup(!pickup);
-                    setDelivery(!delivery);
+                    setPickup(true);
+                    setDelivery(false);
                   }}
                   className={`border-[1px] transition-all duration-200 rounded border-black h-[50px] px-[5px] ${pickup ? "bg-black text-white" : "bg-white text-black"
                     }`}
