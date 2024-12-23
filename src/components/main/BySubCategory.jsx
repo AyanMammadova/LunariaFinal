@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
 import { getbooks, getDataBySubBrand, getDataBySubCategory } from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
@@ -10,17 +10,15 @@ import {
   IoIosCheckmark,
 } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
-import axios from "axios";
 import { Helmet } from "react-helmet";
 
 function BySubCategory() {
   const pathname = useLocation()
-  const { catname, catid, subname, subid } = useParams()
+  const { catname, subname} = useParams()
   const [sortSelection, showSortSelection] = useState(false)
   const { dataCategory, dataFilter, dataFav, handleFavs, showFilter, setShowFilter } = useContext(DATA)
-  const sortData = ['RECOMMENDED ', 'PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
-  const [selectedSort, setSelectedSort] = useState('RECOMMENDED')
-  // const [sortedData,setSortedData]=useState()
+  const sortData = ['RECOMMENDED' , 'PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
+  const [selectedSort, setSelectedSort] = useState('RECOMMENDED ')
   const [dataByCategory, setDataByCategory] = useState(null)
   const [totalPage, setTotalPage] = useState(1)
   const [selectedColors, setSelectedColors] = useState(null)
@@ -31,6 +29,9 @@ function BySubCategory() {
   const [brandData, setBrandData] = useState(null)
   const [page, setPage] = useState(1)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter)
+  const catid=dataCategory?.find((item,i)=>item.name==catname).id
+  const subid=dataCategory?.[catid-1]?.Subcategory?.find((item,i)=>item.name==subname).id
+  const navigate=useNavigate()
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -42,12 +43,23 @@ function BySubCategory() {
     )
   }
 
-  function handleCheckedFilters(filtername, filteri, filtertype) {
-    filtertype == 'colors' ? setSelectedColors(filtername) :
-      filtertype == 'brands' ? setSelectedBrand(filtername) :
-        filtertype == 'sizes' ? setSelectedSizes(filtername) :
-          filtertype == 'discount' ? setSearchParams({discounted : true}) : ''
+  function handleCheckedFilters(filtername, filteri, filtertype, filtertypeid) {
+    // setnewdatafilter(
+    //   newdatafilter[filtertypeid].subfilter.map((item, i) =>
+    //     item.name ? { ...item, isselecte: true } : ''
+    //   ))
+
+    filtertype == 'colors' ? setSelectedColors(filtername) :  ''
+    // filtertype == 'brands' ? setSelectedBrand(filtername) : 
+    //   filtertype == 'sizes' ? setSelectedSizes(filtername) :
+    //     filtertype == 'discount' ? setSearchParams({ discounted: true }) : ''
+    
   }
+  // console.log(newdatafilter)
+
+  useEffect(() => {
+    getDataBySubBrand(selectedColors).then(res => setDataByCategory(res.data))
+  }, [selectedColors])
 
   useEffect(() => {
     setnewdatafilter(
@@ -142,7 +154,7 @@ function BySubCategory() {
           </div>
         </div>
         {
-          dataByCategory?.length > 1 ? <div className="flex p-[30px] justify-between">
+          dataByCategory && <div className="flex p-[30px] justify-between">
             {/* FILTERDIV */}
             <div className="hidden lg:block w-[500px] mr-[20px]">
               <div>
@@ -173,7 +185,9 @@ function BySubCategory() {
                                     <li key={subi}
                                       className={`p-[5px] cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
                                       <div
-                                        onClick={() => { handleCheckedFilters(subitem, subi, item.name) }}
+                                        onClick={() => {
+                                          handleCheckedFilters(subitem, subi, item.name, i)
+                                        }}
                                         className={`relative  border-[1px] border-black
                                       ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
                                             : 'rounded h-[15px] w-[15px]'}
@@ -283,18 +297,18 @@ function BySubCategory() {
               <div className={`flex mx-[auto] gap-[10px] h-[70px] items-center w-[300px] *:cursor-pointer `}>
                 <div
                   onClick={(e) => {
-                      if(page == 1) {
-                        e.stopPropagation()
-                        return
-                      }
-                      changeUrlPage(page - 1);
-                      setPage(page - 1);
-                      setSearchParams({ page: page - 1 }) 
-                    
-                    
+                    if (page == 1) {
+                      e.stopPropagation()
+                      return
+                    }
+                    changeUrlPage(page - 1);
+                    setPage(page - 1);
+                    setSearchParams({ page: page - 1 })
+
+
                   }}
                   className={`flex items-center ${page == 1 ? 'text-gray-400' : 'text-black'}`}>
-                  <IoIosArrowBack className={``}/> Previous{" "}
+                  <IoIosArrowBack className={``} /> Previous{" "}
                 </div>
                 {Array(totalPage)
                   .fill("ayan")
@@ -314,7 +328,7 @@ function BySubCategory() {
                   ))}
                 <div
                   onClick={(e) => {
-                    if(page == totalPage) {
+                    if (page == totalPage) {
                       e.stopPropagation()
                       return
                     }
@@ -327,12 +341,13 @@ function BySubCategory() {
                 </div>
               </div>
             </div>
-          </div> : (
-            <div>
-              <p className='text-center pt-[30px] bp600:px-[40px] font-montserrat text-[1.3em] bp600:text-[2em]'>
-                We're sorry, there are no products available for "{subname}" category right now. Please check back later!
-              </p>
-            </div>)
+          </div> 
+          // : (
+          //   <div>
+          //     <p className='text-center pt-[30px] bp600:px-[40px] font-montserrat text-[1.3em] bp600:text-[2em]'>
+          //       We're sorry, there are no products available for "{subname}" category right now. Please check back later!
+          //     </p>
+          //   </div>)
         }
       </div>
     </>

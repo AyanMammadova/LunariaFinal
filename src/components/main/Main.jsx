@@ -18,12 +18,12 @@ function Main() {
               src="https://www.versace.com/dw/image/v2/BGWN_PRD/on/demandware.static/-/Library-Sites-ver-library/default/dwe92ce0c5/Homepage-New/SS25/hp-mercury-18112024-hero-desk.jpg" alt="MainPhoto" />
             <p className='absolute z-20 top-[60%] bp600:top-[70%]  text-[2em] font-serif text-white w-[100%] text-center'>Black Friday</p>
             <div className='absolute z-20 bottom-[60px] w-[100%] flex-col bp600:flex-row justify-center flex gap-[20px] text-white bp600:w-[40%] bp600:left-[30%]'>
-              <Link to={'/productsbycategory/Women/1'}>
+              <Link to={'/category/Women/1'}>
                 <button className='bg-transparent border-2 border-white ml-[2%] w-[95%]  bp600:w-[200px] py-[10px] hover:bg-[#35313180] font-[600] '>
                   Women
                 </button>
               </Link>
-              <Link to={'/productsbycategory/Men/2'}>
+              <Link to={'/category/Men/2'}>
                 <button className='bg-transparent border-2 border-white ml-[2%] w-[95%] bp600:w-[200px] py-[10px] hover:bg-[#35313180] font-[600] '>
                   Men
                 </button>
@@ -44,7 +44,7 @@ function Main() {
             {
               dataCategory ? dataCategory.map((item, i) => {
                 return <Link
-                  to={`/productsbycategory/${item.name}/${item.id}`}
+                  to={`/category/${item.name}/${item.id}`}
                   key={i}
                   className='w-[100%] group overflow-hidden  md:w-[49%] relative'>
                   <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>

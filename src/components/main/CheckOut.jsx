@@ -17,9 +17,9 @@ function CheckOut() {
   const [onlinepay, setOnlinePay] = useState(true);
   const [pickup, setPickup] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     setUrgent(false)
-  },[pickup])
+  }, [pickup])
   const [showOrderSumFull, setShowOrderSumFull] = useState(false)
   onscroll = function () {
     if (window.scrollY >= 850) {
@@ -150,12 +150,14 @@ function CheckOut() {
                 </div>
               </div>
             </div>
-            <button
+            <Link to={onlinepay ? '/payment' : '/finishorder'}>
+              <button
 
-              className="bg-black text-white transition-all font-montserrat duration-200 hover:bg-white hover:text-black text-center w-[95%] rounded mt-[20px] h-[40px] border-[1px] border-black"
-            >
-              {onlinepay ? 'Go to payment' : 'Complete Order'}
-            </button>
+                className="bg-black text-white transition-all font-montserrat duration-200 hover:bg-white hover:text-black text-center w-[95%] rounded mt-[20px] h-[40px] border-[1px] border-black"
+              >
+                {onlinepay ? 'Go to payment' : 'Complete Order'}
+              </button>
+            </Link>
             <p className="text-[1.3em] py-[20px] font-cormorant  flex justify-center">
               Need Help?
             </p>
@@ -477,7 +479,7 @@ function CheckOut() {
         </div>
         {/* ORDER DIV */}
         <div className={`${showOrderSumFull ? 'hidden' : 'block'} hidden lg:block lg:w-[30%]`}>
-          <OrderSummary urgent={urgent}  setShowOrderSumFull={setShowOrderSumFull} pickup={pickup} />
+          <OrderSummary urgent={urgent} setShowOrderSumFull={setShowOrderSumFull} pickup={pickup} />
         </div>
         {/* FIXED ORDER DIV */}
         <div className={`lg:hidden ${showOrderSumFull ? 'hidden' : 'relative'} w-[100%] h-[100px] mt-[20px]  bg-[#F7F7F2]`}>
@@ -502,15 +504,17 @@ function CheckOut() {
             </div>
           </div>
         </div>
+
+
         <div className={`${showOrderSumFull ? 'relative' : 'hidden'} lg:hidden w-[100%]  z-40`}>
 
-          <div 
-          className="fixed w-[100%] top-0 h-[100vh] bg-[#53525280] "
-          onClick={()=>{setShowOrderSumFull(false)}}
+          <div
+            className="fixed w-[100%] top-0 h-[100vh] bg-[#53525280] "
+            onClick={() => { setShowOrderSumFull(false) }}
           >
-            <div 
-            onClick={(e)=>e.stopPropagation()}
-            className="fixed w-[100%]  bottom-0">
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="fixed w-[100%]  bottom-0">
               <OrderSummary urgent={urgent} setShowOrderSumFull={setShowOrderSumFull} />
             </div>
           </div>

@@ -15,6 +15,8 @@ import CheckOut from './components/main/CheckOut'
 import NotFound from './NotFound'
 import ImageWithLoader from './components/main/ImageWithLoader'
 import { Helmet } from 'react-helmet'
+import FinishOrder from './components/main/FinishOrder'
+import Payment from './components/main/Payment'
 
 function App() {
   const { pathname } = useLocation()
@@ -32,14 +34,16 @@ function App() {
      <Routes>
         <Route path='/' element={<Layout/>}>
           <Route index element={<Main/>}/>
-          <Route path='/productsbycategory/:catname/:catid' element={<ByCategory/>}/>
+          <Route path='/category/:catname' element={<ByCategory/>}/>
           <Route path='/productbyid/:proid' element={<ProductById/>}/>
-          <Route path='/productsbysubcategory/:catname/:catid/:subname/:subid' element={<BySubCategory/>}/>
+          <Route path='/products/:catname/:subname' element={<BySubCategory/>}/>
           <Route path='/register' element={<RegisterPage/>}/>
           <Route path='/wishlist' element={<WishList/>}/>
           <Route path='/remind' element={<ForgotPassword/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/about' element={<About/>}/>
+          <Route path='/payment' element={<Payment/>}/>
+          <Route path='/finishorder' element={<FinishOrder/>}/>
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>

@@ -44,7 +44,6 @@ function BasketContext({ children }) {
                 size: size,
                 color: color,
                 quantity: 1
-
             }
             ])
         }

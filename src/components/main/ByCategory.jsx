@@ -11,11 +11,12 @@ import QuickView from './QuickView'
 import { Helmet } from 'react-helmet'
 
 function ByCategory() {
-  const { catname, catid } = useParams()
+  const { catname} = useParams()
+  
   const { imgsfordeps, imgsforsubcats, dataCategory } = useContext(DATA)
   const [showQuick, setShowQuick] = useState(false)
   const [proid, setproid] = useState(null)
-
+  const catid=dataCategory?.find((item,i)=>item.name==catname).id
   return (
     <>
     <Helmet>
@@ -69,7 +70,7 @@ function ByCategory() {
             className="mySwiper"
           >
             {
-              imgsforsubcats && imgsforsubcats[catid - 1].map((item, i) => {
+              imgsforsubcats && imgsforsubcats[catid - 1]?.map((item, i) => {
                 return <SwiperSlide key={i} >
                   <div className='w-full h-auto relative group overflow-hidden'>
                     <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>

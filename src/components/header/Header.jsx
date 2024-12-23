@@ -15,7 +15,7 @@ import FilterSlide from "../offcanvas/FilterSlide";
 function Header() {
   const location = useLocation();
   const [showCategorySlide, setShowCategorySlide] = useState(false);
-  const { dataCategory, imgsformenu, dataFav,setShowFilter,showFilter } = useContext(DATA);
+  const { dataCategory, imgsformenu, dataFav, setShowFilter, showFilter } = useContext(DATA);
   const { basket } = useContext(BASKET);
   const [showSeachBar, setShowSearchBar] = useState(false);
   const [showBag, setShowBag] = useState(false);
@@ -34,35 +34,30 @@ function Header() {
             setShowSearchBar(false);
             setShowBag(false);
           }}
-          className={`${
-            showBag || showSeachBar ? "block" : "hidden"
-          } w-full h-full bg-[#53525280] fixed z-30`}
+          className={`${showBag || showSeachBar ? "block" : "hidden"
+            } w-full h-full bg-[#53525280] fixed z-30`}
         ></div>
         <div
-          className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${
-            showBag ? "right-0" : "-right-[100%]"
-          }`}
+          className={` w-[300px] bp600:w-[400px] absolute transition-all duration-300 ${showBag ? "right-0" : "-right-[100%]"
+            }`}
         >
           <ShoppingBag setShowBag={setShowBag} />
         </div>
         <div
-          className={`z-50 absolute w-[100%] transition-all duration-300  ${
-            showSeachBar ? "top-0" : "-top-[100vh]"
-          }`}
+          className={`z-50 absolute w-[100%] transition-all duration-300  ${showSeachBar ? "top-0" : "-top-[100vh]"
+            }`}
         >
           <SearchBar setShowSearchBar={setShowSearchBar} />
         </div>
         <div
-          className={`absolute  w-[100%] z-50 translate-x-0 duration-300 ${
-            showFilter ? "left-0" : "-left-[170%]"
-          }  bp1200:hidden`}
+          className={`absolute  w-[100%] z-50 translate-x-0 duration-300 ${showFilter ? "left-0" : "-left-[170%]"
+            }  bp1200:hidden`}
         >
           <FilterSlide />
         </div>
         <div
-          className={`absolute top-[90px] translate-x-0 duration-300 ${
-            showCategorySlide ? "left-0" : "-left-[170%]"
-          }  bp1200:hidden`}
+          className={`absolute top-[90px] translate-x-0 duration-300 ${showCategorySlide ? "left-0" : "-left-[170%]"
+            }  bp1200:hidden`}
         >
           <CategorySlide />
         </div>
@@ -93,7 +88,7 @@ function Header() {
                     return (
                       <div key={i} className="cathead">
                         <NavLink
-                          to={`/productsbycategory/${item.name}/${item.id}`}
+                          to={`/category/${item.name}`}
                           className="hover:bg-[#E4E4E4] navlarim py-[5px] rounded px-[10px]  text-[1.1em] cursor-pointer"
                         >
                           {item.name}
@@ -105,7 +100,7 @@ function Header() {
                                 return (
                                   <NavLink
                                     key={subi}
-                                    to={`/productsbysubcategory/${item.name}/${item.id}/${subitem.name}/${subitem.id}`}
+                                    to={`/products/${item.name}/${subitem.name}`}
                                     className="relative  w-max mx-[10px] cursor-pointer group"
                                   >
                                     <span className="">{subitem.name}</span>
@@ -141,9 +136,8 @@ function Header() {
 
             <div className="text-[1.6em] relative w-[43%] justify-end flex gap-[10px]">
               <div
-                className={`${
-                  showLogin ? "absolute" : "hidden"
-                }  top-[50px] ring-0`}
+                className={`${showLogin ? "absolute" : "hidden"
+                  }  top-[50px] ring-0`}
               >
                 <LoginPopUp />
               </div>
