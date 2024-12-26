@@ -12,7 +12,7 @@ function SearchBar({ setShowSearchBar }) {
 
   
   useEffect(()=>{
-    const filteredbyInput = dataAll.filter((item => item.name.toLowerCase().includes(trimmedInput)))
+    const filteredbyInput = dataAll?.filter((item => item.name.toLowerCase().includes(trimmedInput)))
     setSearchedData(
       selectedCategory == 'All' ? filteredbyInput : filteredbyInput.filter(item => item.categoryId == Number(selectedCategory))
     )
