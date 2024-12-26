@@ -50,7 +50,7 @@ function SearchBar({ setShowSearchBar }) {
               }
             </ul>
           </div>
-          <div className='w-[280px] max-h-[300px] overflow-y-scroll  mx-[auto] mb-[20px] bp600:w-[450px]'>
+          <div className='w-[280px] max-h-[60vh] lg:max-h-[300px] overflow-y-scroll  mx-[auto] mb-[20px] bp600:w-[450px]'>
             {
               searchedData && searchedData.map((item, i) => {
                 return <Link key={i} to={`/productbyid/${item.id}`}>
