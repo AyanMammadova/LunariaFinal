@@ -89,7 +89,7 @@ function Header() {
                       <div key={i} className="cathead">
                         <NavLink
                           to={`/category/${item.name}`}
-                          className="hover:bg-[#E4E4E4] navlarim py-[5px] rounded px-[10px]  text-[1.1em] cursor-pointer"
+                          className="hover:bg-[rgb(228,228,228)] navlarim py-[5px] rounded px-[10px]  text-[1.1em] cursor-pointer"
                         >
                           {item.name}
                         </NavLink>

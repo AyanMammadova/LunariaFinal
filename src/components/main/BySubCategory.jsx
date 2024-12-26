@@ -12,8 +12,8 @@ function BySubCategory() {
   const { catname, subname } = useParams()
   const [sortSelection, showSortSelection] = useState(false)
   const { dataCategory, dataFilter, dataFav, handleFavs, showFilter, setShowFilter } = useContext(DATA)
-  const sortData = ['RECOMMENDED', 'PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
-  const [selectedSort, setSelectedSort] = useState('RECOMMENDED ')
+  const sortData = ['PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
+  const [selectedSort, setSelectedSort] = useState('PRICE LOW TO HIGH')
   const [dataByCategory, setDataByCategory] = useState(null)
   const [totalPage, setTotalPage] = useState(1)
   const [selectedColors, setSelectedColors] = useState(null)
@@ -27,6 +27,7 @@ function BySubCategory() {
   const catid = dataCategory?.find((item, i) => item.name == catname).id
   const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
   const navigate = useNavigate()
+  const [discounted, setDiscounted] = useState(false)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -39,14 +40,30 @@ function BySubCategory() {
   }
 
   function handleCheckedFilters(filtername, filteri, filtertype, filtertypeid) {
-    filtertype == 'colors' ? setSelectedColors(filtername) :
-      filtertype == 'brands' ? setSelectedBrand(filtername) :
-        filtertype == 'sizes' ? setSelectedSizes(filtername) : " "
+    if (filtertype == 'colors') {
+      setColorData(
+        colorData.map((item, i) =>
+          item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
+      )
+    } else if (filtertype == 'brands') {
+      setBrandData(
+        brandData.map((item, i) =>
+          item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
+      )
+    } else if (filtertype == 'sizes') {
+      setSizeData(
+        sizeData.map((item, i) =>
+          item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
+      )
+    }
+    setSelectedColors(colorData.filter(item => item.isChecked==true).map(item=>item.name)) 
+    setSelectedBrand(brandData.filter(item => item.isChecked==true).map(item=>item.name))
+    setSelectedSizes(sizeData.filter(item => item.isChecked==true).map(item=>item.name))
   }
-
+  console.log(selectedColors)
   useEffect(() => {
     getFilteredData(subid, selectedColors, selectedBrand, selectedSizes).then(res => setDataByCategory(res.data))
-    navigate(`?${selectedColors ? `&color=${selectedColors}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${selectedSizes ? `&size=${selectedSizes}` : ''}`)
+    navigate(`?${selectedColors.length>0 ? `&color=${selectedColors.map(item=> item).join('%2C')}` : ''}${selectedBrand.length>0 ? `&brandId=${selectedBrand.map(item=> item).join('%2C')}` : ''}${selectedSizes.length>1 ? `&size=${selectedSizes}` : ''}`)
   }, [selectedColors, selectedBrand, selectedSizes])
 
 
@@ -55,29 +72,38 @@ function BySubCategory() {
       newdatafilter.map((item, i) =>
         item.name == 'colors' ? { ...item, subfilter: [colorData] } :
           item.name == 'brands' ? { ...item, subfilter: [brandData] } :
-            item.name == 'discount' ? { ...item, subfilter: [['discount']] } :
+            item.name == 'discount' ? { ...item, subfilter: [[{ name: 'discount', isChecked: false }]] } :
               item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
       ))
   }, [dataCategory, colorData, sizeData, brandData])
-
   useEffect(() => {
     showSortSelection(false)
     getDataBySubCategory(subid, page, selectedBrand).then((res) => {
-      setDataByCategory(res.data.sort(() => Math.random() - 0.5))
+      setDataByCategory(res.data)
       setTotalPage(res.meta.totalPages)
-      setColorData([...new Set(res.data.flatMap((item) => item.Colors))])
-      setSizeData([...new Set(res.data.flatMap((item) => item.Size))])
-      setBrandData([...new Set(res.data.flatMap((item) => item.Brands.id))])
+      setColorData([...new Set(res.data.flatMap((item) => item.Colors))].map((item, i) =>
+        ({ name: item, isChecked: false })
+      ))
+      setSizeData([...new Set(res.data.flatMap((item) => item.Size))].map((item, i) =>
+        ({ name: item, isChecked: false })
+      ))
+      const datanow = res.data.flatMap((item) => ({ name: item.Brands.name, id: item.Brands.id, isChecked: false }))
+      setBrandData(
+        datanow.reduce((acc, item) => {
+          if (!acc?.some(existingItem => existingItem.id == item.id)) {
+            acc.push(item)
+          }
+          return acc
+        }, [])
+      )
     })
-    setSelectedBrand('')
-    setSelectedColors('')
-    setSelectedSizes('')
+
   }, [subid, page])
   function handleSort(type) {
     setSelectedSort(type)
     if (type == 'PRICE LOW TO HIGH') dataByCategory?.sort(function (a, b) { return a.price - b.price })
-    else if (type == 'PRICE HIGH TO LOW') dataByCategory?.sort(function (a, b) { return b.price - a.price })
-    else setDataByCategory(dataByCategory?.sort(() => Math.random() - 0.5))
+    else  dataByCategory?.sort(function (a, b) { return b.price - a.price })
+    // else setDataByCategory(dataByCategory?.sort(() => Math.random() - 0.5))
   }
 
   function changeUrlPage(page) {
@@ -87,7 +113,7 @@ function BySubCategory() {
     });
   }
   useEffect(() => {
-    setSelectedSort('RECOMMENDED')
+    setSelectedSort('PRICE LOW TO HIGH')
 
   }, [pathname])
 
@@ -160,7 +186,7 @@ function BySubCategory() {
                             onClick={() => {
                               handleSubFilter(item.id);
                             }}
-                            className="flex z-0 justify-between w-[100%]">
+                            className="flex z-0 justify-between capitalize w-[100%]">
                             {item.name}
                             <IoIosArrowDown
                               className={`transition-all duration-300 ${item.name == "price" ? "hidden" : "block"
@@ -178,21 +204,22 @@ function BySubCategory() {
                                       className={`p-[5px] cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
                                       <div
                                         onClick={() => {
-                                          handleCheckedFilters(subitem, subi, item.name, i)
+                                          handleCheckedFilters(subitem.name, subi, item.name, i)
                                         }}
                                         className={`relative  border-[1px] border-black
                                       ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
                                             : 'rounded h-[15px] w-[15px]'}
                                       `}
-                                        style={{ backgroundColor: subitem }}
+                                        style={{ backgroundColor: subitem.name }}
                                       >
                                         <IoIosCheckmark className={`-right-[5px] 
                                       ${item.name == "colors" ? '-top-[3px]  text-[2em] text-white' : 'text-black -top-[6px]  text-[1.5em]'}   
-                                      ${subitem.isChecked ? 'absolute' : 'hidden'}  `}
+                                      ${subitem.isChecked ? 'absolute' : 'hidden'}
+                                        `}
                                         />
                                       </div>
 
-                                      {subitem}</li>
+                                      {subitem.name}</li>
                                   )
                                 })
                               }
@@ -208,7 +235,7 @@ function BySubCategory() {
             {/* PAGINATIONDIV */}
             <div className="flex flex-col  w-[100%] ">
               <div className="flex w-[100%]  gap-[20px] flex-wrap justify-around">
-                {dataByCategory?.length > 1 ?
+                {dataByCategory?.length > 0 ?
                   dataByCategory.map((item, i) => {
                     return (
                       <Link key={i} to={`/productbyid/${item.id}`}>
@@ -292,7 +319,7 @@ function BySubCategory() {
                 }
               </div>
 
-              <div className={`${dataByCategory.length > 1 ? 'block' : 'hidden'} flex mx-[auto] gap-[10px] h-[70px] items-center w-[300px] *:cursor-pointer `}>
+              <div className={`${dataByCategory.length > 0 ? 'block' : 'hidden'} flex mx-[auto] gap-[10px] h-[70px] items-center w-[300px] *:cursor-pointer `}>
                 <div
                   onClick={(e) => {
                     if (page == 1) {
@@ -340,12 +367,7 @@ function BySubCategory() {
               </div>
             </div>
           </div>
-          // : (
-          //   <div>
-          //     <p className='text-center pt-[30px] bp600:px-[40px] font-montserrat text-[1.3em] bp600:text-[2em]'>
-          //       We're sorry, there are no products available for "{subname}" category right now. Please check back later!
-          //     </p>
-          //   </div>)
+
         }
       </div>
     </>
