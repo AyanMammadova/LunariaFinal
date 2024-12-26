@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
 import { IoCloseSharp } from 'react-icons/io5'
-import { Link, NavLink } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { DATA } from '../../context/DataContext'
 
 function SearchBar({ setShowSearchBar }) {

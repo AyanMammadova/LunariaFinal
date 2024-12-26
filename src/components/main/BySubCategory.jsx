@@ -63,7 +63,7 @@ function BySubCategory() {
   console.log(selectedColors)
   useEffect(() => {
     getFilteredData(subid, selectedColors, selectedBrand, selectedSizes).then(res => setDataByCategory(res.data))
-    navigate(`?${selectedColors.length>0 ? `&color=${selectedColors.map(item=> item).join('%2C')}` : ''}${selectedBrand.length>0 ? `&brandId=${selectedBrand.map(item=> item).join('%2C')}` : ''}${selectedSizes.length>1 ? `&size=${selectedSizes}` : ''}`)
+    navigate(`?${selectedColors?.length>0 ? `&color=${selectedColors.map(item=> item).join('%2C')}` : ''}${selectedBrand?.length>0 ? `&brandId=${selectedBrand.map(item=> item).join('%2C')}` : ''}${selectedSizes?.length>1 ? `&size=${selectedSizes}` : ''}`)
   }, [selectedColors, selectedBrand, selectedSizes])
 
 
