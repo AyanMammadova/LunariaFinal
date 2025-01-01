@@ -14,7 +14,11 @@ function ProductById() {
     const { addToBasket, handleSize, size, setSize, color, handleColor } = useContext(BASKET)
     const { dataFav, handleFavs } = useContext(DATA)
 
-    const { proid } = useParams()
+    const { proinfo } = useParams()
+    const splittedproinfo=proinfo.split("-")
+    const proid=splittedproinfo[splittedproinfo.length-1]
+    
+    
     const [product, setProduct] = useState(null)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })

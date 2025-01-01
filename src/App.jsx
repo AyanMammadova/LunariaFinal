@@ -35,7 +35,7 @@ function App() {
         <Route path='/' element={<Layout/>}>
           <Route index element={<Main/>}/>
           <Route path='/category/:catname' element={<ByCategory/>}/>
-          <Route path='/productbyid/:proid' element={<ProductById/>}/>
+          <Route path='/details/:proinfo' element={<ProductById/>}/>
           <Route path='/products/:catname/:subname' element={<BySubCategory/>}/>
           <Route path='/register' element={<RegisterPage/>}/>
           <Route path='/wishlist' element={<WishList/>}/>

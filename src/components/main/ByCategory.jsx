@@ -9,25 +9,31 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import QuickView from './QuickView'
 import { Helmet } from 'react-helmet'
+import { getDataByCategory } from '../../services/api'
 
 function ByCategory() {
-  const { catname} = useParams()
-  
+  const { catname } = useParams()
+  const [cdata, setcdata] = useState(null)
   const { imgsfordeps, imgsforsubcats, dataCategory } = useContext(DATA)
   const [showQuick, setShowQuick] = useState(false)
   const [proid, setproid] = useState(null)
-  const catid=dataCategory?.find((item,i)=>item.name==catname).id
+  // const [catid,setCatid]=useState(null)
+  const catid=dataCategory?.find((item, i) => item.name == catname).id
+  useEffect(() => {
+    
+    getDataByCategory(catid).then(res => { setcdata(res.data) })
+  }, [catname])
   return (
     <>
-    <Helmet>
-    <title>{catname} | Lunaria</title>
-    </Helmet>
+      <Helmet>
+        <title>{catname} | Lunaria</title>
+      </Helmet>
       <section>
         <div className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
           <QuickView setShowQuick={setShowQuick} proid={proid} />
         </div>
         <div className='overflow-hidden h-[100vh]  w-[95%] mx-[auto] relative group'>
-          
+
           <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
 
           <img className=' absolute pt-[100px] top-0 object-top lg:w-full object-cover h-full  transition-all duration-500 group-hover:scale-110'
@@ -42,7 +48,20 @@ function ByCategory() {
       <section>
         <div className='p-[10px] bp600:p-[40px]'>
           <p className='font-[600] text-[1.2em]'>{catname}</p>
-          <ProductSwiper type={'category'} validId={catid} setproid={setproid} setShowQuick={setShowQuick} />
+          <div className={`flex w-[100%] gap-[30px]`}>
+            <div className={`justify-center items-center flex-col gap-[5px] w-[200px] h-[300px] hidden md:flex  `}>
+              <p>NEW ARRIVALS</p>
+              <p className='text-[4em] font-cormorant'>{cdata?.length}</p>
+              <Link to={`/products/${catname}/Clothing`}>
+                <button
+                  className='text-white bg-black hover:text-black border-black border-[1px] hover:bg-white transition-all duration-200 p-[10px]'
+                >
+                  SHOP NOW
+                </button>
+              </Link>
+            </div>
+            <ProductSwiper type={'category'} validId={catid} setproid={setproid} setShowQuick={setShowQuick} />
+          </div>
         </div>
       </section>
       <section>

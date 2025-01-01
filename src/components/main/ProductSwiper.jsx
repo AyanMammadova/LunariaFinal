@@ -28,7 +28,7 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
 
   return (
     <>
-      <div className='relative w-[100%] flex flex-col h-[100%]'>
+ <div className={`${type == 'category' ? 'w-[80%]' : 'w-[100%]'} relative  flex flex-col h-[100%]`}>
         {
           currentData?.length > 1 ? <div className='flex '>
             <Swiper
@@ -69,7 +69,7 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
                 currentData.map((item, i) => {
                   return <SwiperSlide key={i} className=''>
                     <Link to={`/productbyid/${item.id}`}>
-                      <div key={i} className='my-[20px]  shadow-lg bg-white  relative flex cursor-pointer flex-col'>
+                      <div key={i} className='my-[20px]  shadow-sm bg-white  relative flex cursor-pointer flex-col'>
                         <div
                           className=' relative h-[100%] overflow-hidden group '>
                           <img

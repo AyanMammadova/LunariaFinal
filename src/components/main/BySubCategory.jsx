@@ -247,7 +247,7 @@ function BySubCategory() {
                 {dataByCategory?.length > 0 ?
                   dataByCategory.map((item, i) => {
                     return (
-                      <Link key={i} to={`/productbyid/${item.id}`}>
+                      <Link key={i} to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
                         <div className="my-[20px] max-w-[200px] shadow-lg bg-white  relative flex cursor-pointer flex-col">
                           <div className=" relative h-[100%] overflow-hidden group ">
                             <img

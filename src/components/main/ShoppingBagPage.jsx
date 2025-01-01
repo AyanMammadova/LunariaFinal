@@ -20,44 +20,46 @@ function ShoppingBagPage() {
                     </div>
                     {
                         basket && basket.map((item, i) => (
-                            <div className='flex border-t-2 pt-[20px] mx-[5px] p-[4px] gap-[40px] relative' key={i}>
-                                <img className='h-[100px]' src={item?.images?.[0]} alt="" />
-                                <IoCloseSharp
-                                    onClick={() => { removeFromBasket(item.id) }}
-                                    className='absolute cursor-pointer top-[10px] right-[10px]' />
-                                <div>
-                                    <p className='uppercase'>{item?.brand}</p>
-                                    <p>{item.name}</p>
-                                    <p className='flex items-center  gap-[5px]'>Color:
-                                        <span
-                                            className={`cursor-pointer h-[15px] rounded-full w-[15px] `}
-                                            style={{ backgroundColor: item.color }}>
-                                        </span>
-                                    </p>
-                                    <p>Size:{item.size}</p>
-                                    <p className={`${item?.discount > 1 ? 'block' : 'hidden'} text-black text-[1.2em]`}>
-                                        <span>{((item?.price * (100 - item?.discount)) / 100).toFixed(1)}$</span>
-                                        <del className='text-gray-600 px-[5px] text-[.8em]'>{item?.price}</del>
-                                    </p>
-                                    <p className={`${item?.discount > 1 ? 'hidden' : 'block'} text-[1.2em]`}>
-                                        {item?.price}$
-                                    </p>
-                                    <p className='flex gap-[5px] items-center'>Quantity:
-                                        <FaRegSquareMinus
-                                            className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
-                                            onClick={(e) => {
-                                                handleCount(item.id, item.color, item.size, -1)
-                                            }} />
-                                        {item.quantity}
-                                        <FaRegSquarePlus
-                                            className='cursor-pointer'
-                                            onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
-                                    </p>
-                                    <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price}$</p>
-                                    <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
+                            <Link key={i} to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
+                                <div className='flex border-t-2 pt-[20px] mx-[5px] p-[4px] gap-[40px] relative' >
+                                    <img className='h-[100px]' src={item?.images?.[0]} alt="" />
+                                    <IoCloseSharp
+                                        onClick={() => { removeFromBasket(item.id) }}
+                                        className='absolute cursor-pointer top-[10px] right-[10px]' />
+                                    <div>
+                                        <p className='uppercase'>{item?.brand}</p>
+                                        <p>{item.name}</p>
+                                        <p className='flex items-center  gap-[5px]'>Color:
+                                            <span
+                                                className={`cursor-pointer h-[15px] rounded-full w-[15px] `}
+                                                style={{ backgroundColor: item.color }}>
+                                            </span>
+                                        </p>
+                                        <p>Size:{item.size}</p>
+                                        <p className={`${item?.discount > 1 ? 'block' : 'hidden'} text-black text-[1.2em]`}>
+                                            <span>{((item?.price * (100 - item?.discount)) / 100).toFixed(1)}$</span>
+                                            <del className='text-gray-600 px-[5px] text-[.8em]'>{item?.price}</del>
+                                        </p>
+                                        <p className={`${item?.discount > 1 ? 'hidden' : 'block'} text-[1.2em]`}>
+                                            {item?.price}$
+                                        </p>
+                                        <p className='flex gap-[5px] items-center'>Quantity:
+                                            <FaRegSquareMinus
+                                                className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
+                                                onClick={(e) => {
+                                                    handleCount(item.id, item.color, item.size, -1)
+                                                }} />
+                                            {item.quantity}
+                                            <FaRegSquarePlus
+                                                className='cursor-pointer'
+                                                onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
+                                        </p>
+                                        <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price}$</p>
+                                        <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
 
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         )
                         )
                     }
