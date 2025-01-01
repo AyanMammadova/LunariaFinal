@@ -28,7 +28,7 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
 
   return (
     <>
- <div className={`${type == 'category' ? 'w-[80%]' : 'w-[100%]'} relative  flex flex-col h-[100%]`}>
+      <div className={`${type == 'category' ? 'md:w-[80%] w-[100%]' : ''} w-[100%] relative  flex flex-col `}>
         {
           currentData?.length > 1 ? <div className='flex '>
             <Swiper
@@ -40,15 +40,15 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
                   spaceBetween: 10,
                 },
                 640: {
-                  slidesPerView: 3,
+                  slidesPerView: 2,
                   spaceBetween: 15,
                 },
                 768: {
-                  slidesPerView: 4,
+                  slidesPerView: 3,
                   spaceBetween: 20,
                 },
                 1024: {
-                  slidesPerView: 5,
+                  slidesPerView: 4,
                   spaceBetween: 25,
                 },
               }}
@@ -71,7 +71,7 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
                     <Link to={`/productbyid/${item.id}`}>
                       <div key={i} className='my-[20px]  shadow-sm bg-white  relative flex cursor-pointer flex-col'>
                         <div
-                          className=' relative h-[100%] overflow-hidden group '>
+                          className=' relative overflow-hidden group '>
                           <img
                             className={`group-hover:hidden transition-opacity duration-300 ease-in-out `}
                             src={item.images[0]} alt=""
@@ -119,7 +119,7 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
                             <span>{((item.price * (100 - item.discount)) / 100).toFixed(1)}$</span>
                             <del className='text-gray-600 px-[10px] text-[.8em]'>{item.price}</del>
                           </p>
-                          <p className={`${item.discount > 2 ? 'hidden' : 'block'} font-bold`}>
+                          <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold`}>
                             {item.price}$
                           </p>
                         </div>
@@ -131,11 +131,11 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
 
 
             </Swiper>
-          </div> :  <div>
-              <p className='text-center pt-[30px] font-montserrat text-[1.3em] bp600:text-[2em]'>
-                We're sorry, there are no products available in this category right now. Please check back later!
-              </p>
-            </div>
+          </div> : <div>
+            <p className='text-center pt-[30px] font-montserrat text-[1.3em] bp600:text-[2em]'>
+              We're sorry, there are no products available in this category right now. Please check back later!
+            </p>
+          </div>
         }
       </div>
 

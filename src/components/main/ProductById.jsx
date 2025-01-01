@@ -53,11 +53,11 @@ function ProductById() {
                                 product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
                                     return <div
                                         key={i}
-                                        className={` flex items-center justify-center w-[30px] h-[30px] border-2 rounded-full`}
+                                        className={` flex items-center justify-center w-[30px] shadow-lg  h-[30px] border-2 rounded-full`}
                                         style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
                                     >
                                         <div
-                                            className={`cursor-pointer h-[20px] rounded-full w-[20px] `}
+                                            className={`${item=='WHITE' ? 'border-[1px] border-gray-400': ''} cursor-pointer h-[20px] rounded-full w-[20px] `}
                                             style={{ backgroundColor: item }}
                                             onClick={() => { handleColor(item) }}
                                         ></div>

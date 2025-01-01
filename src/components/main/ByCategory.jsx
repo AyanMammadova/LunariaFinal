@@ -46,15 +46,15 @@ function ByCategory() {
         </div>
       </section>
       <section>
-        <div className='p-[10px] bp600:p-[40px]'>
-          <p className='font-[600] text-[1.2em]'>{catname}</p>
-          <div className={`flex w-[100%] gap-[30px]`}>
-            <div className={`justify-center items-center flex-col gap-[5px] w-[200px] h-[300px] hidden md:flex  `}>
-              <p>NEW ARRIVALS</p>
+        <div className='p-[10px] md:px-[40px]'>
+          <p className='font-[600] text-[2em] font-cormorant'>{catname}</p>
+          <div className={`flex flex-col md:flex-row w-[100%] gap-[20px]`}>
+            <div className={`justify-center items-center flex-col gap-[5px] w-full md:w-[200px] md:h-[300px] flex  `}>
+              <p className='font-montserrat text-[1.2em]'>NEW ARRIVALS</p>
               <p className='text-[4em] font-cormorant'>{cdata?.length}</p>
               <Link to={`/products/${catname}/Clothing`}>
                 <button
-                  className='text-white bg-black hover:text-black border-black border-[1px] hover:bg-white transition-all duration-200 p-[10px]'
+                  className='text-white hidden md:block bg-black hover:text-black border-black border-[1px] hover:bg-white transition-all duration-200 p-[10px]'
                 >
                   SHOP NOW
                 </button>
@@ -93,7 +93,7 @@ function ByCategory() {
                 return <SwiperSlide key={i} >
                   <div className='w-full h-auto relative group overflow-hidden'>
                     <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
-                    <Link to={`/`}
+                    <Link to={`/products/${catname}/${dataCategory?.[catid - 1].Subcategory[i].name}`}
                       className='z-50 flex justify-center items-center text-white font-serif text-[1.3em] absolute inset-0'>
                       {dataCategory && dataCategory[catid - 1].Subcategory[i].name}
                     </Link>
