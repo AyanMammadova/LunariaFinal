@@ -452,7 +452,7 @@ function CheckOut() {
                   Payment to Proceed
                 </button>
                 <NavLink
-                  to={`/`}
+                  to={`/shoppingbagpage`}
                   className="relative  flex my-[20px]  w-max mx-[auto]  cursor-pointer group"
                 >
                   <span className="text-center uppercase w-[100%]  font-montserrat">

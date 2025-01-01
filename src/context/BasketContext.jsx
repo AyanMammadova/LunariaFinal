@@ -26,7 +26,6 @@ function BasketContext({ children }) {
     function handleColor(color) {
         setColor(color)
     }
-    console.log(SubTotal)
     function addToBasket(id, name, description, price, discount, brand, images, size, color, quantity) {
         if (basket?.find(item => item.id == id && item.color == color && item.size == size)) {
             setBasket(basket?.map(item =>

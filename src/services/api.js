@@ -19,14 +19,14 @@ async function getProductById({proid}) {
     const res=await axios.get(`https://ecommerce.ibradev.me/products/get/${proid}`)
     return res.data
 }
-async function getDataBySubCategory(subid,page=1) {
-    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}&page=${page}}`)
+async function getDataBySubCategory(subid,page=1,color,brand,size) {
+    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}&page=${page}${color?.length>0 ? `&color=${color?.map(item=> item).join('%2C')}` : ''}${brand ? `&brandId=${brand.map(item=> item).join('%2C')}` : ''}${size ? `&size=${size.map(item=> item).join('%2C')}` : ''} `)
     return res.data
 }
-async function getFilteredData(subid,color,brand,size) {    
-    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}${color.length>0 ? `&color=${color.map(item=> item).join('%2C')}` : ''}${brand ? `&brandId=${brand.map(item=> item).join('%2C')}` : ''}${size ? `&size=${size.map(item=> item).join('%2C')}` : ''} `)
-    return res.data
-}
+// async function getFilteredData(page) {    
+//     const res=await axios.get(`${brand ? `&brandId=${brand.map(item=> item).join('%2C')}` : ''}${size ? `&size=${size.map(item=> item).join('%2C')}` : ''} `)
+//     return res.data
+// }
 
 async function getbooks() {
     const res=await axios.get(`https://raw.githubusercontent.com/M-X-3112/Patagonia-data/refs/heads/main/ProductData.json`)
@@ -40,6 +40,5 @@ export {
     getDataByCategory,
     getDataBySubCategory,
     getDataAll,
-    getProductById,
-    getFilteredData
+    getProductById
 }

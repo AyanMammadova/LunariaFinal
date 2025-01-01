@@ -31,17 +31,17 @@ function CategorySlide() {
           </ul>
           <ul className='text-[.8em] flex flex-col  pt-[30px] font-bold'>
             {
-              id ?  <Link to={`/category/${dataCategory[id-1]?.name}/${dataCategory[id-1]?.id}`}>
+              id ?  <Link to={`/category/${dataCategory[id-1]?.name}`}>
                       {dataCategory[id-1]?.name}-HomePage
                     </Link> : ''
             }
             
             {
-              dataCategory ? dataCategory[id-1]?.Subcategory?.map((item,i)=>{
+              dataCategory ? dataCategory[id-1]?.Subcategory?.map((subitem,subi)=>{
                 return  <Link 
-                          to={`/`}
-                          key={i}>
-                          {item.name}
+                          to={`/products/${dataCategory[id-1]?.name}/${subitem.name}`}
+                          key={subi}>
+                          {subitem.name}
                         </Link>
               }) : 
                ''

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
-import { getDataBySubCategory, getFilteredData } from "../../services/api";
+import { getDataBySubCategory} from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosCheckmark, } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
@@ -22,14 +22,13 @@ function BySubCategory() {
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(null)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter)
   const catid = dataCategory?.find((item, i) => item.name == catname).id
   const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
   const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
 
-  const [searchParams, setSearchParams] = useSearchParams()
 
   function handleSubFilter(id) {
     setnewdatafilter(
@@ -55,31 +54,42 @@ function BySubCategory() {
         sizeData.map((item, i) =>
           item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
       )
-    }
-    setSelectedColors(colorData.filter(item => item.isChecked==true).map(item=>item.name)) 
-    setSelectedBrand(brandData.filter(item => item.isChecked==true).map(item=>item.name))
-    setSelectedSizes(sizeData.filter(item => item.isChecked==true).map(item=>item.name))
-  }
-  console.log(selectedColors)
-  useEffect(() => {
-    getFilteredData(subid, selectedColors, selectedBrand, selectedSizes).then(res => setDataByCategory(res.data))
-    navigate(`?${selectedColors?.length>0 ? `&color=${selectedColors.map(item=> item).join('%2C')}` : ''}${selectedBrand?.length>0 ? `&brandId=${selectedBrand.map(item=> item).join('%2C')}` : ''}${selectedSizes?.length>1 ? `&size=${selectedSizes}` : ''}`)
-  }, [selectedColors, selectedBrand, selectedSizes])
+    } else if (filtertype == 'discount') {
 
+      setDiscounted(!discounted)
+    }
+    setSelectedColors(colorData.filter(item => item.isChecked == true).map(item => item.name))
+    setSelectedBrand(brandData.filter(item => item.isChecked == true).map(item => item.id))
+    setSelectedSizes(sizeData.filter(item => item.isChecked == true).map(item => item.name))
+    getDataBySubCategory(subid, page,selectedColors,selectedBrand,selectedSizes).then((res) => {
+      if (discounted == true) {
+        setDataByCategory(res.data.filter(item => item.discount > 1))
+      }
+      else {
+        setDataByCategory(res.data)
+      }
+    }
+    )
+  }
+  useEffect(() => {
+    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length > 0 ? `&color=${selectedColors.map(item => item).join('%2C')}` : ''}${selectedBrand?.length > 0 ? `&brandId=${selectedBrand.map(item => item).join('%2C')}` : ''}${selectedSizes?.length > 1 ? `&size=${selectedSizes}` : ''}${discounted ? `&discounted=true` : ''}`)
+  }, [selectedColors, selectedBrand, selectedSizes, page])
 
   useEffect(() => {
     setnewdatafilter(
       newdatafilter.map((item, i) =>
         item.name == 'colors' ? { ...item, subfilter: [colorData] } :
           item.name == 'brands' ? { ...item, subfilter: [brandData] } :
-            item.name == 'discount' ? { ...item, subfilter: [[{ name: 'discount', isChecked: false }]] } :
+            item.name == 'discount' ? { ...item, subfilter: [[{ name: 'discount', isChecked: discounted}]] } :
               item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
       ))
-  }, [dataCategory, colorData, sizeData, brandData])
+  }, [dataCategory, colorData, sizeData, brandData,discounted])
+
   useEffect(() => {
     showSortSelection(false)
-    getDataBySubCategory(subid, page, selectedBrand).then((res) => {
+    getDataBySubCategory(subid, page).then((res) => {
       setDataByCategory(res.data)
+      
       setTotalPage(res.meta.totalPages)
       setColorData([...new Set(res.data.flatMap((item) => item.Colors))].map((item, i) =>
         ({ name: item, isChecked: false })
@@ -102,7 +112,7 @@ function BySubCategory() {
   function handleSort(type) {
     setSelectedSort(type)
     if (type == 'PRICE LOW TO HIGH') dataByCategory?.sort(function (a, b) { return a.price - b.price })
-    else  dataByCategory?.sort(function (a, b) { return b.price - a.price })
+    else dataByCategory?.sort(function (a, b) { return b.price - a.price })
     // else setDataByCategory(dataByCategory?.sort(() => Math.random() - 0.5))
   }
 
@@ -114,7 +124,6 @@ function BySubCategory() {
   }
   useEffect(() => {
     setSelectedSort('PRICE LOW TO HIGH')
-
   }, [pathname])
 
   return (
@@ -328,7 +337,6 @@ function BySubCategory() {
                     }
                     changeUrlPage(page - 1);
                     setPage(page - 1);
-                    setSearchParams({ page: page - 1 })
 
 
                   }}
@@ -342,7 +350,6 @@ function BySubCategory() {
                       onClick={() => {
                         changeUrlPage(i + 1);
                         setPage(i + 1);
-                        setSearchParams({ page: i + 1 })
                       }}
                       key={i}
                       title={`Page ${i + 1}`}
@@ -359,7 +366,6 @@ function BySubCategory() {
                     }
                     changeUrlPage(page + 1);
                     setPage(page + 1);
-                    setSearchParams({ page: page + 1 })
                   }}
                   className={` ${page == totalPage ? 'text-gray-400' : 'text-black'} flex items-center`}>
                   Next <IoIosArrowForward />
