@@ -20,6 +20,7 @@ function BySubCategory() {
   const [totalPage, setTotalPage] = useState(1)
   const [selectedColors, setSelectedColors] = useState(null)
   const [selectedSizes, setSelectedSizes] = useState(null)
+  const [selectedBrand, setSelectedBrand] = useState(null)
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
@@ -30,15 +31,16 @@ function BySubCategory() {
   const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
   const [minPrice, setMinPrice] = useState(100)
-  const [maxPrice, setMaxPrice] = useState(6000)
+  const [maxPrice, setMaxPrice] = useState(4500)
   const [value, setValue] = React.useState([minPrice, maxPrice]);
-  const [showPrices,setShowPrices]=useState(false)
+  const [showPrices, setShowPrices] = useState(false)
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
     setMinPrice(newValue[0])
     setMaxPrice(newValue[1])
   }
+
   function handleSubFilter(id) {
     setnewdatafilter(
       newdatafilter.map((item, i) =>
@@ -47,7 +49,7 @@ function BySubCategory() {
     )
   }
 
-  function handleCheckedFilters(filtername, filteri, filtertype, filtertypeid) {
+  function handleCheckedFilters(filtername, filteri, filtertype, filtertypeid, id) {
     if (filtertype == 'colors') {
       setColorData((prevColorData) =>
         prevColorData.map((item) =>
@@ -63,42 +65,53 @@ function BySubCategory() {
           item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
       )
     }
+    else if (filtertype = 'brands') {
+      setBrandData(
+        brandData.map((item, i) =>
+          item.name == filtername ? { ...item, isChecked: !item.isChecked } : { ...item, isChecked: false }
+        )
+      )
+    }
     else if (filtertype == 'discount') {
-
       setDiscounted(!discounted)
     }
   }
   useEffect(() => {
-    getDataBySubCategory(subid, page, selectedColors, selectedSizes,minPrice,maxPrice).then((res) => {
+    getDataBySubCategory(subid, page, selectedColors,selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
       const filteredData = discounted
         ? res.data.filter((item) => item.discount > 1)
         : res.data;
       setdataFinal(filteredData);
     });
-  }, [selectedColors, selectedSizes, page, discounted,showPrices]);
+  }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand]);
   useEffect(() => {
     setSelectedColors(
       colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
-    );
+    )
     setSelectedSizes(
       sizeData?.filter((item) => item.isChecked).map((item) => item.name) || []
-    );
-  }, [colorData, sizeData]);
+    )
+    setSelectedBrand(
+      brandData?.find((item, i) => item.isChecked == true)?.id
+    )
+  }, [colorData, sizeData, brandData])
   useEffect(() => {
-    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&color=${selectedSizes.map(item => item).join(',')}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice ? `&maxPrice=${maxPrice}` : ''}`)
-  }, [selectedColors, selectedSizes, page, discounted,showPrices])
+    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''} ${maxPrice ? `&maxPrice=${maxPrice}` : ''}`)
+  }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand])
 
   useEffect(() => {
     setnewdatafilter(
       newdatafilter.map((item, i) =>
         item.name == 'colors' ? { ...item, subfilter: [colorData] } :
-          item.name == 'discount' ? { ...item, subfilter: [[{ name: 'discount', isChecked: discounted }]] } : item
+          item.name == 'discount' ? { ...item, subfilter: [[{ name: 'discount', isChecked: discounted }]] } :
+            item.name == 'brands' ? { ...item, subfilter: [brandData] } :
+              item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
       ))
   }, [dataCategory, colorData, sizeData, brandData, discounted])
 
   useEffect(() => {
     setMinPrice(0)
-    setMaxPrice(6000)  
+    setMaxPrice(4500)
     setDiscounted(false)
     showSortSelection(false)
     getDataBySubCategory(subid, page).then((res) => {
@@ -226,7 +239,7 @@ function BySubCategory() {
                                       className={`p-[5px] ${item.name == 'colors' && subitem.isChecked == true ? 'bg-pink-300' : ''} rounded-xl cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
                                       <div
                                         onClick={() => {
-                                          handleCheckedFilters(subitem.name, subi, item.name, i)
+                                          handleCheckedFilters(subitem.name, subi, item.name, i, item.id)
                                         }}
                                         className={`relative  border-[1px] border-black
                                       ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
@@ -290,9 +303,9 @@ function BySubCategory() {
                     value={maxPrice}
                     className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
                     type="number" />
-                  <div 
-                  onClick={()=>{setShowPrices(true)}}
-                  className="border-[1px] rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
+                  <div
+                    onClick={() => { setShowPrices(true) }}
+                    className="border-[1px] rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
                     <HiMagnifyingGlass />
                   </div>
 

@@ -13,7 +13,6 @@ import About from './components/main/About'
 import ShoppingBagPage from './components/main/ShoppingBagPage'
 import CheckOut from './components/main/CheckOut'
 import NotFound from './NotFound'
-import ImageWithLoader from './components/main/ImageWithLoader'
 import { Helmet } from 'react-helmet'
 import FinishOrder from './components/main/FinishOrder'
 import Payment from './components/main/Payment'
@@ -46,7 +45,6 @@ function App() {
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>
-          <Route path='/img' element={<ImageWithLoader/>}/>
         </Route>  
         <Route path='/payment' element={<Payment/>}/>     
      </Routes>
