@@ -6,6 +6,8 @@ import { VscHeart, VscHeartFilled } from "react-icons/vsc";
 import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosCheckmark, } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
 import { Helmet } from "react-helmet";
+import { Box, Slider } from "@mui/material";
+import { HiMagnifyingGlass } from "react-icons/hi2";
 
 function BySubCategory() {
   const pathname = useLocation()
@@ -27,8 +29,16 @@ function BySubCategory() {
   const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
   const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
+  const [minPrice, setMinPrice] = useState(100)
+  const [maxPrice, setMaxPrice] = useState(6000)
+  const [value, setValue] = React.useState([minPrice, maxPrice]);
+  const [showPrices,setShowPrices]=useState(false)
 
-
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+    setMinPrice(newValue[0])
+    setMaxPrice(newValue[1])
+  }
   function handleSubFilter(id) {
     setnewdatafilter(
       newdatafilter.map((item, i) =>
@@ -53,28 +63,19 @@ function BySubCategory() {
           item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
       )
     }
-    // else if (filtertype == 'colors') {
-    //   setSizeData((prevSizeData) =>
-    //     prevSizeData.map((item) =>
-    //       item.name === filtername
-    //         ? { ...item, isChecked: !item.isChecked }
-    //         : item
-    //     )
-    //   );
-    // } 
     else if (filtertype == 'discount') {
 
       setDiscounted(!discounted)
     }
   }
   useEffect(() => {
-    getDataBySubCategory(subid, page, selectedColors, selectedSizes).then((res) => {
+    getDataBySubCategory(subid, page, selectedColors, selectedSizes,minPrice,maxPrice).then((res) => {
       const filteredData = discounted
         ? res.data.filter((item) => item.discount > 1)
         : res.data;
       setdataFinal(filteredData);
     });
-  }, [selectedColors, selectedSizes, page, discounted]);
+  }, [selectedColors, selectedSizes, page, discounted,showPrices]);
   useEffect(() => {
     setSelectedColors(
       colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
@@ -84,8 +85,8 @@ function BySubCategory() {
     );
   }, [colorData, sizeData]);
   useEffect(() => {
-    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&color=${selectedSizes.map(item => item).join(',')}` : ''}${discounted ? `&discounted=true` : ''}`)
-  }, [selectedColors, selectedSizes, page, discounted])
+    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&color=${selectedSizes.map(item => item).join(',')}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice ? `&maxPrice=${maxPrice}` : ''}`)
+  }, [selectedColors, selectedSizes, page, discounted,showPrices])
 
   useEffect(() => {
     setnewdatafilter(
@@ -96,6 +97,8 @@ function BySubCategory() {
   }, [dataCategory, colorData, sizeData, brandData, discounted])
 
   useEffect(() => {
+    setMinPrice(0)
+    setMaxPrice(6000)  
     setDiscounted(false)
     showSortSelection(false)
     getDataBySubCategory(subid, page).then((res) => {
@@ -248,6 +251,52 @@ function BySubCategory() {
                       </div>
                     )
                   })}
+
+                <Box sx={{ width: 300 }}>
+                  <Slider
+                    sx={{
+                      '& .MuiSlider-thumb': {
+                        backgroundColor: 'black',
+                      },
+                      '& .MuiSlider-rail': {
+                        backgroundColor: '#bdbdbd',
+                      },
+                      '& .MuiSlider-track': {
+                        backgroundColor: 'black',
+                      },
+                    }}
+                    getAriaLabel={() => 'Temperature range'}
+                    value={value}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    min={0}
+                    max={10000}
+                  />
+                </Box>
+                <div className="flex justify-between w-[100%]">
+                  <input
+                    onChange={(e) => {
+                      setMinPrice(Number(e.target.value))
+                      setValue([Number(e.target.value), maxPrice])
+                    }}
+                    value={minPrice}
+                    className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
+                    type="number" />
+                  <input
+                    onChange={(e) => {
+                      setMaxPrice(Number(e.target.value))
+                      setValue([minPrice, Number(e.target.value)])
+                    }}
+                    value={maxPrice}
+                    className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
+                    type="number" />
+                  <div 
+                  onClick={()=>{setShowPrices(true)}}
+                  className="border-[1px] rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
+                    <HiMagnifyingGlass />
+                  </div>
+
+                </div>
               </div>
             </div>
 

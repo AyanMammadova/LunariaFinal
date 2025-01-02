@@ -15,10 +15,10 @@ function ProductById() {
     const { dataFav, handleFavs } = useContext(DATA)
 
     const { proinfo } = useParams()
-    const splittedproinfo=proinfo.split("-")
-    const proid=splittedproinfo[splittedproinfo.length-1]
-    
-    
+    const splittedproinfo = proinfo.split("-")
+    const proid = splittedproinfo[splittedproinfo.length - 1]
+
+
     const [product, setProduct] = useState(null)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })
@@ -57,7 +57,7 @@ function ProductById() {
                                         style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
                                     >
                                         <div
-                                            className={`${item=='WHITE' ? 'border-[1px] border-gray-400': ''} cursor-pointer h-[20px] rounded-full w-[20px] `}
+                                            className={`${item == 'WHITE' ? 'border-[1px] border-gray-400' : ''} cursor-pointer h-[20px] rounded-full w-[20px] `}
                                             style={{ backgroundColor: item }}
                                             onClick={() => { handleColor(item) }}
                                         ></div>

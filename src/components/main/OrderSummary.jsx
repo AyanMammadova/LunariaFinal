@@ -20,7 +20,7 @@ function OrderSummary({ urgent, setShowOrderSumFull, pickup }) {
                         <span>Order Summary</span>
                         <IoIosArrowDown
                             onClick={() => { setShowOrderSumFull(false) }}
-                            className="text-[1.3em]  z-50 cursor-pointer"
+                            className="text-[1.3em] lg:hidden  z-50 cursor-pointer"
                         />
                     </p>
                     {/* BASKETDIV */}
@@ -72,7 +72,7 @@ function OrderSummary({ urgent, setShowOrderSumFull, pickup }) {
                                                     className='cursor-pointer'
                                                     onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
                                             </p>
-                                            <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price}$</p>
+                                            <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right py-[5px]`}>ItemTotal: {item.quantity * item.price}$</p>
                                             <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
                                         </div>
                                         <hr />
@@ -80,14 +80,14 @@ function OrderSummary({ urgent, setShowOrderSumFull, pickup }) {
                                 );
                             })}
                     </div>
-                    <p className="flex px-[15px] w-full  justify-between">
+                    <p className="flex px-[15px] pt-[5px] font-montserrat w-full  justify-between">
                         ItemsTotal:{" "}
                         <span>${urgent ? `${SubTotal + 15}` : `${SubTotal}`}$</span>{" "}
                     </p>
-                    <p className={`${pickup ? 'hidden' : 'block'} flex px-[15px] w-full justify-between py-[5px]`}>
+                    <p className={`${pickup ? 'hidden' : 'block'} flex px-[15px] font-montserrat w-full justify-between py-[5px]`}>
                         Delivery: <span>{urgent ? `15$` : `FREE`}</span>
                     </p>
-                    <p className="flex px-[15px] w-full justify-between">
+                    <p className="flex px-[15px] w-full justify-between font-montserrat">
                         SubTotal:{" "}
                         <span>${urgent ? `${SubTotal + 15}` : `${SubTotal}`}</span>
                     </p>

@@ -17,8 +17,8 @@ async function getProductById({proid}) {
     const res=await axios.get(`https://ecommerce.ibradev.me/products/get/${proid}`)
     return res.data
 }
-async function getDataBySubCategory(subid,page=1,color,size) {
-    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}&page=${page}${color?.length>0 ? `&color=${color?.map(item=> item).join('%2C')}` : ''} `)
+async function getDataBySubCategory(subid,page=1,color,size,minPrice,maxPrice) {
+    const res=await axios.get(`https://ecommerce.ibradev.me/products/all?subcategoryId=${subid}&page=${page}${color?.length>0 ? `&color=${color?.map(item=> item).join('%2C')}` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice ? `&maxPrice=${maxPrice}` : ''} `)
     return res.data
 }
 

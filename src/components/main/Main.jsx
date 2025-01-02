@@ -16,7 +16,7 @@ function Main() {
             <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
             <img className=' absolute top-0 object-top lg:w-full object-cover h-full  transition-all duration-500 group-hover:scale-110'
               src="https://www.versace.com/dw/image/v2/BGWN_PRD/on/demandware.static/-/Library-Sites-ver-library/default/dwe92ce0c5/Homepage-New/SS25/hp-mercury-18112024-hero-desk.jpg" alt="MainPhoto" />
-            <p className='absolute z-20 top-[60%] bp600:top-[70%]  text-[2em] font-serif text-white w-[100%] text-center'>Black Friday</p>
+            {/* <p className='absolute z-20 top-[60%] bp600:top-[70%]  text-[2em] font-serif text-white w-[100%] text-center'>Black Friday</p> */}
             <div className='absolute z-20 bottom-[60px] w-[100%] flex-col bp600:flex-row justify-center flex gap-[20px] text-white bp600:w-[40%] bp600:left-[30%]'>
               <Link to={'/category/Women'}>
                 <button className='bg-transparent border-2 border-white ml-[2%] w-[95%]  bp600:w-[200px] py-[10px] hover:bg-[#35313180] font-[600] '>

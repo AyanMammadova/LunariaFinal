@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { MdCircle, MdKeyboardArrowUp, MdOutlineModeEdit } from "react-icons/md";
+import { MdCircle, MdOutlineModeEdit } from "react-icons/md";
 import { BASKET } from "../../context/BasketContext";
 import { BsCheck } from "react-icons/bs";
 import { Link, NavLink } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 import OrderSummary from "./OrderSummary";
-import { IoIosArrowBack, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 
 function CheckOut() {
   const { basket, SubTotal, removeFromBasket, handleCount } = useContext(BASKET);
@@ -21,7 +21,7 @@ function CheckOut() {
   }, [pickup])
   const [showOrderSumFull, setShowOrderSumFull] = useState(false)
   onscroll = function () {
-    if (window.scrollY >= 850) {
+    if (window.scrollY >= 350) {
       setSummaryFixed(false)
     } else {
       setSummaryFixed(true)
@@ -479,25 +479,27 @@ function CheckOut() {
           <OrderSummary urgent={urgent} setShowOrderSumFull={setShowOrderSumFull} pickup={pickup} />
         </div>
         {/* FIXED ORDER DIV */}
-        <div className={`lg:hidden ${showOrderSumFull ? 'hidden' : 'relative'} w-[100%] h-[100px] mt-[20px]  bg-[#F7F7F2]`}>
-          <IoIosArrowUp
-            onClick={() => { setShowOrderSumFull(true) }}
-            className="text-[1.3em] cursor-pointer absolute top-[10px] right-[10px]"
-          />
-          <div className="flex justify-between w-[100%]">
-            <div className="flex max-w-[200px] overflow-hidden mx-[20px] items-center ">
-              {
-                basket && basket.map((item, i) => {
-                  return <img className="h-[90px] p-[10px] object-cover w-[70px]" key={i} src={item.images[0]} />
-                })
-              }
-              <div className="w-[30px]  text-center font-montserrat bg-black text-white">
-                +{basket.length}
+        <div className={`${summaryFixed ? 'fixed bottom-0' : ''} z-50 w-[100%] `}>
+          <div className={`lg:hidden ${showOrderSumFull ? 'hidden' : 'relative'} w-[100%] h-[100px] mt-[20px]  bg-[#F7F7F2]`}>
+            <IoIosArrowUp
+              onClick={() => { setShowOrderSumFull(true) }}
+              className="text-[1.3em]  cursor-pointer absolute top-[10px] right-[10px]"
+            />
+            <div className="flex justify-between w-[100%]">
+              <div className="flex max-w-[200px] overflow-hidden mx-[20px] items-center ">
+                {
+                  basket && basket.map((item, i) => {
+                    return <img className="h-[90px] p-[10px] object-cover w-[70px]" key={i} src={item.images[0]} />
+                  })
+                }
+                <div className="w-[30px]  text-center font-montserrat bg-black text-white">
+                  +{basket.length}
+                </div>
               </div>
-            </div>
-            <div className="absolute text-[.9em] top-[40px] font-montserrat right-[10px]">
-              <p className="">SUBTOTAL</p>
-              <p>{urgent ? `${SubTotal + 15}` : `${SubTotal}`} AZN</p>
+              <div className="absolute text-[.9em] top-[40px] font-montserrat right-[10px]">
+                <p className="">SUBTOTAL</p>
+                <p>{urgent ? `${SubTotal + 15}` : `${SubTotal}`} AZN</p>
+              </div>
             </div>
           </div>
         </div>

@@ -68,7 +68,7 @@ function ProductSwiper({ type, validId, setShowQuick, setproid }) {
               {
                 currentData.map((item, i) => {
                   return <SwiperSlide key={i} className=''>
-                    <Link to={`/productbyid/${item.id}`}>
+                    <Link to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
                       <div key={i} className='my-[20px]  shadow-sm bg-white  relative flex cursor-pointer flex-col'>
                         <div
                           className=' relative overflow-hidden group '>

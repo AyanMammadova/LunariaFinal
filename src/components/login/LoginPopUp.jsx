@@ -9,10 +9,8 @@ function LoginPopUp() {
     name:'',
     password: ''
   })
-  // console.log(loginData)
   return (
     <>
-    
       <div className='px-[20px] p-[10px] *:py-[4px] rounded  bg-white text-[.6em] border-[1px] border-gray-300'>
         <p className='font-serif'>My Profile</p>
         <hr />

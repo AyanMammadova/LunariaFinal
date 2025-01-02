@@ -16,7 +16,7 @@ function ShoppingBag({ setShowBag }) {
 
         <IoCloseSharp
           className='absolute top-[20px] right-[20px] cursor-pointer text-[1.2em]'
-          onClick={() => { setShowBag(false) }} />
+          onClick={(e) => { setShowBag(false) }} />
         <p className='font-serif text-[1.2em] p-[20px]'>Shopping Bag</p>
         <div className={`${basket.length > 0 ? 'hidden' : 'block'}`}>
 
@@ -33,16 +33,20 @@ function ShoppingBag({ setShowBag }) {
                 <div className='h-[200px]  w-[200px] flex items-center justify-center'>
                   <img className=' object-cover ' src={item?.images?.[0]} alt="" />
                 </div>
-                <IoCloseSharp
-                  onClick={() => { removeFromBasket(item.id, item.size, item.color) }}
-                  className='absolute bg-white cursor-pointer top-[10px] right-[10px]' />
+                <div
+                onClick={(e)=>e.preventDefault()}
+                >
+                  <IoCloseSharp
+                    onClick={() => { removeFromBasket(item.id, item.size, item.color) }}
+                    className='absolute cursor-pointer top-[10px] right-[10px]' />
+                </div>
 
                 <div className='w-[100%] pt-[30px]'>
                   <p>{item.name}</p>
                   <div className='flex gap-[20px]'>
                     <p className='flex items-center  gap-[5px]'>Color:
                       <span
-                        className={`cursor-pointer h-[15px] rounded-full w-[15px] `}
+                        className={`cursor-pointer h-[15px] border-[1px] rounded-full w-[15px] `}
                         style={{ backgroundColor: item.color }}>
                       </span>
                     </p>

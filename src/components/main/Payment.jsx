@@ -34,10 +34,10 @@ function Payment() {
         <title>Payment</title>
       </Helmet>
       <div className='w-[100%] h-[100vh] flex items-center justify-center bg-[#F7F8F2]'>
-        <div className='w-[350px] flex flex-col items-center justify-start h-[90vh] rounded bg-white'>
+        <div className='w-[350px] scale-90 flex flex-col items-center justify-start h-[90vh] rounded bg-white'>
           <div className='  w-[90%] flex justify-center h-[40px] '>
             <img
-              className="lg:h-[30px] my-[10px]   object-cover"
+              className="   object-cover"
               src="/img/logo.png"
               alt="Lunaria.logo"
             />
@@ -110,7 +110,6 @@ function Payment() {
               <img
                 className=" w-[45%]  bottom-[50px] right-0 z-50 rounded hidden cvvcard object-cover"
                 src="/img/cvvcard.png"
-                alt="Lunaria.logo"
               />
             </div>
 
