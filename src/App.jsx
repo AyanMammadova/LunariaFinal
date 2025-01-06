@@ -16,6 +16,7 @@ import NotFound from './NotFound'
 import { Helmet } from 'react-helmet'
 import FinishOrder from './components/main/FinishOrder'
 import Payment from './components/main/Payment'
+import Cabinet from './components/login/Cabinet'
 
 function App() {
   const { pathname } = useLocation()
@@ -43,6 +44,7 @@ function App() {
           <Route path='/about' element={<About/>}/>
           <Route path='/finishorder' element={<FinishOrder/>}/>
           <Route path='/checkout' element={<CheckOut/>}/>
+          <Route path='/cabinet' element={<Cabinet/>}/>
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>  

@@ -1,35 +1,36 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { LuEye, LuEyeOff } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
+import { USER } from '../../context/UserInfoContext'
 
 function LoginPopUp() {
+  const { handleUserIn,loginData ,setLoginData} = useContext(USER)
   const [hidePassword, setHidePassword] = useState(false)
-  const [loginData,setLoginData]=useState({
-    name:'',
-    password: ''
-  })
+  
+
+
   return (
     <>
-      <div className='px-[20px] p-[10px] *:py-[4px] rounded  bg-white text-[.6em] border-[1px] border-gray-300'>
+      <div className='px-[20px] p-[10px] *:py-[4px] rounded hidden bp1200:block bg-white text-[.6em] border-[1px] border-gray-300'>
         <p className='font-serif'>My Profile</p>
         <hr />
-        <input 
-          type="text" 
-          className='h-[30px] w-[95%] mx-[2%] border-[1px] border-gray-300 text-gray-600 font-serif px-[4px]' 
-          placeholder='Username' 
-          onChange={(e)=>{
-            setLoginData({...loginData,name:e.target.value})
+        <input
+          type="text"
+          className='h-[30px] w-[95%] mx-[2%] border-[1px] border-gray-300 text-gray-600 font-serif px-[4px]'
+          placeholder='Username'
+          onChange={(e) => {
+            setLoginData({ ...loginData, name: e.target.value })
           }}
         />
 
         <div className='border-[1px] h-[30px] my-[10px] p-[4px] m-[2%] w-[95%] border-gray-600 flex justify-between items-center'>
-          <input 
-            type={hidePassword ? 'password' : 'text'} 
-            className=' w-[90%]  text-gray-300 font-serif px-[4px]' 
-            placeholder='Password' 
-            onChange={(e)=>{
-              setLoginData({...loginData,password:e.target.value})
+          <input
+            type={hidePassword ? 'password' : 'text'}
+            className=' w-[90%]  text-gray-300 font-serif px-[4px]'
+            placeholder='Password'
+            onChange={(e) => {
+              setLoginData({ ...loginData, password: e.target.value })
             }}
           />
 
@@ -42,21 +43,24 @@ function LoginPopUp() {
 
           </div>
         </div>
-          <Toaster
-            position="top-right"
-            reverseOrder={false}
-          />
-        <button 
-        onClick={()=>{
-          if(loginData.password.trim() && loginData.name.trim() ){
-            toast.success('Successfully Signed in!')
-          }
-          else{
-            toast.error('fill them all pls!')
-          }
-        }}
-        className='bg-black h-[40px] mx-[5%] rounded text-white font-serif w-[90%]'>
-          
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
+        <button
+          onClick={() => {
+            {
+              if (loginData.password.trim() && loginData.name.trim()) {
+                toast.success('Successfully Signed in!')
+              }
+              else {
+                toast.error('fill them all pls!')
+              }
+            }; handleUserIn()
+
+          }}
+          className='bg-black h-[40px] mx-[5%] rounded text-white font-serif w-[90%]'>
+
           Sign in
         </button>
         <Link to={'/remind'}>

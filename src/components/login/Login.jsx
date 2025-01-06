@@ -25,7 +25,7 @@ function Login() {
 
                     </div>
                 </div>
-                <button className='w-[100%] my-[10px]  bg-black py-[4px] text-white font-[600] transition-all duration-200 hover:bg-white hover:text-black border-[1px] border-black'>Send</button>
+                <button className='w-[100%] my-[10px]  bg-black py-[4px] text-white font-[600] transition-all duration-200 hover:bg-white hover:text-black border-[1px] border-black'>Sign in</button>
                 <Link to={'/remind'}>
                     <p className='text-[.9em] py-[20px] underline'>Forgot Password?</p>
                 </Link>

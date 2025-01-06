@@ -11,8 +11,10 @@ import ShoppingBag from "../offcanvas/ShoppingBag";
 import LoginPopUp from "../login/LoginPopUp";
 import { BASKET } from "../../context/BasketContext";
 import FilterSlide from "../offcanvas/FilterSlide";
+import { USER } from "../../context/UserInfoContext";
 
 function Header() {
+  const {isUserIn}=useContext(USER)
   const location = useLocation();
   const [showCategorySlide, setShowCategorySlide] = useState(false);
   const { dataCategory, imgsformenu, dataFav, setShowFilter, showFilter } = useContext(DATA);
@@ -134,10 +136,13 @@ function Header() {
               </Link>
             </div>
 
-            <div className="text-[1.6em] relative w-[43%] justify-end flex gap-[10px]">
+            <div onClick={()=>{setShowLogin(false)}}
+            className={ ` z-10  top-0 w-[100%] h-[100vh] ${showLogin ? "fixed" : "hidden"}`}></div>
+
+            <div className="text-[1.6em] relative w-[43%] justify-end flex gap-[10px]  ">
               <div
                 className={`${showLogin ? "absolute" : "hidden"
-                  }  top-[50px] ring-0`}
+                  }  top-[50px] z-50 ring-0 `}
               >
                 <LoginPopUp />
               </div>
@@ -160,7 +165,7 @@ function Header() {
                 onClick={() => {
                   setShowLogin(!showLogin);
                 }}
-                className="hidden cursor-pointer bp1200:block"
+                className={`${isUserIn ? 'bg-red-800' : ''} hidden cursor-pointer bp1200:block`}
               />
               <Link to={"/wishlist"}>
                 <div className="relative z-10">

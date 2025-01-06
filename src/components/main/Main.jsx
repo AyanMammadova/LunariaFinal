@@ -44,7 +44,7 @@ function Main() {
             {
               dataCategory ? dataCategory.map((item, i) => {
                 return <Link
-                  to={`/category/${item.name}/${item.id}`}
+                  to={`/category/${item.name}`}
                   key={i}
                   className='w-[100%] group overflow-hidden  md:w-[49%] relative'>
                   <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>

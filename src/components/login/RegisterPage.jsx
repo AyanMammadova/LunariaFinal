@@ -18,12 +18,7 @@ function RegisterPage() {
     repeatpass: "",
   }
   const [registerData, setRegisterData] = useState(initialObj)
-  console.log(registerData)
-
-  // useEffect(() => {
-  //   localStorage.setItem('RegisterLocal', JSON.stringify(registerData));
-
-  // }, [registerData])
+  
   return (
     <>
       <Toaster

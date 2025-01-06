@@ -39,6 +39,7 @@ function BySubCategory() {
     setValue(newValue);
     setMinPrice(newValue[0])
     setMaxPrice(newValue[1])
+    
   }
 
   function handleSubFilter(id) {
@@ -65,12 +66,14 @@ function BySubCategory() {
           item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
       )
     }
-    else if (filtertype = 'brands') {
-      setBrandData(
-        brandData.map((item, i) =>
-          item.name == filtername ? { ...item, isChecked: !item.isChecked } : { ...item, isChecked: false }
+    else if (filtertype == 'brands') {
+      setBrandData((prevBrandData) =>
+        prevBrandData.map((item) =>
+          item.name === filtername
+            ? { ...item, isChecked: !item.isChecked }
+            : { ...item, isChecked: false }
         )
-      )
+      );
     }
     else if (filtertype == 'discount') {
       setDiscounted(!discounted)
@@ -78,8 +81,7 @@ function BySubCategory() {
   }
   useEffect(() => {
     getDataBySubCategory(subid, page, selectedColors,selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
-      const filteredData = discounted
-        ? res.data.filter((item) => item.discount > 1)
+      const filteredData = discounted ? res.data.filter((item) => item.discount > 1)
         : res.data;
       setdataFinal(filteredData);
     });
@@ -96,7 +98,7 @@ function BySubCategory() {
     )
   }, [colorData, sizeData, brandData])
   useEffect(() => {
-    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''} ${maxPrice ? `&maxPrice=${maxPrice}` : ''}`)
+    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${showPrices ? `&minPrice=${minPrice}&maxPrice=${maxPrice}` : ''}`)
   }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand])
 
   useEffect(() => {
@@ -278,7 +280,7 @@ function BySubCategory() {
                         backgroundColor: 'black',
                       },
                     }}
-                    getAriaLabel={() => 'Temperature range'}
+                    getAriaLabel={() => 'Price range'}
                     value={value}
                     onChange={handleChange}
                     valueLabelDisplay="auto"
