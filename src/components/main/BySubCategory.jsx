@@ -39,6 +39,7 @@ function BySubCategory() {
     setValue(newValue);
     setMinPrice(newValue[0])
     setMaxPrice(newValue[1])
+    setShowPrices(false)
     
   }
 
@@ -85,7 +86,7 @@ function BySubCategory() {
         : res.data;
       setdataFinal(filteredData);
     });
-  }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand]);
+  }, [showPrices,selectedColors, selectedSizes,page, discounted,  selectedBrand]);
   useEffect(() => {
     setSelectedColors(
       colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
@@ -98,7 +99,8 @@ function BySubCategory() {
     )
   }, [colorData, sizeData, brandData])
   useEffect(() => {
-    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${showPrices ? `&minPrice=${minPrice}&maxPrice=${maxPrice}` : ''}`)
+    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${showPrices && minPrice!=0 && maxPrice!=4500 ? `&minPrice=${minPrice}&maxPrice=${maxPrice}` : ''}`)
+    // setShowPrices(false)
   }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand])
 
   useEffect(() => {
@@ -118,7 +120,6 @@ function BySubCategory() {
     showSortSelection(false)
     getDataBySubCategory(subid, page).then((res) => {
       setdataFinal(res.data)
-
       setTotalPage(res.meta.totalPages)
       setColorData([...new Set(res.data.flatMap((item) => item.Colors))].map((item, i) =>
         ({ name: item, isChecked: false })
@@ -307,7 +308,7 @@ function BySubCategory() {
                     type="number" />
                   <div
                     onClick={() => { setShowPrices(true) }}
-                    className="border-[1px] rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
+                    className="border-[1px]  rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
                     <HiMagnifyingGlass />
                   </div>
 
@@ -411,7 +412,7 @@ function BySubCategory() {
                       }}
                       key={i}
                       title={`Page ${i + 1}`}
-                      className="hover:bg-black flex transition-all duration-100 justify-center items-center rounded border-[1px] border-black  hover:text-white w-[40px] h-[40px]"
+                      className={`${page==i+1 ? 'bg-black text-white' : ''} hover:bg-black flex transition-all duration-100 justify-center items-center rounded border-[1px] border-black  hover:text-white w-[40px] h-[40px]`}
                     >
                       {i + 1}
                     </div>
