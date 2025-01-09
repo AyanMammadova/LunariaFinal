@@ -17,7 +17,6 @@ function UserInfoContext({ children }) {
 
         setIsUserIn(true)
     }
-    console.log(AllRegisters)
     
     return (
         <USER.Provider

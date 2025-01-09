@@ -33,14 +33,14 @@ function BySubCategory() {
   const [discounted, setDiscounted] = useState(false)
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(4500)
-  const [value, setValue] = React.useState([minPrice, maxPrice]);
-  const [showPrices, setShowPrices] = useState(false)
+  const [prices, setPrices] = useState([minPrice, maxPrice]);
 
-  const handleChange = (_, newValue) => {
-    setValue(newValue);
-    setMinPrice(newValue[0])
-    setMaxPrice(newValue[1])
-    setShowPrices(false)
+  const handleChange = (_, newPrices) => {
+    setPrices(newPrices);
+  }
+  function handleShowPrices() {
+    setMinPrice(prices[0])
+    setMaxPrice(prices[1])
   }
 
   function handleSubFilter(id) {
@@ -81,13 +81,12 @@ function BySubCategory() {
     }
   }
   useEffect(() => {
-    console.log(showPrices)
-    getDataBySubCategory(subid, page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice, showPrices).then((res) => {
+    getDataBySubCategory(subid, page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
       const filteredData = discounted ? res.data.filter((item) => item.discount > 1)
         : res.data;
       setdataFinal(filteredData);
     });
-  }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand]);
+  }, [selectedColors, selectedSizes, page, discounted, selectedBrand,minPrice,maxPrice]);
   useEffect(() => {
     setSelectedColors(
       colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
@@ -100,9 +99,9 @@ function BySubCategory() {
     )
   }, [colorData, sizeData, brandData])
   useEffect(() => {
-    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}
-      ${showPrices && minPrice != 0 ? `&minPrice=${minPrice}` : ''}${showPrices && maxPrice != 4500 ? `&maxPrice=${maxPrice}` : ''}`)
-  }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand])
+    console.log(selectedBrand)
+    navigate(`?${page && page != 1 ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item.toLowerCase()).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item.toLowerCase()).join(',')}` : ''}${selectedBrand ? `&brand=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice && maxPrice!=4500 ? `&maxPrice=${maxPrice}` : ''}`)
+  }, [selectedColors, selectedSizes, page, discounted, selectedBrand, minPrice, maxPrice])
 
   useEffect(() => {
     setnewdatafilter(
@@ -140,9 +139,9 @@ function BySubCategory() {
     })
 
   }, [subid, page])
-  useEffect(()=>{
+  useEffect(() => {
     setPage(1)
-  },[subid])
+  }, [subid])
   function handleSort(type) {
     setSelectedSort(type)
     if (type == 'PRICE LOW TO HIGH') dataFinal?.sort(function (a, b) { return a.price - b.price })
@@ -286,7 +285,7 @@ function BySubCategory() {
                       },
                     }}
                     getAriaLabel={() => 'Price range'}
-                    value={value}
+                    value={prices}
                     onChange={handleChange}
                     valueLabelDisplay="auto"
                     min={0}
@@ -296,26 +295,20 @@ function BySubCategory() {
                 <div className="flex justify-between w-[100%]">
                   <input
                     onChange={(e) => {
-                      const newMinPrice=Number(e.target.value)
-                      setShowPrices(false);
-                      setMinPrice(newMinPrice);
-                      setValue([newMinPrice, maxPrice])
+                      setPrices([Number(e.target.value), prices[1]])
                     }}
-                    value={minPrice}
+                    value={prices[0]}
                     className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
                     type="number" />
                   <input
                     onChange={(e) => {
-                      const newMaxPrice=Number(e.target.value)
-                      setShowPrices(false);
-                      setMaxPrice(newMaxPrice);
-                      setValue([minPrice, newMaxPrice])
+                      setPrices([prices[0], Number(e.target.value)])
                     }}
-                    value={maxPrice}
+                    value={prices[1]}
                     className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
                     type="number" />
                   <div
-                    onClick={() => { setShowPrices(true) }}
+                    onClick={() => { handleShowPrices() }}
                     className="border-[1px]  rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
                     <HiMagnifyingGlass />
                   </div>

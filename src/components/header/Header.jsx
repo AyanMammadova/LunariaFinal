@@ -94,13 +94,13 @@ function Header() {
                       <div key={i} className="cathead">
                         <NavLink
                           to={`/category/${item.name}`}
-                          className="hover:bg-[rgb(228,228,228)] navlarim py-[5px] rounded px-[10px]  text-[1.1em] cursor-pointer"
+                          className="hover:bg-[rgb(228,228,228)] navlarim rounded p-[10px]  text-[1.1em] cursor-pointer"
                         >
                           {item.name}
                         </NavLink>
-                        <div className="bg-white absolute mt-[10px] p-[40px] left-0 w-screen hidden justify-between catim shadow-[0_10px_10px_0_rgba(0,0,0,0.3)]">
+                        <div className="bg-white  absolute mt-[10px] p-[40px] left-0 w-screen hidden justify-between catim shadow-[0_10px_10px_0_rgba(0,0,0,0.3)]">
                           <div>
-                            <ul className="flex flex-col gap-[5px]">
+                            <ul className="flex  flex-col gap-[5px]">
                               {item.Subcategory.map((subitem, subi) => {
                                 return (
                                   <NavLink
@@ -132,7 +132,7 @@ function Header() {
             <div>
               <Link to={"/"}>
                 <img
-                  className="lg:h-[40px]  object-cover"
+                  className="lg:h-[40px] mb-[10px]  object-cover"
                   src="/img/logo.png"
                   alt="Lunaria.logo"
                 />
