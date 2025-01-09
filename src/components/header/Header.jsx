@@ -11,15 +11,13 @@ import ShoppingBag from "../offcanvas/ShoppingBag";
 import LoginPopUp from "../login/LoginPopUp";
 import { BASKET } from "../../context/BasketContext";
 import FilterSlide from "../offcanvas/FilterSlide";
-import { USER } from "../../context/UserInfoContext";
 
 function Header() {
-  const {isUserIn}=useContext(USER)
   const location = useLocation();
   const [showCategorySlide, setShowCategorySlide] = useState(false);
   const { dataCategory, imgsformenu, dataFav, setShowFilter, showFilter } = useContext(DATA);
   const { basket } = useContext(BASKET);
-  const [showSeachBar, setShowSearchBar] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const [showBag, setShowBag] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
 
@@ -27,16 +25,21 @@ function Header() {
     setShowLogin(false);
     setShowCategorySlide(false);
     setShowBag(false);
+    setShowSearchBar(false)
   }, [location.pathname]);
+  function handlesmth(){
+    console.log('sdkjvndslj')
+  }
   return (
     <>
       <header className=" fixed w-[100%] bg-white z-50">
         <div
           onClick={() => {
+            handlesmth();
             setShowSearchBar(false);
             setShowBag(false);
           }}
-          className={`${showBag || showSeachBar ? "block" : "hidden"
+          className={`${showBag || showSearchBar ? "block" : "hidden"
             } w-full h-full bg-[#53525280] fixed z-30`}
         ></div>
         <div
@@ -46,10 +49,10 @@ function Header() {
           <ShoppingBag setShowBag={setShowBag} />
         </div>
         <div
-          className={`z-50 absolute w-[100%] transition-all duration-300  ${showSeachBar ? "top-0" : "-top-[100vh]"
+          className={`z-50 absolute w-[100%] transition-all duration-300  ${showSearchBar ? "top-0" : "-top-[100vh]"
             }`}
         >
-          <SearchBar setShowSearchBar={setShowSearchBar} />
+          <SearchBar setShowSearchBar={setShowSearchBar} showSearchBar={showSearchBar} />
         </div>
         <div
           className={`absolute  w-[100%] z-50 translate-x-0 duration-300 ${showFilter ? "left-0" : "-left-[170%]"
@@ -144,7 +147,7 @@ function Header() {
                 className={`${showLogin ? "absolute" : "hidden"
                   }  top-[50px] z-50 ring-0 `}
               >
-                <LoginPopUp />
+                <LoginPopUp setShowLogin={setShowLogin}/>
               </div>
               <div className="hidden bp1200:flex  justify-end  pr-[40px] ">
                 <div
@@ -165,7 +168,7 @@ function Header() {
                 onClick={() => {
                   setShowLogin(!showLogin);
                 }}
-                className={`${isUserIn ? 'bg-red-800' : ''} hidden cursor-pointer bp1200:block`}
+                className={`hidden cursor-pointer bp1200:block`}
               />
               <Link to={"/wishlist"}>
                 <div className="relative z-10">

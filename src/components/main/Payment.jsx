@@ -66,7 +66,6 @@ function Payment() {
           <div className="flex flex-col ">
             <p className='text-start w-[300px] py-[10px]'>Card number:</p>
             <input
-              id="card-number"
               type="text"
               value={cardNumber}
               onChange={handleInputChange}
@@ -99,7 +98,6 @@ function Payment() {
           <div className="flex flex-col  relative">
             <p className='text-start w-[300px] py-[10px]'>cvv2 / cvc2:</p>
             <input
-              id="card-number"
               type="password"
               maxLength="3"
               className="border border-gray-300 rounded-md px-3 py-2 outline-none  w-[300px]"

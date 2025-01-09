@@ -4,27 +4,27 @@ export const USER = createContext(null)
 function UserInfoContext({ children }) {
     const [isUserIn, setIsUserIn] = useState(false)
     const [AllRegisters, setAllRegisters] = useState(JSON.parse(localStorage.getItem('registerLocal')) || [])
-    const [loginData, setLoginData] = useState(
-        JSON.parse(localStorage.getItem('loginLocal')) ||
-        {
-            name: '',
-            password: ''
-        })
+    
     useEffect(() => {
-        localStorage.setItem('loginLocal', JSON.stringify(loginData));
-    }, [loginData])
+        localStorage.setItem('registerLocal', JSON.stringify(AllRegisters));
+    }, [AllRegisters])
 
-    function handleUserIn() {
+    function handleNewRegister(registerData){
+        setAllRegisters([
+            ...AllRegisters,
+            {registerData}
+        ])
+
         setIsUserIn(true)
     }
+    console.log(AllRegisters)
+    
     return (
         <USER.Provider
             value={{
-                handleUserIn,
                 isUserIn,
                 setIsUserIn,
-                loginData,
-                setLoginData
+                handleNewRegister
             }}
         >
             {children}

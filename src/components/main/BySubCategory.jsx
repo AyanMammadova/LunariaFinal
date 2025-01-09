@@ -8,6 +8,7 @@ import { IoFilterSharp } from "react-icons/io5"
 import { Helmet } from "react-helmet";
 import { Box, Slider } from "@mui/material";
 import { HiMagnifyingGlass } from "react-icons/hi2";
+import { ImDropbox } from "react-icons/im";
 
 function BySubCategory() {
   const pathname = useLocation()
@@ -30,7 +31,7 @@ function BySubCategory() {
   const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
   const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
-  const [minPrice, setMinPrice] = useState(100)
+  const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(4500)
   const [value, setValue] = React.useState([minPrice, maxPrice]);
   const [showPrices, setShowPrices] = useState(false)
@@ -40,7 +41,6 @@ function BySubCategory() {
     setMinPrice(newValue[0])
     setMaxPrice(newValue[1])
     setShowPrices(false)
-    
   }
 
   function handleSubFilter(id) {
@@ -81,12 +81,13 @@ function BySubCategory() {
     }
   }
   useEffect(() => {
-    getDataBySubCategory(subid, page, selectedColors,selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
+    console.log(showPrices)
+    getDataBySubCategory(subid, page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice, showPrices).then((res) => {
       const filteredData = discounted ? res.data.filter((item) => item.discount > 1)
         : res.data;
       setdataFinal(filteredData);
     });
-  }, [showPrices,selectedColors, selectedSizes,page, discounted,  selectedBrand]);
+  }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand]);
   useEffect(() => {
     setSelectedColors(
       colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
@@ -99,8 +100,8 @@ function BySubCategory() {
     )
   }, [colorData, sizeData, brandData])
   useEffect(() => {
-    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${showPrices && minPrice!=0 && maxPrice!=4500 ? `&minPrice=${minPrice}&maxPrice=${maxPrice}` : ''}`)
-    // setShowPrices(false)
+    navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}
+      ${showPrices && minPrice != 0 ? `&minPrice=${minPrice}` : ''}${showPrices && maxPrice != 4500 ? `&maxPrice=${maxPrice}` : ''}`)
   }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand])
 
   useEffect(() => {
@@ -139,6 +140,9 @@ function BySubCategory() {
     })
 
   }, [subid, page])
+  useEffect(()=>{
+    setPage(1)
+  },[subid])
   function handleSort(type) {
     setSelectedSort(type)
     if (type == 'PRICE LOW TO HIGH') dataFinal?.sort(function (a, b) { return a.price - b.price })
@@ -292,16 +296,20 @@ function BySubCategory() {
                 <div className="flex justify-between w-[100%]">
                   <input
                     onChange={(e) => {
-                      setMinPrice(Number(e.target.value))
-                      setValue([Number(e.target.value), maxPrice])
+                      const newMinPrice=Number(e.target.value)
+                      setShowPrices(false);
+                      setMinPrice(newMinPrice);
+                      setValue([newMinPrice, maxPrice])
                     }}
                     value={minPrice}
                     className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
                     type="number" />
                   <input
                     onChange={(e) => {
-                      setMaxPrice(Number(e.target.value))
-                      setValue([minPrice, Number(e.target.value)])
+                      const newMaxPrice=Number(e.target.value)
+                      setShowPrices(false);
+                      setMaxPrice(newMaxPrice);
+                      setValue([minPrice, newMaxPrice])
                     }}
                     value={maxPrice}
                     className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
@@ -383,7 +391,10 @@ function BySubCategory() {
                         </div>
                       </Link>
                     );
-                  }) : <div className="loader"></div>
+                  }) : <div className="flex flex-col items-center">
+                    <ImDropbox className="text-[4em]" />
+                    <p className="text-center font-cormorant text-[2em]">No Product Found</p>
+                  </div>
                 }
               </div>
 
@@ -412,7 +423,7 @@ function BySubCategory() {
                       }}
                       key={i}
                       title={`Page ${i + 1}`}
-                      className={`${page==i+1 ? 'bg-black text-white' : ''} hover:bg-black flex transition-all duration-100 justify-center items-center rounded border-[1px] border-black  hover:text-white w-[40px] h-[40px]`}
+                      className={`${page == i + 1 ? 'bg-black text-white' : ''} hover:bg-black flex transition-all duration-100 justify-center items-center rounded border-[1px] border-black  hover:text-white w-[40px] h-[40px]`}
                     >
                       {i + 1}
                     </div>

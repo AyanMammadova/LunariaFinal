@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { LuEye, LuEyeOff } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
+import { USER } from '../../context/UserInfoContext'
 
 function RegisterPage() {
+  const { handleNewRegister } = useContext(USER)
   const [hidePassword1, setHidePassword1] = useState(true)
   const [hidePassword2, setHidePassword2] = useState(true)
 
@@ -12,13 +14,13 @@ function RegisterPage() {
     lastname: "",
     email: "",
     number: "",
-    birthday: "",
+    username: "",
     gender: "",
     password: "",
     repeatpass: "",
   }
   const [registerData, setRegisterData] = useState(initialObj)
-  
+
   return (
     <>
       <Toaster
@@ -45,6 +47,14 @@ function RegisterPage() {
               setRegisterData({ ...registerData, lastname: e.target.value })
             }}
             type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[95%]' placeholder='Last Name' />
+          <p className=' font-bold'>USERNAME</p>
+          <input
+            required
+            value={registerData.username}
+            onChange={(e) => {
+              setRegisterData({ ...registerData, username: e.target.value })
+            }}
+            type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[95%]' placeholder='Username' />
 
           <p className=' font-bold'>EMAIL</p>
           <input
@@ -64,14 +74,6 @@ function RegisterPage() {
             }}
             type="tel" className='border-[1px] border-gray-400 rounded p-[3px]  w-[95%]' placeholder='Mobile Numbers' />
 
-          <p className=' font-bold'>BIRTHDAY</p>
-          <input
-            required
-            value={registerData.birthday}
-            onChange={(e) => {
-              setRegisterData({ ...registerData, birthday: e.target.value })
-            }}
-            type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[95%]' placeholder='Birthday' />
 
           <p className=' font-bold'>GENDER</p>
           <select
@@ -145,7 +147,10 @@ function RegisterPage() {
               }
               else {
                 toast.error('your passwords dont match!')
-              }
+              };
+              handleNewRegister(registerData)
+              setRegisterData(initialObj)
+
             }}
           >
             Register

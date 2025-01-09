@@ -4,10 +4,10 @@ import { LuEye, LuEyeOff } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 import { USER } from '../../context/UserInfoContext'
 
-function LoginPopUp() {
-  const { handleUserIn,loginData ,setLoginData} = useContext(USER)
+function LoginPopUp({setShowLogin}) {
+  // const { loginData ,setLoginData} = useContext(USER)
+  const [loginData,setLoginData]=useState({name :'',password : ''})
   const [hidePassword, setHidePassword] = useState(false)
-  
 
 
   return (
@@ -51,12 +51,14 @@ function LoginPopUp() {
           onClick={() => {
             {
               if (loginData.password.trim() && loginData.name.trim()) {
-                toast.success('Successfully Signed in!')
+                toast.success('Successfully Signed in!');
+                
               }
               else {
                 toast.error('fill them all pls!')
               }
-            }; handleUserIn()
+            }; 
+            
 
           }}
           className='bg-black h-[40px] mx-[5%] rounded text-white font-serif w-[90%]'>
