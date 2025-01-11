@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6'
 
 function ShoppingBag({ setShowBag }) {
-  const { basket, removeFromBasket, SubTotal, handleCount } = useContext(BASKET)
+  const { basket, removeFromBasket, SubTotal, handleCount,showUpdate,setShowUpdate } = useContext(BASKET)
 
   return (
     <>
@@ -16,7 +16,7 @@ function ShoppingBag({ setShowBag }) {
 
         <IoCloseSharp
           className='absolute top-[20px] right-[20px] cursor-pointer text-[1.2em]'
-          onClick={(e) => { setShowBag(false) }} />
+          onClick={() => { setShowBag(false) }} />
         <p className='font-serif text-[1.2em] p-[20px]'>Shopping Bag</p>
         <div className={`${basket.length > 0 ? 'hidden' : 'block'}`}>
 
@@ -28,16 +28,27 @@ function ShoppingBag({ setShowBag }) {
         </div>
         {
           basket && basket.map((item, i) => {
-            return <Link key={i} to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
+            return <div key={i}>
               <div className='flex border-b-2 mx-[5px] p-[4px] gap-[10px] relative'>
-                <div className='h-[200px]  w-[200px] flex items-center justify-center'>
-                  <img className=' object-cover ' src={item?.images?.[0]} alt="" />
-                </div>
-                <div
-                onClick={(e)=>e.preventDefault()}
+                <div 
+                onClick={()=>{setShowUpdate(true)}}
+                className='h-[200px]  w-[200px] flex items-center justify-center group cursor-pointer'
                 >
+                  <img
+                    className={`group-hover:hidden transition-opacity duration-300 ease-in-out `}
+                    src={item.images[0]}
+                  />
+                  <img
+                    className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`}
+                    src={item.images[1]}
+                  />
+                </div>
+
+                <div>
                   <IoCloseSharp
-                    onClick={() => { removeFromBasket(item.id, item.size, item.color) }}
+                    onClick={() => {
+                      removeFromBasket(item.id, item.size, item.color)
+                    }}
                     className='absolute cursor-pointer top-[10px] right-[10px]' />
                 </div>
 
@@ -60,25 +71,28 @@ function ShoppingBag({ setShowBag }) {
                   <p className={`${item?.discount > 1 ? 'hidden' : 'block'} text-[1.2em]`}>
                     {item?.price}$
                   </p>
-                  <p className='flex gap-[5px] items-center'>Quantity:
-                    <FaRegSquareMinus
-                      className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
-                      onClick={(e) => {
-                        handleCount(item.id, item.color, item.size, -1);
-                        e.stopPropagation()
-                      }} />
-                    {item.quantity}
-                    <FaRegSquarePlus
-                      className='cursor-pointer'
-                      onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
-                  </p>
+                  <div>
+                    <p className='flex gap-[5px] items-center'>Quantity:
+                      <FaRegSquareMinus
+                        className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
+                        onClick={() => {
+                          handleCount(item.id, item.color, item.size, -1)
+                        }} />
+                      {item.quantity}
+                      <FaRegSquarePlus
+                        className='cursor-pointer'
+                        onClick={(e) => {
+                          handleCount(item.id, item.color, item.size, +1)
+                        }} />
+                    </p>
+                  </div>
 
                   <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price}$</p>
                   <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
                 </div>
                 <hr />
               </div>
-            </Link>
+            </div>
           }
           )
         }

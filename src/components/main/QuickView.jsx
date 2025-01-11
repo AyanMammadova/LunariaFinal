@@ -11,15 +11,14 @@ import { BASKET } from '../../context/BasketContext';
 import EcommerceSwiper from './EcommerceSwiper';
 
 
-function QuickView({ proid, setShowQuick }) {
-  const { dataFav, handleFavs } = useContext(DATA)
-  const { addToBasket, handleSize, size, setSize,color,setColor } = useContext(BASKET)
+function QuickView({ proid}) {
+  const { dataFav, handleFavs, setShowQuick } = useContext(DATA)
+  const { addToBasket, handleSize, size, setSize,color,setColor,handleColor } = useContext(BASKET)
 
   const [product, setProduct] = useState(null)
   useEffect(() => {
     proid && getProductById({ proid }).then(res => { setProduct(res) })
   }, [proid])
-
 
   return (
     <>
@@ -27,10 +26,10 @@ function QuickView({ proid, setShowQuick }) {
         <IoCloseSharp
           onClick={() => { setShowQuick(false) }}
           className='absolute cursor-pointer top-[20px] right-[20px]' />
-        {product ? <div className='w-full h-full flex items-center pt-[20px] flex-col md:flex-row justify-start gap-[50px] '>
+        {product ? <div className='w-full h-full flex items-center pt-[20px] flex-col bp900:flex-row justify-start gap-[50px] '>
           {/* IMAGEDIV */}
-          <div className='flex justify-between'>
-            <div className="h-[90%] w-[300px]">
+          <div className='flex w-[100%] justify-between'>
+            <div className="h-[90%] w-[400px]">
               <EcommerceSwiper images={product?.images} />
             </div>
           </div>
@@ -110,16 +109,14 @@ function QuickView({ proid, setShowQuick }) {
                   (dataFav && dataFav.find(itema => itema.id == product.id)) ? <VscHeartFilled className={` text-[2em]`} />
                     : <VscHeart className={` text-[2em] `} />
                 }
-
               </div>
 
             </div>
-            <div className=''>
-              <Link to={`/productbyid/${proid}`}>
+            <div className='pb-[50px]'>
+              <Link to={`/details/${product.name.replace(/ /g, '-')}-${proid}`}>
                 <p className='underline'>View Product page</p>
               </Link>
             </div>
-
 
           </div>
         </div>

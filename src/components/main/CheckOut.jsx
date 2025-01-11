@@ -16,18 +16,20 @@ function CheckOut() {
   const [onlinepay, setOnlinePay] = useState(true);
   const [pickup, setPickup] = useState(false);
 
+  const [payment, setPayment] = useState(false);
   useEffect(() => {
     setUrgent(false)
   }, [pickup])
   const [showOrderSumFull, setShowOrderSumFull] = useState(false)
   onscroll = function () {
-    if (window.scrollY >= 350) {
+    if (window.scrollY >= 700) {
       setSummaryFixed(false)
     } else {
       setSummaryFixed(true)
     }
   }
-  const [payment, setPayment] = useState(false);
+  console.log(': '  +payment)
+  
   function handleProceedtoPayment(status) {
     setPayment(status);
     window.scrollTo({
@@ -50,8 +52,8 @@ function CheckOut() {
             <div className="rounded-full border-[1px] border-gray-900 h-[40px] font-montserrat w-[40px] flex justify-center items-center">
               1
             </div>
-            <div className="w-[37%] border-t-[1px] border-gray-300"></div>
-            <div className="rounded-full border-[1px] border-gray-300 h-[40px] font-montserrat w-[40px] flex justify-center items-center">
+            <div className={`${payment ? 'border-black' : 'border-gray-300'} w-[37%] border-t-[1px] `}></div>
+            <div className={`${payment ? 'border-black' : 'border-gray-300'} rounded-full border-[1px]  h-[40px] font-montserrat w-[40px] flex justify-center items-center`}>
               2
             </div>
             <div className="w-[37%] border-t-[1px] border-gray-300"></div>
@@ -59,9 +61,14 @@ function CheckOut() {
               3
             </div>
           </div>
+          <div className="w-[100%] font-montserrat px-[10px] bp600:px-[60px] flex justify-between">
+              <p>Delivery</p>
+              <p>Review&Pay</p>
+              <p>Complete</p>
+            </div>
           {/* DIV AFTER PROCEED TO PAYMENT */}
           <div className={`${payment ? "block" : "hidden"} `}>
-            <p className="text-[1.3em] font-cormorant px-[40px] py-[20px] ">
+            <p className="text-[1.3em] font-cormorant px-[40px] pt-[100px] py-[20px] ">
               Delivery Details
             </p>
 
@@ -167,11 +174,7 @@ function CheckOut() {
           </div>
           {/* DIV BEFORE PROCEED TO PAYMENT */}
           <div className={`${payment ? "hidden" : "block"} `}>
-            <div className="w-[100%] font-montserrat px-[10px] bp600:px-[60px] flex justify-between">
-              <p>Delivery</p>
-              <p>Review&Pay</p>
-              <p>Complete</p>
-            </div>
+            
             <div className="p-[10px] bp400:p-[40px] font-montserrat">
               <p className="font-cormorant text-[1.3em] py-[20px]">
                 Select delivery method
@@ -479,7 +482,7 @@ function CheckOut() {
           <OrderSummary urgent={urgent} setShowOrderSumFull={setShowOrderSumFull} pickup={pickup} />
         </div>
         {/* FIXED ORDER DIV */}
-        <div className={`${summaryFixed ? 'fixed bottom-0' : ''} z-50 w-[100%] `}>
+        <div className={`${summaryFixed ? 'fixed bottom-0' : ''} lg:hidden z-50 w-[100%] `}>
           <div className={`lg:hidden ${showOrderSumFull ? 'hidden' : 'relative'} w-[100%] h-[100px] mt-[20px]  bg-[#F7F7F2]`}>
             <IoIosArrowUp
               onClick={() => { setShowOrderSumFull(true) }}

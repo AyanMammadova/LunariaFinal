@@ -10,12 +10,11 @@ import SearchBar from "../offcanvas/SearchBar";
 import ShoppingBag from "../offcanvas/ShoppingBag";
 import LoginPopUp from "../login/LoginPopUp";
 import { BASKET } from "../../context/BasketContext";
-import FilterSlide from "../offcanvas/FilterSlide";
 
 function Header() {
   const location = useLocation();
   const [showCategorySlide, setShowCategorySlide] = useState(false);
-  const { dataCategory, imgsformenu, dataFav, setShowFilter, showFilter } = useContext(DATA);
+  const { dataCategory, imgsformenu, dataFav } = useContext(DATA);
   const { basket } = useContext(BASKET);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showBag, setShowBag] = useState(false);
@@ -28,7 +27,7 @@ function Header() {
     setShowSearchBar(false)
   }, [location.pathname]);
   function handlesmth(){
-    console.log('sdkjvndslj')
+    console.log('')
   }
   return (
     <>
@@ -48,17 +47,12 @@ function Header() {
         >
           <ShoppingBag setShowBag={setShowBag} />
         </div>
+        
         <div
           className={`z-50 absolute w-[100%] transition-all duration-300  ${showSearchBar ? "top-0" : "-top-[100vh]"
             }`}
         >
           <SearchBar setShowSearchBar={setShowSearchBar} showSearchBar={showSearchBar} />
-        </div>
-        <div
-          className={`absolute  w-[100%] z-50 translate-x-0 duration-300 ${showFilter ? "left-0" : "-left-[170%]"
-            }  bp1200:hidden`}
-        >
-          <FilterSlide />
         </div>
         <div
           className={`absolute top-[90px] translate-x-0 duration-300 ${showCategorySlide ? "left-0" : "-left-[170%]"

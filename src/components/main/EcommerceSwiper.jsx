@@ -9,29 +9,9 @@ import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 function EcommerceSwiper({ images }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
     return (
         <>
-            <div className='flex'>
-                <Swiper
-                    onSwiper={setThumbsSwiper}
-                    spaceBetween={10}
-                    slidesPerView={4}
-                    freeMode={true}
-                    direction='vertical'
-                    watchSlidesProgress={true}
-                    modules={[FreeMode, Navigation, Thumbs]}
-                    className="mySwiper1 h-[300px]"
-                >
-                    {
-                        images && images.map((item, i) => {
-                            return <SwiperSlide key={i}>
-                                <img src={item}  />
-                            </SwiperSlide>
-                        })
-                    }
-
-                </Swiper>
+            <div className='flex justify-center w-[100%] '>
                 <Swiper
                     style={{
                         '--swiper-navigation-color': '#fff',
@@ -46,7 +26,7 @@ function EcommerceSwiper({ images }) {
                     {
                         images && images.map((item, i) => {
                             return <SwiperSlide key={i}>
-                                <img className='h-full w-[600px] object-cover' src={item} />
+                                <img className='h-full  object-cover' src={item} />
                             </SwiperSlide>
                         })
                     }
@@ -54,8 +34,26 @@ function EcommerceSwiper({ images }) {
 
 
                 </Swiper>
-            </div>
+                <Swiper
+                    onSwiper={setThumbsSwiper}
+                    spaceBetween={10}
+                    slidesPerView={4}
+                    freeMode={true}
+                    direction='vertical'
+                    watchSlidesProgress={true}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className="mySwiper1"
+                >
+                    {
+                        images && images.map((item, i) => {
+                            return <SwiperSlide key={i}>
+                                <img src={item} />
+                            </SwiperSlide>
+                        })
+                    }
 
+                </Swiper>
+            </div>
         </>
     );
 }

@@ -4,9 +4,11 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6'
 import { Helmet } from 'react-helmet'
+import { DATA } from '../../context/DataContext'
 
 function ShoppingBagPage() {
     const { basket, removeFromBasket, handleCount, SubTotal } = useContext(BASKET)
+    const {setShowQuick}=useContext(DATA)
     return (
         <>
             <Helmet>
@@ -24,7 +26,10 @@ function ShoppingBagPage() {
                                 <div className='flex border-t-2 pt-[20px] mx-[5px] p-[4px] gap-[40px] relative' >
                                     <img className='h-[100px]' src={item?.images?.[0]} alt="" />
                                     <IoCloseSharp
-                                        onClick={() => { removeFromBasket(item.id) }}
+                                        onClick={(e) => { 
+                                            removeFromBasket(item.id,item.size,item.color)
+                                            e.preventDefault()
+                                         }}
                                         className='absolute cursor-pointer top-[10px] right-[10px]' />
                                     <div>
                                         <p className='uppercase'>{item?.brand}</p>
@@ -48,14 +53,18 @@ function ShoppingBagPage() {
                                                 className={`${item.quantity == 1 ? 'text-gray-400' : ''} cursor-pointer `}
                                                 onClick={(e) => {
                                                     handleCount(item.id, item.color, item.size, -1)
+                                                    e.preventDefault()
                                                 }} />
                                             {item.quantity}
                                             <FaRegSquarePlus
                                                 className='cursor-pointer'
-                                                onClick={() => { handleCount(item.id, item.color, item.size, +1) }} />
+                                                onClick={(e) => { 
+                                                    handleCount(item.id, item.color, item.size, +1) 
+                                                    e.preventDefault()
+                                                    }} />
                                         </p>
-                                        <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price}$</p>
-                                        <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
+                                        <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold w-[50vw] text-right`}>ItemTotal: {item.quantity * item.price}$</p>
+                                        <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold w-[50vw] text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
 
                                     </div>
                                 </div>

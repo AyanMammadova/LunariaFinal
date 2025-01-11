@@ -8,9 +8,9 @@ import 'swiper/css/pagination';
 import { getDataByCategory, getDataBySubCategory } from '../../services/api';
 import { Link } from 'react-router-dom';
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
-function ProductSwiper({ type, validId, setShowQuick, setproid }) {
+function ProductSwiper({ type, validId, setproid }) {
 
-  const { dataDiscounted, handleFavs, dataFav } = useContext(DATA)
+  const { dataDiscounted, handleFavs, dataFav, setShowQuick} = useContext(DATA)
 
   const [currentData, setCurrentData] = useState(null)
   useEffect(() => {

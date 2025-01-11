@@ -2,35 +2,85 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Box, Slider } from "@mui/material";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { DATA } from '../../context/DataContext';
+import { IoIosArrowDown, IoIosCheckmark } from 'react-icons/io';
+import { getDataBySubCategory } from "../../services/api";
 import { useNavigate } from 'react-router-dom';
-import { IoIosArrowDown } from 'react-icons/io';
+import { IoClose } from 'react-icons/io5';
 
-function FilterPart() {
-    const { dataCategory, dataFilter, dataFav, handleFavs, showFilter, setShowFilter } = useContext(DATA)
-
+function FilterPart({ catname, subname, page, setdataFinal }) {
+    const [discounted, setDiscounted] = useState(false)
+    const [minPrice, setMinPrice] = useState(0)
+    const [maxPrice, setMaxPrice] = useState(4500)
     const [selectedColors, setSelectedColors] = useState(null)
     const [selectedSizes, setSelectedSizes] = useState(null)
     const [selectedBrand, setSelectedBrand] = useState(null)
     const [colorData, setColorData] = useState(null)
     const [sizeData, setSizeData] = useState(null)
     const [brandData, setBrandData] = useState(null)
-    const [page, setPage] = useState(null)
+    const [prices, setPrices] = useState([minPrice, maxPrice]);
+    const { dataCategory, dataFilter, setShowFilter } = useContext(DATA)
     const [newdatafilter, setnewdatafilter] = useState(dataFilter)
+    const [totalPage, setTotalPage] = useState(1)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        navigate(`?${page && page != 1 ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item.toLowerCase()).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item.toLowerCase()).join(',')}` : ''}${selectedBrand ? `&brand=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice && maxPrice != 4500 ? `&maxPrice=${maxPrice}` : ''}`)
+    }, [selectedColors, selectedSizes, page, discounted, selectedBrand, minPrice, maxPrice])
+
+
     const catid = dataCategory?.find((item, i) => item.name == catname).id
     const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
-    const navigate = useNavigate()
-    const [discounted, setDiscounted] = useState(false)
-    const [minPrice, setMinPrice] = useState(100)
-    const [maxPrice, setMaxPrice] = useState(4500)
-    const [value, setValue] = React.useState([minPrice, maxPrice]);
-    const [showPrices, setShowPrices] = useState(false)
+    useEffect(() => {
+        setMinPrice(0)
+        setMaxPrice(4500)
+        setDiscounted(false)
+        // showSortSelection(false)
+        getDataBySubCategory(subid, page).then((res) => {
+            setdataFinal(res.data)
+            setTotalPage(res.meta.totalPages)
+            setColorData([...new Set(res.data.flatMap((item) => item.Colors))].map((item, i) =>
+                ({ name: item, isChecked: false })
+            ))
+            setSizeData([...new Set(res.data.flatMap((item) => item.Size))].map((item, i) =>
+                ({ name: item, isChecked: false })
+            ))
+            const datanow = res.data.flatMap((item) => ({ name: item.Brands.name, id: item.Brands.id, isChecked: false }))
+            setBrandData(
+                datanow.reduce((acc, item) => {
+                    if (!acc?.some(existingItem => existingItem.id == item.id)) {
+                        acc.push(item)
+                    }
+                    return acc
+                }, [])
+            )
+        })
 
-    const handleChange = (_, newValue) => {
-        setValue(newValue);
-        setMinPrice(newValue[0])
-        setMaxPrice(newValue[1])
+    }, [subid, page])
+    useEffect(() => {
+        setSelectedColors(
+            colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
+        )
+        setSelectedSizes(
+            sizeData?.filter((item) => item.isChecked).map((item) => item.name) || []
+        )
+        setSelectedBrand(
+            brandData?.find((item, i) => item.isChecked == true)?.id
+        )
+    }, [colorData, sizeData, brandData])
+    const handleChange = (_, newPrices) => {
+        setPrices(newPrices);
     }
-
+    function handleShowPrices() {
+        setMinPrice(prices[0])
+        setMaxPrice(prices[1])
+    }
+    useEffect(() => {
+        getDataBySubCategory(subid, page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
+            const filteredData = discounted ? res.data.filter((item) => item.discount > 1)
+                : res.data;
+            setdataFinal(filteredData);
+        });
+    }, [selectedColors, selectedSizes, page, discounted, selectedBrand, minPrice, maxPrice]);
     function handleSubFilter(id) {
         setnewdatafilter(
             newdatafilter.map((item, i) =>
@@ -54,40 +104,19 @@ function FilterPart() {
                     item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
             )
         }
-        else if (filtertype = 'brands') {
-            setBrandData(
-                brandData.map((item, i) =>
-                    item.name == filtername ? { ...item, isChecked: !item.isChecked } : { ...item, isChecked: false }
+        else if (filtertype == 'brands') {
+            setBrandData((prevBrandData) =>
+                prevBrandData.map((item) =>
+                    item.name === filtername
+                        ? { ...item, isChecked: !item.isChecked }
+                        : { ...item, isChecked: false }
                 )
-            )
+            );
         }
         else if (filtertype == 'discount') {
             setDiscounted(!discounted)
         }
     }
-    useEffect(() => {
-        getDataBySubCategory(subid, page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
-            const filteredData = discounted
-                ? res.data.filter((item) => item.discount > 1)
-                : res.data;
-            setdataFinal(filteredData);
-        });
-    }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand]);
-    useEffect(() => {
-        setSelectedColors(
-            colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
-        )
-        setSelectedSizes(
-            sizeData?.filter((item) => item.isChecked).map((item) => item.name) || []
-        )
-        setSelectedBrand(
-            brandData?.find((item, i) => item.isChecked == true)?.id
-        )
-    }, [colorData, sizeData, brandData])
-    useEffect(() => {
-        navigate(`?${page ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item).join(',')}` : ''}${selectedBrand ? `&brandId=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice ? `maxPrice=${maxPrice}` : ''}`)
-    }, [selectedColors, selectedSizes, page, discounted, showPrices, selectedBrand])
-
     useEffect(() => {
         setnewdatafilter(
             newdatafilter.map((item, i) =>
@@ -97,45 +126,15 @@ function FilterPart() {
                             item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
             ))
     }, [dataCategory, colorData, sizeData, brandData, discounted])
-
-    useEffect(() => {
-        setMinPrice(0)
-        setMaxPrice(4500)
-        setDiscounted(false)
-        showSortSelection(false)
-        getDataBySubCategory(subid, page).then((res) => {
-            setdataFinal(res.data)
-
-            setTotalPage(res.meta.totalPages)
-            setColorData([...new Set(res.data.flatMap((item) => item.Colors))].map((item, i) =>
-                ({ name: item, isChecked: false })
-            ))
-            setSizeData([...new Set(res.data.flatMap((item) => item.Size))].map((item, i) =>
-                ({ name: item, isChecked: false })
-            ))
-            const datanow = res.data.flatMap((item) => ({ name: item.Brands.name, id: item.Brands.id, isChecked: false }))
-            setBrandData(
-                datanow.reduce((acc, item) => {
-                    if (!acc?.some(existingItem => existingItem.id == item.id)) {
-                        acc.push(item)
-                    }
-                    return acc
-                }, [])
-            )
-        })
-
-    }, [subid, page])
-
-
     return (
         <>
-            {/* FILTERDIV */}
-            <div className="hidden lg:block w-[40%] mr-[20px]">
-                <div>
+            <div className={` relative flex bg-white z-30  h-[100vh] justify-center w-[100%] `}>
+                <IoClose onClick={() => { setShowFilter(false) }} className="cursor-pointer absolute top-[30px] right-[10px]" />
+                <div className='mx-[auto]  w-[90%]'>
                     {newdatafilter &&
                         newdatafilter.map((item, i) => {
                             return (
-                                <div key={i} className="">
+                                <div key={i} className="w-[100%]">
                                     <div
                                         className={`text-[.9em]  bg-white  relative font-bold p-[10px]  mx-[10px] border-t-4 flex justify-between w-[100%] cursor-pointer`}>
                                         <p
@@ -163,15 +162,15 @@ function FilterPart() {
                                                                         handleCheckedFilters(subitem.name, subi, item.name, i, item.id)
                                                                     }}
                                                                     className={`relative  border-[1px] border-black
-                                            ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
+                                      ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
                                                                             : 'rounded h-[15px] w-[15px]'}
-                                            `}
+                                      `}
                                                                     style={{ backgroundColor: subitem.name }}
                                                                 >
                                                                     <IoIosCheckmark className={`-right-[5px] 
-                                            ${item.name == "colors" ? '-top-[3px]  text-[2em] text-white' : 'text-black -top-[6px]  text-[1.5em]'}   
-                                            ${subitem.isChecked ? 'absolute' : 'hidden'}
-                                              `}
+                                      ${item.name == "colors" ? '-top-[3px]  text-[2em] text-white' : 'text-black -top-[6px]  text-[1.5em]'}   
+                                      ${subitem.isChecked ? 'absolute' : 'hidden'}
+                                        `}
                                                                     />
                                                                 </div>
 
@@ -199,8 +198,8 @@ function FilterPart() {
                                     backgroundColor: 'black',
                                 },
                             }}
-                            getAriaLabel={() => 'Temperature range'}
-                            value={value}
+                            getAriaLabel={() => 'Price range'}
+                            value={prices}
                             onChange={handleChange}
                             valueLabelDisplay="auto"
                             min={0}
@@ -210,23 +209,21 @@ function FilterPart() {
                     <div className="flex justify-between w-[100%]">
                         <input
                             onChange={(e) => {
-                                setMinPrice(Number(e.target.value))
-                                setValue([Number(e.target.value), maxPrice])
+                                setPrices([Number(e.target.value), prices[1]])
                             }}
-                            value={minPrice}
+                            value={prices[0]}
                             className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
                             type="number" />
                         <input
                             onChange={(e) => {
-                                setMaxPrice(Number(e.target.value))
-                                setValue([minPrice, Number(e.target.value)])
+                                setPrices([prices[0], Number(e.target.value)])
                             }}
-                            value={maxPrice}
+                            value={prices[1]}
                             className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
                             type="number" />
                         <div
-                            onClick={() => { setShowPrices(true) }}
-                            className="border-[1px] rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
+                            onClick={() => { handleShowPrices() }}
+                            className="border-[1px]  rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
                             <HiMagnifyingGlass />
                         </div>
 

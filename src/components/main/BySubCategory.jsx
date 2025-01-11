@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
 import { getDataBySubCategory } from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
-import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosCheckmark, } from "react-icons/io"
+import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward } from "react-icons/io"
 import { IoFilterSharp } from "react-icons/io5"
 import { Helmet } from "react-helmet";
-import { Box, Slider } from "@mui/material";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 import { ImDropbox } from "react-icons/im";
+import FilterPart from "./FilterPart";
+import QuickView from "./QuickView";
 
 function BySubCategory() {
   const pathname = useLocation()
   const { catname, subname } = useParams()
   const [sortSelection, showSortSelection] = useState(false)
-  const { dataCategory, dataFilter, dataFav, handleFavs, showFilter, setShowFilter } = useContext(DATA)
+  const { dataCategory, dataFav, handleFavs, setShowFilter, dataFilter, showFilter,showQuick, setShowQuick } = useContext(DATA)
   const sortData = ['PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
   const [selectedSort, setSelectedSort] = useState('PRICE LOW TO HIGH')
   const [dataFinal, setdataFinal] = useState(null)
@@ -25,68 +25,14 @@ function BySubCategory() {
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
-  const [page, setPage] = useState(null)
+  const [proid,setproid]=useState(null)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter)
+  const [page, setPage] = useState(null)
   const catid = dataCategory?.find((item, i) => item.name == catname).id
   const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
   const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
-  const [minPrice, setMinPrice] = useState(0)
-  const [maxPrice, setMaxPrice] = useState(4500)
-  const [prices, setPrices] = useState([minPrice, maxPrice]);
 
-  const handleChange = (_, newPrices) => {
-    setPrices(newPrices);
-  }
-  function handleShowPrices() {
-    setMinPrice(prices[0])
-    setMaxPrice(prices[1])
-  }
-
-  function handleSubFilter(id) {
-    setnewdatafilter(
-      newdatafilter.map((item, i) =>
-        item.id == id ? { ...item, isOpen: !item.isOpen } : item
-      )
-    )
-  }
-
-  function handleCheckedFilters(filtername, filteri, filtertype, filtertypeid, id) {
-    if (filtertype == 'colors') {
-      setColorData((prevColorData) =>
-        prevColorData.map((item) =>
-          item.name === filtername
-            ? { ...item, isChecked: !item.isChecked }
-            : item
-        )
-      );
-    }
-    else if (filtertype == 'sizes') {
-      setSizeData(
-        sizeData.map((item, i) =>
-          item.name == filtername ? { ...item, isChecked: !item.isChecked } : item)
-      )
-    }
-    else if (filtertype == 'brands') {
-      setBrandData((prevBrandData) =>
-        prevBrandData.map((item) =>
-          item.name === filtername
-            ? { ...item, isChecked: !item.isChecked }
-            : { ...item, isChecked: false }
-        )
-      );
-    }
-    else if (filtertype == 'discount') {
-      setDiscounted(!discounted)
-    }
-  }
-  useEffect(() => {
-    getDataBySubCategory(subid, page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
-      const filteredData = discounted ? res.data.filter((item) => item.discount > 1)
-        : res.data;
-      setdataFinal(filteredData);
-    });
-  }, [selectedColors, selectedSizes, page, discounted, selectedBrand,minPrice,maxPrice]);
   useEffect(() => {
     setSelectedColors(
       colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
@@ -98,24 +44,8 @@ function BySubCategory() {
       brandData?.find((item, i) => item.isChecked == true)?.id
     )
   }, [colorData, sizeData, brandData])
+  
   useEffect(() => {
-    console.log(selectedBrand)
-    navigate(`?${page && page != 1 ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item.toLowerCase()).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item.toLowerCase()).join(',')}` : ''}${selectedBrand ? `&brand=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice && maxPrice!=4500 ? `&maxPrice=${maxPrice}` : ''}`)
-  }, [selectedColors, selectedSizes, page, discounted, selectedBrand, minPrice, maxPrice])
-
-  useEffect(() => {
-    setnewdatafilter(
-      newdatafilter.map((item, i) =>
-        item.name == 'colors' ? { ...item, subfilter: [colorData] } :
-          item.name == 'discount' ? { ...item, subfilter: [[{ name: 'discount', isChecked: discounted }]] } :
-            item.name == 'brands' ? { ...item, subfilter: [brandData] } :
-              item.name == 'sizes' ? { ...item, subfilter: [sizeData] } : item
-      ))
-  }, [dataCategory, colorData, sizeData, brandData, discounted])
-
-  useEffect(() => {
-    setMinPrice(0)
-    setMaxPrice(4500)
     setDiscounted(false)
     showSortSelection(false)
     getDataBySubCategory(subid, page).then((res) => {
@@ -158,11 +88,26 @@ function BySubCategory() {
     setSelectedSort('PRICE LOW TO HIGH')
   }, [pathname])
 
+
   return (
     <>
       <Helmet>
         <title>{subname} | Lunaria</title>
       </Helmet>
+      
+      <div className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
+          <QuickView setShowQuick={setShowQuick} proid={proid} />
+        </div>
+
+      {/* SLIDING FILTER DIV */}
+      <div className="bp1200:hidden">
+        <div
+          className={`absolute  w-[100%] z-50 translate-x-0 duration-300 ${showFilter ? "left-0" : "-left-[170%]"
+            } `}
+        >
+          <FilterPart catname={catname} subname={subname} page={page} setdataFinal={setdataFinal} />
+        </div>
+      </div>
       <div className=" pt-[150px]">
         <p className="text-[3em] font-serif text-center">{subname}</p>
         <ul className="underline flex  gap-[20px] justify-center">
@@ -172,7 +117,7 @@ function BySubCategory() {
                 <Link to={`/products/${catname}/${item.name}`} key={i}>
                   {item.name}
                 </Link>
-              );
+              )
             })}
         </ul>
 
@@ -181,7 +126,7 @@ function BySubCategory() {
             onClick={() => {
               setShowFilter(true);
             }}
-            className="flex bg-red-300 h-[40px] cursor-pointer items-center lg:hidden gap-[10px]"
+            className="flex w-[100px] h-[40px] cursor-pointer items-center lg:hidden gap-[10px]"
           >
             <IoFilterSharp /> FILTERS
           </div>
@@ -215,106 +160,8 @@ function BySubCategory() {
         {
           dataFinal && <div className="flex p-[30px] justify-between">
             {/* FILTERDIV */}
-            <div className="hidden lg:block w-[40%] mr-[20px]">
-              <div>
-                {newdatafilter &&
-                  newdatafilter.map((item, i) => {
-                    return (
-                      <div key={i} className="">
-                        <div
-                          className={`text-[.9em]  bg-white  relative font-bold p-[10px]  mx-[10px] border-t-4 flex justify-between w-[100%] cursor-pointer`}>
-                          <p
-                            onClick={() => {
-                              handleSubFilter(item.id);
-                            }}
-                            className="flex z-0 justify-between capitalize w-[100%]">
-                            {item.name}
-                            <IoIosArrowDown
-                              className={`transition-all duration-300 ${item.name == "price" ? "hidden" : "block"
-                                } ${item.isOpen ? "rotate-180" : ""}`} />
-                          </p>
-                        </div>
-
-                        <div className={` pt-[10px]  w-[100%] `}>
-                          <div>
-                            <ul className={` pl-[30px] lowercase flex flex-col ${item.isOpen ? "block" : "hidden"}`}>
-                              {
-                                item.subfilter && item.subfilter[0]?.map((subitem, subi) => {
-                                  return (
-                                    <li key={subi}
-                                      className={`p-[5px] ${item.name == 'colors' && subitem.isChecked == true ? 'bg-pink-300' : ''} rounded-xl cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
-                                      <div
-                                        onClick={() => {
-                                          handleCheckedFilters(subitem.name, subi, item.name, i, item.id)
-                                        }}
-                                        className={`relative  border-[1px] border-black
-                                      ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
-                                            : 'rounded h-[15px] w-[15px]'}
-                                      `}
-                                        style={{ backgroundColor: subitem.name }}
-                                      >
-                                        <IoIosCheckmark className={`-right-[5px] 
-                                      ${item.name == "colors" ? '-top-[3px]  text-[2em] text-white' : 'text-black -top-[6px]  text-[1.5em]'}   
-                                      ${subitem.isChecked ? 'absolute' : 'hidden'}
-                                        `}
-                                        />
-                                      </div>
-
-                                      {subitem.name}</li>
-                                  )
-                                })
-                              }
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-
-                <Box sx={{ width: 300 }}>
-                  <Slider
-                    sx={{
-                      '& .MuiSlider-thumb': {
-                        backgroundColor: 'black',
-                      },
-                      '& .MuiSlider-rail': {
-                        backgroundColor: '#bdbdbd',
-                      },
-                      '& .MuiSlider-track': {
-                        backgroundColor: 'black',
-                      },
-                    }}
-                    getAriaLabel={() => 'Price range'}
-                    value={prices}
-                    onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    min={0}
-                    max={10000}
-                  />
-                </Box>
-                <div className="flex justify-between w-[100%]">
-                  <input
-                    onChange={(e) => {
-                      setPrices([Number(e.target.value), prices[1]])
-                    }}
-                    value={prices[0]}
-                    className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
-                    type="number" />
-                  <input
-                    onChange={(e) => {
-                      setPrices([prices[0], Number(e.target.value)])
-                    }}
-                    value={prices[1]}
-                    className="border-[1px] rounded flex justify-center items-center border-gray-500 h-[30px] w-[35%]"
-                    type="number" />
-                  <div
-                    onClick={() => { handleShowPrices() }}
-                    className="border-[1px]  rounded cursor-pointer  flex justify-center items-center border-gray-500 h-[30px] w-[30px]">
-                    <HiMagnifyingGlass />
-                  </div>
-
-                </div>
-              </div>
+            <div className="hidden lg:block lg:w-[40%] h-[200px] lg:min-h-[60vh]  mr-[20px]">
+              <FilterPart catname={catname} subname={subname} page={page} setdataFinal={setdataFinal} />
             </div>
 
             {/* PAGINATIONDIV */}

@@ -14,8 +14,8 @@ import { getDataByCategory } from '../../services/api'
 function ByCategory() {
   const { catname } = useParams()
   const [cdata, setcdata] = useState(null)
-  const { imgsfordeps, imgsforsubcats, dataCategory } = useContext(DATA)
-  const [showQuick, setShowQuick] = useState(false)
+  const { imgsfordeps, imgsforsubcats, dataCategory,showQuick, setShowQuick } = useContext(DATA)
+  // const [showQuick, setShowQuick] = useState(false)
   const [proid, setproid] = useState(null)
   // const [catid,setCatid]=useState(null)
   const catid=dataCategory?.find((item, i) => item.name == catname).id

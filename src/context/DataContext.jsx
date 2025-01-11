@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 export const DATA = createContext(null);
 function DataContext({ children }) {
   const loca = useLocation();
+  const [showQuick,setShowQuick]=useState(false)
   const [showFilter, setShowFilter] = useState(false);
   const [dataCategory, setDataCategory] = useState(null);
   const [dataByCategory, setDataByCategory] = useState(null);
@@ -179,7 +180,9 @@ function DataContext({ children }) {
           dataFav,
           showFilter,
           setShowFilter,
-          footerData
+          footerData,
+          showQuick,
+          setShowQuick
         }}
       >
         {children}

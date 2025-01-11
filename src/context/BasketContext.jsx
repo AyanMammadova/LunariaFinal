@@ -3,6 +3,7 @@ export const BASKET = createContext(null)
 function BasketContext({ children }) {
     const [size, setSize] = useState('')
     const [color, setColor] = useState('')
+    const [showUpdate,setShowUpdate]=useState(false)
 
     const [basket, setBasket] = useState(JSON.parse(localStorage.getItem('basketLocal')) || [])
 
@@ -80,7 +81,9 @@ function BasketContext({ children }) {
                     setColor,
                     handleColor,
                     handleCount,
-                    clearBasket
+                    clearBasket,
+                    showUpdate,
+                    setShowUpdate
                 }}
 
             >
