@@ -8,10 +8,11 @@ import 'swiper/css/pagination';
 import { getDataByCategory, getDataBySubCategory } from '../../services/api';
 import { Link } from 'react-router-dom';
 import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
-function ProductSwiper({ type, validId, setproid }) {
+import { BASKET } from '../../context/BasketContext';
+function ProductSwiper({ type, validId }) {
 
-  const { dataDiscounted, handleFavs, dataFav, setShowQuick} = useContext(DATA)
-
+  const { dataDiscounted, handleFavs, dataFav, setShowQuick,quickId, setQuickId} = useContext(DATA)
+  const {setUpdating}=useContext(BASKET)
   const [currentData, setCurrentData] = useState(null)
   useEffect(() => {
     if (type == 'discount') {
@@ -100,8 +101,9 @@ function ProductSwiper({ type, validId, setproid }) {
                             <div
                               onClick={(e) => {
                                 setShowQuick(true)
-                                setproid(item.id)
+                                setQuickId(item.id)
                                 e.preventDefault()
+                                setUpdating(false)
                               }}
                               className={` group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]   text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}>
                               QUICK VIEW

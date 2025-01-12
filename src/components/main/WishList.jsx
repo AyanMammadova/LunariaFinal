@@ -3,10 +3,12 @@ import { DATA } from '../../context/DataContext'
 import { Link } from 'react-router-dom'
 import { IoCloseSharp } from 'react-icons/io5'
 import { PiHeartLight } from 'react-icons/pi'
+import { BASKET } from '../../context/BasketContext'
 
 function WishList() {
 
-  const { dataFav, handleFavs, setShowQuick } = useContext(DATA)
+  const { dataFav, handleFavs, setShowQuick,quickId, setQuickId } = useContext(DATA)
+  const {setUpdating}=useContext(BASKET)
 
 
   return (
@@ -43,12 +45,13 @@ function WishList() {
                         <IoCloseSharp className={`absolute text-[2em] top-[10px] right-[10px] `} />
                       </div>
 
-                      <div className={`${item.discount > 1 ? 'hidden' : 'block'}`}>
+                      <div className={``}>
                         <div
                           onClick={(e) => {
                             setShowQuick(true)
-                            setproid(item.id)
+                            setQuickId(item.id)
                             e.preventDefault()
+                            setUpdating(false)
                           }}
                           className={` group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]  text-center text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}>
                           QUICK VIEW

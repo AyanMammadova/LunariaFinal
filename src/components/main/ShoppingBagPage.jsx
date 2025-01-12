@@ -7,8 +7,9 @@ import { Helmet } from 'react-helmet'
 import { DATA } from '../../context/DataContext'
 
 function ShoppingBagPage() {
-    const { basket, removeFromBasket, handleCount, SubTotal } = useContext(BASKET)
-    const {setShowQuick}=useContext(DATA)
+    const { basket, removeFromBasket, handleCount, SubTotal,setUpdateColor,setUpdateSize,setUpdating } = useContext(BASKET)
+    const { setShowQuick,setQuickId } = useContext(DATA)
+
     return (
         <>
             <Helmet>
@@ -22,14 +23,39 @@ function ShoppingBagPage() {
                     </div>
                     {
                         basket && basket.map((item, i) => (
-                            <Link key={i} to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
+                            <div key={i}>
                                 <div className='flex border-t-2 pt-[20px] mx-[5px] p-[4px] gap-[40px] relative' >
-                                    <img className='h-[100px]' src={item?.images?.[0]} alt="" />
+                                    <div
+                                        className='h-[180px]    relative flex items-center justify-center group cursor-pointer'
+                                    >
+                                        <img
+                                            className={`group-hover:hidden transition-opacity duration-300 ease-in-out `}
+                                            src={item.images[0]}
+                                        />
+                                        <img
+                                            className={`hidden z-20 group-hover:block transition-opacity duration-300 ease-in-out`}
+                                            src={item.images[1]}
+                                        />
+                                        <div className=" bg-black/20 w-[100%] h-[100%] z-40 absolute opacity-0 inset-0 group-hover:opacity-100 transition-all duration-200 ease-in-out">
+                                            <div
+                                                onClick={() => {
+                                                    setShowQuick(true)
+                                                    setQuickId(item.id)
+                                                    setUpdateColor(item.color)
+                                                    setUpdateSize(item.size)
+                                                    setUpdating(true)
+                                                }}
+                                                className='flex justify-center w-[100%] h-[100%] items-center transition-all duration-500'>
+                                                <p className='text-[1.2em] font-cormorant rounded-full px-[7px] bg-white/70 '>Update</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <IoCloseSharp
-                                        onClick={(e) => { 
-                                            removeFromBasket(item.id,item.size,item.color)
+                                        onClick={(e) => {
+                                            removeFromBasket(item.id, item.size, item.color)
                                             e.preventDefault()
-                                         }}
+                                        }}
                                         className='absolute cursor-pointer top-[10px] right-[10px]' />
                                     <div>
                                         <p className='uppercase'>{item?.brand}</p>
@@ -58,17 +84,17 @@ function ShoppingBagPage() {
                                             {item.quantity}
                                             <FaRegSquarePlus
                                                 className='cursor-pointer'
-                                                onClick={(e) => { 
-                                                    handleCount(item.id, item.color, item.size, +1) 
+                                                onClick={(e) => {
+                                                    handleCount(item.id, item.color, item.size, +1)
                                                     e.preventDefault()
-                                                    }} />
+                                                }} />
                                         </p>
                                         <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold w-[50vw] text-right`}>ItemTotal: {item.quantity * item.price}$</p>
                                         <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold w-[50vw] text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
 
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         )
                         )
                     }

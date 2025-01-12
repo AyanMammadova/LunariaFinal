@@ -10,11 +10,12 @@ import SearchBar from "../offcanvas/SearchBar";
 import ShoppingBag from "../offcanvas/ShoppingBag";
 import LoginPopUp from "../login/LoginPopUp";
 import { BASKET } from "../../context/BasketContext";
+import QuickView from "../main/QuickView";
 
 function Header() {
   const location = useLocation();
   const [showCategorySlide, setShowCategorySlide] = useState(false);
-  const { dataCategory, imgsformenu, dataFav } = useContext(DATA);
+  const { dataCategory, imgsformenu, dataFav, showQuick, setShowQuick } = useContext(DATA);
   const { basket } = useContext(BASKET);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showBag, setShowBag] = useState(false);
@@ -26,12 +27,17 @@ function Header() {
     setShowBag(false);
     setShowSearchBar(false)
   }, [location.pathname]);
-  function handlesmth(){
+  function handlesmth() {
     console.log('')
   }
   return (
     <>
       <header className=" fixed w-[100%] bg-white z-50">
+        <div
+          onClick={() => setShowQuick(false)}
+          className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
+            <QuickView />
+        </div>
         <div
           onClick={() => {
             handlesmth();
@@ -47,7 +53,7 @@ function Header() {
         >
           <ShoppingBag setShowBag={setShowBag} />
         </div>
-        
+
         <div
           className={`z-50 absolute w-[100%] transition-all duration-300  ${showSearchBar ? "top-0" : "-top-[100vh]"
             }`}
@@ -133,15 +139,15 @@ function Header() {
               </Link>
             </div>
 
-            <div onClick={()=>{setShowLogin(false)}}
-            className={ ` z-10  top-0 w-[100%] h-[100vh] ${showLogin ? "fixed" : "hidden"}`}></div>
+            <div onClick={() => { setShowLogin(false) }}
+              className={` z-10  top-0 w-[100%] h-[100vh] ${showLogin ? "fixed" : "hidden"}`}></div>
 
             <div className="text-[1.6em] relative w-[43%] justify-end flex gap-[10px]  ">
               <div
                 className={`${showLogin ? "absolute" : "hidden"
                   }  top-[50px] z-50 ring-0 `}
               >
-                <LoginPopUp setShowLogin={setShowLogin}/>
+                <LoginPopUp setShowLogin={setShowLogin} />
               </div>
               <div className="hidden bp1200:flex  justify-end  pr-[40px] ">
                 <div

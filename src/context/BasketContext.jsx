@@ -3,30 +3,28 @@ export const BASKET = createContext(null)
 function BasketContext({ children }) {
     const [size, setSize] = useState('')
     const [color, setColor] = useState('')
-    const [showUpdate,setShowUpdate]=useState(false)
-
+    const [showUpdate, setShowUpdate] = useState(false)
+    const [updateSize, setUpdateSize] = useState(null)
+    const [updateColor, setUpdateColor] = useState(null)
+    const [updating, setUpdating] = useState(false)
     const [basket, setBasket] = useState(JSON.parse(localStorage.getItem('basketLocal')) || [])
 
-    const SubTotal = basket.reduce((total, item) => total + ((item.discount>1 ?  ((item?.price * (100 - item?.discount)) / 100).toFixed(1) : item.price) * item.quantity), 0)
+    const SubTotal = basket.reduce((total, item) => total + ((item.discount > 1 ? ((item?.price * (100 - item?.discount)) / 100).toFixed(1) : item.price) * item.quantity), 0)
 
-    function handleCount(id,color,size, count) {
+    function handleCount(id, color, size, count) {
         setBasket(basket?.map(item =>
-                item.id == id && item.size==size && item.color==color && (item.quantity >1 || count>0)
+            item.id == id && item.size == size && item.color == color && (item.quantity > 1 || count > 0)
                 ? { ...item, quantity: item.quantity + count }
                 : item
         )
-    )}
-    function clearBasket(){
-
-       setBasket(basket.filter(item=>!item))
+        )
+    }
+    function clearBasket() {
+        setBasket(basket.filter(item => !item))
     }
 
-    function handleSize(size) {
-        setSize(size)
-    }
-    function handleColor(color) {
-        setColor(color)
-    }
+    function handleSize(size) { setSize(size) }
+    function handleColor(color) { setColor(color) }
     function addToBasket(id, name, description, price, discount, brand, images, size, color, quantity) {
         if (basket?.find(item => item.id == id && item.color == color && item.size == size)) {
             setBasket(basket?.map(item =>
@@ -62,6 +60,15 @@ function BasketContext({ children }) {
         )
     }
 
+    function handleUpdate(id, color, oldColor, size, oldSize) {
+        if (basket?.find(item => item.id == id && (item.color == oldColor) && (item.size == oldSize))) {
+            setBasket(basket?.map(item =>
+                item.id == id && (item.color == oldColor) && (item.size == oldSize)
+                    ? { ...item, color: color, size: size }
+                    : item
+            ))
+        }
+    }
     useEffect(() => {
         localStorage.setItem('basketLocal', JSON.stringify(basket));
 
@@ -71,6 +78,7 @@ function BasketContext({ children }) {
             <BASKET.Provider
                 value={{
                     addToBasket,
+                    handleUpdate,
                     basket,
                     removeFromBasket,
                     handleSize,
@@ -83,9 +91,14 @@ function BasketContext({ children }) {
                     handleCount,
                     clearBasket,
                     showUpdate,
-                    setShowUpdate
+                    setShowUpdate,
+                    updateColor,
+                    setUpdateColor,
+                    updateSize,
+                    setUpdateSize,
+                    updating,
+                    setUpdating
                 }}
-
             >
                 {children}
             </BASKET.Provider>

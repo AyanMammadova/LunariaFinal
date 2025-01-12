@@ -22,6 +22,7 @@ export default {
       },
       fontFamily: {
         cormorant: ['"Cormorant"', 'serif'],
+        cormorantgaramond: ['"Cormorant+Garamond"', 'serif'],
         montserrat: ['"Montserrat Ace Regular"', 'sans-serif'],
       },
     },

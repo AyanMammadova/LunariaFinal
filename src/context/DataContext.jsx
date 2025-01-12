@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 export const DATA = createContext(null);
 function DataContext({ children }) {
   const loca = useLocation();
+  const [quickId, setQuickId] = useState(null)
   const [showQuick,setShowQuick]=useState(false)
   const [showFilter, setShowFilter] = useState(false);
   const [dataCategory, setDataCategory] = useState(null);
@@ -40,7 +41,6 @@ function DataContext({ children }) {
   useEffect(() => {
     localStorage.setItem("favData", JSON.stringify(dataFav));
   }, [dataFav]);
-
   useEffect(() => {
     setDataDiscounted(
       dataAll
@@ -70,7 +70,6 @@ function DataContext({ children }) {
       "subcats": ["+994 51 225 96 96", "51, 153 Neftchiler Avenue"]
     }
   ]
-
   const dataFilter = [
     {
       name: "colors",
@@ -182,7 +181,9 @@ function DataContext({ children }) {
           setShowFilter,
           footerData,
           showQuick,
-          setShowQuick
+          setShowQuick,
+          quickId, 
+          setQuickId
         }}
       >
         {children}

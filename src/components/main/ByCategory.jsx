@@ -10,17 +10,15 @@ import 'swiper/css/pagination';
 import QuickView from './QuickView'
 import { Helmet } from 'react-helmet'
 import { getDataByCategory } from '../../services/api'
+import { BASKET } from '../../context/BasketContext'
 
 function ByCategory() {
   const { catname } = useParams()
   const [cdata, setcdata] = useState(null)
-  const { imgsfordeps, imgsforsubcats, dataCategory,showQuick, setShowQuick } = useContext(DATA)
-  // const [showQuick, setShowQuick] = useState(false)
-  const [proid, setproid] = useState(null)
-  // const [catid,setCatid]=useState(null)
+  const { imgsfordeps, imgsforsubcats, dataCategory,showQuick, setShowQuick,quickId, setQuickId } = useContext(DATA)
+ const {updating,setUpdating}=useContext(BASKET)
   const catid=dataCategory?.find((item, i) => item.name == catname).id
   useEffect(() => {
-    
     getDataByCategory(catid).then(res => { setcdata(res.data) })
   }, [catname])
   return (
@@ -29,9 +27,6 @@ function ByCategory() {
         <title>{catname} | Lunaria</title>
       </Helmet>
       <section>
-        <div className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
-          <QuickView setShowQuick={setShowQuick} proid={proid} />
-        </div>
         <div className='overflow-hidden h-[100vh]  w-[95%] mx-[auto] relative group'>
 
           <div className='h-full absolute  w-full  m-[auto] bg-[#35313180] z-10' ></div>
@@ -60,7 +55,7 @@ function ByCategory() {
                 </button>
               </Link>
             </div>
-            <ProductSwiper type={'category'} validId={catid} setproid={setproid} setShowQuick={setShowQuick} />
+            <ProductSwiper type={'category'} validId={catid} setQuickId={setQuickId} setShowQuick={setShowQuick} />
           </div>
         </div>
       </section>

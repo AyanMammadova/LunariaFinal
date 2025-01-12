@@ -8,13 +8,14 @@ import { IoFilterSharp } from "react-icons/io5"
 import { Helmet } from "react-helmet";
 import { ImDropbox } from "react-icons/im";
 import FilterPart from "./FilterPart";
-import QuickView from "./QuickView";
+import { BASKET } from "../../context/BasketContext";
 
 function BySubCategory() {
   const pathname = useLocation()
   const { catname, subname } = useParams()
   const [sortSelection, showSortSelection] = useState(false)
-  const { dataCategory, dataFav, handleFavs, setShowFilter, dataFilter, showFilter,showQuick, setShowQuick } = useContext(DATA)
+  const {setUpdating}=useContext(BASKET)
+  const { dataCategory, dataFav, handleFavs, setShowFilter, dataFilter, showFilter,showQuick, setShowQuick,quickId, setQuickId } = useContext(DATA)
   const sortData = ['PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
   const [selectedSort, setSelectedSort] = useState('PRICE LOW TO HIGH')
   const [dataFinal, setdataFinal] = useState(null)
@@ -25,7 +26,6 @@ function BySubCategory() {
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
-  const [proid,setproid]=useState(null)
   const [newdatafilter, setnewdatafilter] = useState(dataFilter)
   const [page, setPage] = useState(null)
   const catid = dataCategory?.find((item, i) => item.name == catname).id
@@ -95,10 +95,6 @@ function BySubCategory() {
         <title>{subname} | Lunaria</title>
       </Helmet>
       
-      <div className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
-          <QuickView setShowQuick={setShowQuick} proid={proid} />
-        </div>
-
       {/* SLIDING FILTER DIV */}
       <div className="bp1200:hidden">
         <div
@@ -198,7 +194,8 @@ function BySubCategory() {
                               <div
                                 onClick={(e) => {
                                   setShowQuick(true);
-                                  setproid(item.id);
+                                  setQuickId(item.id);
+                                  setUpdating(false)
                                   e.preventDefault();
                                 }}
                                 className={` group-hover:bottom-0  -bottom-full transition-all duration-300 h-[30px]  text-center text-white absolute  w-[100%] bg-[rgba(19,19,19,0.7)]`}

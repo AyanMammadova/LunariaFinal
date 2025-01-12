@@ -49,13 +49,13 @@ function Footer() {
         </section>
         <section className="flex font-montserrat justify-around flex-wrap">
           <div className="h-[70px] border-2  my-[10px] flex items-center w-[100%] bp700:w-[30%]">
-            <GoCreditCard className="mx-[10px]"/> Safe & Easy payment
+            <GoCreditCard className="mx-[10px]" /> Safe & Easy payment
           </div>
           <div className="h-[70px] border-2 my-[10px]  flex items-center w-[100%] bp700:w-[30%]">
-            <FaTruckFast className="mx-[10px]"/> Express delivery
+            <FaTruckFast className="mx-[10px]" /> Express delivery
           </div>
           <div className="h-[70px] border-2 my-[10px]  flex items-center w-[100%] bp700:w-[30%]">
-            <GiBoxUnpacking className="mx-[10px]"/> Quick & Easy returns
+            <GiBoxUnpacking className="mx-[10px]" /> Quick & Easy returns
           </div>
         </section>
         <section className="flex flex-col bp700:flex-row flex-wrap gap-[15px] justify-between text-[.9em]  font-montserrat   py-[20px]">

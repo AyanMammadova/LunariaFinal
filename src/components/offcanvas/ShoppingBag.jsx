@@ -5,15 +5,16 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { BASKET } from '../../context/BasketContext'
 import { Link } from 'react-router-dom'
 import { FaRegSquareMinus, FaRegSquarePlus } from 'react-icons/fa6'
+import { DATA } from '../../context/DataContext'
 
 function ShoppingBag({ setShowBag }) {
-  const { basket, removeFromBasket, SubTotal, handleCount,showUpdate,setShowUpdate } = useContext(BASKET)
+  const { basket, removeFromBasket, SubTotal, handleCount,setUpdateColor,setUpdateSize,setUpdating } = useContext(BASKET)
+  const { setShowQuick, quickId, setQuickId } = useContext(DATA)
 
   return (
     <>
       <div
-        className='w-full relative overflow-y-scroll h-[100vh] bg-white z-50 shadow-lg'>
-
+        className='w-full relative overflow-y-scroll h-[100vh] bg-white z-40 shadow-lg'>
         <IoCloseSharp
           className='absolute top-[20px] right-[20px] cursor-pointer text-[1.2em]'
           onClick={() => { setShowBag(false) }} />
@@ -30,18 +31,31 @@ function ShoppingBag({ setShowBag }) {
           basket && basket.map((item, i) => {
             return <div key={i}>
               <div className='flex border-b-2 mx-[5px] p-[4px] gap-[10px] relative'>
-                <div 
-                onClick={()=>{setShowUpdate(true)}}
-                className='h-[200px]  w-[200px] flex items-center justify-center group cursor-pointer'
+                <div
+                  className='h-[200px]  w-[200px]  relative flex items-center justify-center group cursor-pointer'
                 >
                   <img
                     className={`group-hover:hidden transition-opacity duration-300 ease-in-out `}
                     src={item.images[0]}
                   />
                   <img
-                    className={`hidden group-hover:block transition-opacity duration-300 ease-in-out`}
+                    className={`hidden z-20 group-hover:block transition-opacity duration-300 ease-in-out`}
                     src={item.images[1]}
                   />
+                  <div className=" bg-black/20 w-[100%] h-[100%] z-50 absolute opacity-0 inset-0 group-hover:opacity-100 transition-all duration-200 ease-in-out">
+                    <div
+                      onClick={() => {
+                        setShowQuick(true)
+                        setQuickId(item.id)
+                        setUpdateColor(item.color)
+                        setUpdateSize(item.size)
+                        setUpdating(true)
+                      }}
+                      className='flex justify-center w-[100%] h-[100%] items-center transition-all duration-500'>
+                      <p className='text-[1.2em] font-cormorant rounded-full px-[7px] bg-white/70 '>Update</p>
+                    </div>
+                  </div>
+
                 </div>
 
                 <div>
