@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getProductById } from '../../services/api'
 import { FaMinus, FaPlus, FaWhatsapp } from 'react-icons/fa'
 import toast, { Toaster } from 'react-hot-toast'
@@ -9,20 +9,24 @@ import { GoHeart, GoHeartFill } from 'react-icons/go'
 import { BASKET } from '../../context/BasketContext'
 import EcommerceSwiper from './EcommerceSwiper'
 import { Helmet } from 'react-helmet'
+import { FaCheck } from 'react-icons/fa6'
 
 function ProductById() {
-    const { addToBasket, handleSize, size, setSize, color, handleColor } = useContext(BASKET)
+    const { addToBasket,  size, setSize, color,setColor } = useContext(BASKET)
     const { dataFav, handleFavs } = useContext(DATA)
-
     const { proinfo } = useParams()
     const splittedproinfo = proinfo.split("-")
-    const proid = splittedproinfo[splittedproinfo.length - 1]
-
-
+    const proid = splittedproinfo[splittedproinfo.length - 1] 
     const [product, setProduct] = useState(null)
     useEffect(() => {
         getProductById({ proid }).then(res => { setProduct(res) })
+        setColor(product?.Colors[0])
+        setSize(product?.Size[0]) 
     }, [proid])
+    useEffect(() => {
+        setColor(product?.Colors[0])
+        setSize(product?.Size[0]) 
+    }, [product])
     return (
         <>
             <Helmet>
@@ -32,7 +36,7 @@ function ProductById() {
                 <div className='w-full flex flex-col md:flex-row justify-start gap-[50px] '>
                     {/* IMAGEDIV */}
                     <div className='flex justify-center'>
-                        <div className="h-[80%] w-[400px]">
+                        <div className="h-[80%] w-[450px]">
                             <EcommerceSwiper images={product?.images} />
                         </div>
                     </div>
@@ -53,14 +57,11 @@ function ProductById() {
                                 product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
                                     return <div
                                         key={i}
-                                        className={` flex items-center justify-center w-[30px] shadow-lg  h-[30px] border-2 rounded-full`}
-                                        style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
+                                        className={` flex items-center justify-center  cursor-pointer w-[30px] shadow-lg  h-[30px] rounded-full ${item=='WHITE' ?`border-[1px] border-black` : ""}`}
+                                        style={{ backgroundColor: item }}
+                                            onClick={() => { setColor(item) }}
                                     >
-                                        <div
-                                            className={`${item == 'WHITE' ? 'border-[1px] border-gray-400' : ''} cursor-pointer h-[20px] rounded-full w-[20px] `}
-                                            style={{ backgroundColor: item }}
-                                            onClick={() => { handleColor(item) }}
-                                        ></div>
+                                            <FaCheck className={`${item == color ? 'block' : 'hidden'} ${item=='BLACK' || item=='BLUE' || item == 'PURPLE' || item == 'GREEN' ? 'text-white':''}`}/>
                                     </div>
                                 }) :
                                     <div className='font-thin'>There is no color options</div>
@@ -72,7 +73,7 @@ function ProductById() {
                             {
                                 product?.Size.map((item, i) => (
                                     <div
-                                        onClick={() => { handleSize(item) }}
+                                        onClick={() => { setSize(item) }}
                                         className={`${item == size ? 'border-black' : 'border-gray-200'} px-[26px] py-[2px] border-2 cursor-pointer   transition-all duration-300`}
                                         key={i}>
                                         {item}
@@ -108,9 +109,18 @@ function ProductById() {
                                     ADD TO CARD
                                 </button>
                             </div>
-                            <button className='h-[45px] flex  gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white'>
-                                <FaWhatsapp />SEND US A MESSAGE
-                            </button>
+                            <Link
+                                to="#"
+                                onClick={() =>
+                                    window.open(
+                                        "https://wa.me/9940702561065?text=Hello!%20I'm%20reaching%20out%20via%20WhatsApp.",
+                                        "_blank"
+                                    )
+                                }
+                                className='h-[45px] flex w-[100%]  gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white'
+                            >
+                                    <FaWhatsapp />SEND US A MESSAGE
+                            </Link>
                             <Toaster
                                 position="top-right"
                                 reverseOrder={false}

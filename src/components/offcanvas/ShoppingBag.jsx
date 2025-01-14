@@ -23,9 +23,7 @@ function ShoppingBag({ setShowBag }) {
 
           <HiOutlineShoppingBag className='text-[4em] mx-[auto] mt-[50px] text-center' />
           <p className='font-serif text-[1.5em] text-center'>Your Bag Is Empty</p>
-
-          <FaRegSadCry className='text-[2em] mx-[auto]' />
-          <p className='font-serif text-[0.7em] text-center'>Buy smth loser</p>
+    
         </div>
         {
           basket && basket.map((item, i) => {

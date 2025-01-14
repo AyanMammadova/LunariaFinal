@@ -5,7 +5,7 @@ function BasketContext({ children }) {
     const [color, setColor] = useState('')
     const [showUpdate, setShowUpdate] = useState(false)
     const [updateSize, setUpdateSize] = useState(null)
-    const [updateColor, setUpdateColor] = useState(null)
+    const [updateColor, setUpdateColor] = useState(null) 
     const [updating, setUpdating] = useState(false)
     const [basket, setBasket] = useState(JSON.parse(localStorage.getItem('basketLocal')) || [])
 
@@ -23,8 +23,7 @@ function BasketContext({ children }) {
         setBasket(basket.filter(item => !item))
     }
 
-    function handleSize(size) { setSize(size) }
-    function handleColor(color) { setColor(color) }
+    
     function addToBasket(id, name, description, price, discount, brand, images, size, color, quantity) {
         if (basket?.find(item => item.id == id && item.color == color && item.size == size)) {
             setBasket(basket?.map(item =>
@@ -49,9 +48,6 @@ function BasketContext({ children }) {
             }
             ])
         }
-
-        setSize('')
-        setColor('')
     }
 
     function removeFromBasket(id, size, color) {
@@ -68,7 +64,14 @@ function BasketContext({ children }) {
                     : item
             ))
         }
-    }
+        // const ayan=basket.filter((item,i)=> item.id == id && (item.color == color) && (item.size == size))
+        // if(ayan.length==2){
+        //     const index=basket.findIndex((item, i) => item.id === id && item.color === color && item.size === size)
+        //     setBasket(basket.filter((item,i)=> i!=index))
+        // } else {
+        //     console.log('deyil')
+        // }
+    } 
     useEffect(() => {
         localStorage.setItem('basketLocal', JSON.stringify(basket));
 
@@ -81,13 +84,11 @@ function BasketContext({ children }) {
                     handleUpdate,
                     basket,
                     removeFromBasket,
-                    handleSize,
                     SubTotal,
                     size,
                     setSize,
                     color,
                     setColor,
-                    handleColor,
                     handleCount,
                     clearBasket,
                     showUpdate,

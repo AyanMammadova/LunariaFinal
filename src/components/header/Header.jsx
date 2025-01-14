@@ -27,20 +27,17 @@ function Header() {
     setShowBag(false);
     setShowSearchBar(false)
   }, [location.pathname]);
-  function handlesmth() {
-    console.log('')
-  }
+  
   return (
     <>
       <header className=" fixed w-[100%] bg-white z-50">
         <div
           onClick={() => setShowQuick(false)}
           className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
-            <QuickView />
+            <QuickView setShowBag={setShowBag}/>
         </div>
         <div
           onClick={() => {
-            handlesmth();
             setShowSearchBar(false);
             setShowBag(false);
           }}

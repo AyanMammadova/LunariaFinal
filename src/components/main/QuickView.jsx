@@ -9,32 +9,30 @@ import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
 import { DATA } from '../../context/DataContext';
 import { BASKET } from '../../context/BasketContext';
 import EcommerceSwiper from './EcommerceSwiper';
+import { FaCheck } from 'react-icons/fa6';
 
 
-function QuickView() {
+function QuickView({setShowBag}) {
   const { dataFav, handleFavs, setShowQuick, quickId, setQuickId } = useContext(DATA)
-  const { addToBasket, handleSize, size, setSize, color, setColor, handleColor, updateSize, updateColor, updating, handleUpdate } = useContext(BASKET)
+  const { addToBasket, size, setSize, color, setColor, updateSize, updateColor, updating, handleUpdate, basket } = useContext(BASKET)
   const [product, setProduct] = useState(null)
   const [newColor, setNewColor] = useState(null)
   const [newSize, setNewSize] = useState(null)
+  const [alreadyExist,setAlreadyExist]=useState(false)
   useEffect(() => {
     quickId && getProductById({ proid: quickId }).then(res => { setProduct(res) })
     setNewColor(null)
     setNewSize(null)
-    console.log(updateColor)
   }, [quickId])
-  function handleIfColorChanged(selectedcolor) {
-    setNewColor(selectedcolor)
+  function handleIsAlreadyExist(id, color, size) {
+    if (basket?.filter(item => item.id == id && item.color == color && item.size == size).length==1) {
+      setAlreadyExist(true)
+    }
+    else{
+      setAlreadyExist(false)
+    }
   }
-  function handleIfSizeChanged(selectedsize) {
-    setNewSize(selectedsize)
-  }
-
-  // function handleSmallUpdate(id, newColor, colorChanged, newSize, sizeChanged) {
-  //   handleIfColorChanged(newColor)
-  //   handleIfSizeChanged(newSize)
-  //   handleUpdate(id, newColor, colorChanged, newSize, sizeChanged)
-  // }
+  
   return (
     <>
       <div
@@ -61,14 +59,11 @@ function QuickView() {
                 product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
                   return <div
                     key={i}
-                    className={` flex items-center justify-center w-[30px] h-[30px] border-2 rounded-full`}
-                    style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
+                    className={` flex items-center justify-center  cursor-pointer w-[25px] shadow-lg  h-[25px] rounded-full ${item == 'WHITE' ? `border-[1px] border-black` : ""}`}
+                    style={{ backgroundColor: item }}
+                    onClick={() => { setColor(item) }}
                   >
-                    <div
-                      className={`cursor-pointer h-[20px] rounded-full w-[20px] `}
-                      style={{ backgroundColor: item }}
-                      onClick={() => { handleColor(item) }}
-                    ></div>
+                    <FaCheck className={`${item == color ? 'block' : 'hidden'} ${item == 'BLACK' || item == 'BLUE' ? 'text-white' : ''}`} />
                   </div>
                 }) :
                   <div className='font-thin'>There is no color options</div>
@@ -80,19 +75,19 @@ function QuickView() {
               <p>Color:{
                 newColor ? newColor : product.Colors.find(item => item == updateColor)
               }</p>
-              <div className='flex'>
+              <div className='flex m-[3px] gap-[3px]'>
                 {
                   product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
                     return <div
                       key={i}
-                      className={` flex items-center justify-center w-[30px] h-[30px] border-2 rounded-full`}
-                      style={{ border: `${item == color ? `1px solid ${item}` : 'none'}` }}
+                      className={`flex items-center justify-center  cursor-pointer w-[25px] shadow-lg  h-[25px] rounded-full ${item == 'WHITE' ? `border-[1px] border-black` : ""}`}
+                      style={{ backgroundColor: item }}
+                      onClick={() => { 
+                        setNewColor(item) 
+                        handleIsAlreadyExist(product.id, item, newSize || updateSize)
+                      }}
                     >
-                      <div
-                        className={`cursor-pointer h-[20px] rounded-full w-[20px] `}
-                        style={{ backgroundColor: item }}
-                        onClick={() => { handleIfColorChanged(item) }}
-                      ></div>
+                      <FaCheck className={`${newColor ? item == newColor ? 'block' : 'hidden' : item == updateColor ? 'block' : 'hidden'} ${item == 'BLACK' || item == 'BLUE' || item == 'PURPLE' || item == 'GREEN' ? 'text-white' : ''}`} />
                     </div>
                   }) :
                     <div className='font-thin'>There is no color options</div>
@@ -104,7 +99,7 @@ function QuickView() {
               {
                 product?.Size.map((item, i) => (
                   <div
-                    onClick={() => { handleSize(item) }}
+                    onClick={() => { setSize(item) }}
                     className={`${item == size ? 'border-black' : 'border-gray-200'} px-[26px] py-[2px] border-2 cursor-pointer   transition-all duration-300`}
                     key={i}>
                     {item}
@@ -117,7 +112,10 @@ function QuickView() {
               {
                 product?.Size.map((item, i) => (
                   <div
-                    onClick={() => { handleIfSizeChanged(item) }}
+                    onClick={() => { 
+                      setNewSize(item) 
+                      handleIsAlreadyExist(product.id, newColor || updateColor, item)
+                    }}
                     className={`
                       ${newSize ? item == newSize ? 'border-black' : 'border-gray-200'
                         : item == updateSize ? 'border-black' : 'border-gray-200'
@@ -160,14 +158,12 @@ function QuickView() {
               {/* UPDATE BUTTON */}
               <div
                 onClick={() => {
-                  setShowQuick(false)
-                  // handleSmallUpdate(product.id, newColor || updateColor, colorChanged, newSize || updateSize, sizeChanged)
-                  handleUpdate(product.id, newColor || updateColor, updateColor, newSize || updateSize, updateSize)
+                  alreadyExist ? '' : handleUpdate(product.id, newColor || updateColor, updateColor, newSize || updateSize, updateSize) ; setShowQuick(false)
                 }}
-                className={`${updating ? 'flex' : 'hidden'} font-montserrat h-[45px] w-[100%] items-center  justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black `} >
+                className={`${updating ? 'flex' : 'hidden'} ${alreadyExist ? 'bg-gray-400 text-gray-700' : ''} font-montserrat h-[45px] w-[100%] items-center  justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black `} >
                 <button
                 >
-                  UPDATE
+                  {alreadyExist ? 'ALREADY EXIST' : 'UPDATE'}
                 </button>
               </div>
               <div
@@ -185,7 +181,12 @@ function QuickView() {
 
             </div>
             <div className='pb-[50px]'>
-              <Link to={`/details/${product.name.replace(/ /g, '-')}-${quickId}`}>
+              <Link to={`/details/${product.name.replace(/ /g, '-')}-${quickId}`}
+                onClick={() => { 
+                  setShowQuick(false)
+                  setShowBag(false)
+                 }}
+              >
                 <p className='underline'>View Product page</p>
               </Link>
             </div>
