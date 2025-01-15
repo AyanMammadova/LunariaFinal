@@ -161,7 +161,7 @@ function Header() {
                   <MdOutlineSearch className="text-[1.1em] text-gray-600" />
                 </div>
               </div>
-              <div className="flex items-center">
+              <div className="">
                 {/* <div className="font-cormorant text-[.6em] border-[1px] border-black flex items-center justify-center h-[30px] w-[30px] rounded-full p-[16px]">
                    M.A
                 </div> */}
