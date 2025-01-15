@@ -101,7 +101,7 @@ function BySubCategory() {
           className={`absolute  w-[100%] z-50 translate-x-0 duration-300 ${showFilter ? "left-0" : "-left-[170%]"
             } `}
         >
-          <FilterPart catname={catname} subname={subname} page={page} setdataFinal={setdataFinal} />
+          <FilterPart catname={catname} subname={subname} setPage={setPage} page={page} isSliding={true} setdataFinal={setdataFinal} />
         </div>
       </div>
       <div className=" pt-[150px]">
@@ -157,7 +157,7 @@ function BySubCategory() {
           dataFinal && <div className="flex p-[30px] justify-between">
             {/* FILTERDIV */}
             <div className="hidden lg:block lg:w-[40%] h-[200px] lg:min-h-[60vh]  mr-[20px]">
-              <FilterPart catname={catname} subname={subname} page={page} setdataFinal={setdataFinal} />
+              <FilterPart catname={catname} subname={subname} setPage={setPage} page={page} isSliding={false} setdataFinal={setdataFinal} />
             </div>
 
             {/* PAGINATIONDIV */}

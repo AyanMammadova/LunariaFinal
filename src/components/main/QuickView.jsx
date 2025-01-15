@@ -13,17 +13,17 @@ import { FaCheck } from 'react-icons/fa6';
 
 
 function QuickView({setShowBag}) {
-  const { dataFav, handleFavs, setShowQuick, quickId, setQuickId } = useContext(DATA)
+  const { dataFav, handleFavs, setShowQuick,showQuick, quickId, setQuickId } = useContext(DATA)
   const { addToBasket, size, setSize, color, setColor, updateSize, updateColor, updating, handleUpdate, basket } = useContext(BASKET)
   const [product, setProduct] = useState(null)
   const [newColor, setNewColor] = useState(null)
   const [newSize, setNewSize] = useState(null)
-  const [alreadyExist,setAlreadyExist]=useState(false)
+  const [alreadyExist,setAlreadyExist]=useState(true)
   useEffect(() => {
     quickId && getProductById({ proid: quickId }).then(res => { setProduct(res) })
     setNewColor(null)
     setNewSize(null)
-  }, [quickId])
+  }, [quickId,showQuick])
   function handleIsAlreadyExist(id, color, size) {
     if (basket?.filter(item => item.id == id && item.color == color && item.size == size).length==1) {
       setAlreadyExist(true)
@@ -54,7 +54,7 @@ function QuickView({setShowBag}) {
             <p className='font-montserrat'>{product?.name}</p>
             <p className='font-montserrat'>{product?.price} USD</p>
             {/* COLOR */}
-            <div className={`${updating ? 'hidden' : 'flex'} flex gap-[10px]`}>Color:
+            <div className={`${updating ? 'hidden' : 'flex'} py-[5px] flex gap-[10px]`}>Color:
               {
                 product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
                   return <div
@@ -71,7 +71,7 @@ function QuickView({setShowBag}) {
 
             </div>
             {/* UPDATE COLOR DIV */}
-            <div className={`${updating ? 'block' : 'hidden'}`}>
+            <div className={`${updating ? 'block' : 'hidden'} py-[5px]`}>
               <p>Color:{
                 newColor ? newColor : product.Colors.find(item => item == updateColor)
               }</p>
@@ -95,7 +95,7 @@ function QuickView({setShowBag}) {
               </div>
             </div>
             {/* SIZE */}
-            <div className={`${updating ? 'hidden' : 'flex'} flex gap-[5px]  flex-wrap`}>
+            <div className={`${updating ? 'hidden' : 'flex'} flex gap-[5px] py-[5px]  flex-wrap`}>
               {
                 product?.Size.map((item, i) => (
                   <div
@@ -108,7 +108,7 @@ function QuickView({setShowBag}) {
               }
             </div>
             {/* UPDATE SIZE DIV */}
-            <div className={`${updating ? 'flex' : 'hidden'} flex gap-[5px]  flex-wrap`}>
+            <div className={`${updating ? 'flex' : 'hidden'} flex gap-[5px]  py-[5px] flex-wrap`}>
               {
                 product?.Size.map((item, i) => (
                   <div
@@ -128,7 +128,8 @@ function QuickView({setShowBag}) {
                 )
               }
             </div>
-            <div className='flex  pt-[30px] items-center justify-between   gap-[10px] w-[100%]'>
+            <p className={`${alreadyExist ? 'block' : 'hidden'} py-[5px]`}>Change smth to update</p>
+            <div className='flex  pt-[10px] items-center justify-between   gap-[10px] w-[100%]'>
               {/* ADD BUTTON */}
               <div
                 onClick={() => {
@@ -154,7 +155,9 @@ function QuickView({setShowBag}) {
                 >
                   ADD TO CARD
                 </button>
+              
               </div>
+              
               {/* UPDATE BUTTON */}
               <div
                 onClick={() => {
@@ -163,7 +166,7 @@ function QuickView({setShowBag}) {
                 className={`${updating ? 'flex' : 'hidden'} ${alreadyExist ? 'bg-gray-400 text-gray-700' : ''} font-montserrat h-[45px] w-[100%] items-center  justify-center cursor-pointer transition-all text-center duration-300 border-[1px] border-black bg-black text-white hover:bg-white hover:text-black `} >
                 <button
                 >
-                  {alreadyExist ? 'ALREADY EXIST' : 'UPDATE'}
+                  {alreadyExist ? 'CLOSE' : 'UPDATE'}
                 </button>
               </div>
               <div

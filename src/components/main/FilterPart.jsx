@@ -7,7 +7,7 @@ import { getDataBySubCategory } from "../../services/api";
 import { useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
 
-function FilterPart({ catname, subname, page, setdataFinal }) {
+function FilterPart({ catname, subname,setPage, page,isSliding, setdataFinal }) {
     const [discounted, setDiscounted] = useState(false)
     const [minPrice, setMinPrice] = useState(0)
     const [maxPrice, setMaxPrice] = useState(4500)
@@ -22,6 +22,7 @@ function FilterPart({ catname, subname, page, setdataFinal }) {
     const [newdatafilter, setnewdatafilter] = useState(dataFilter)
     const [totalPage, setTotalPage] = useState(1)
     const navigate = useNavigate()
+    // console.log(selectedColors)
 
     useEffect(() => {
         navigate(`?${page && page != 1 ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item.toLowerCase()).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item.toLowerCase()).join(',')}` : ''}${selectedBrand ? `&brand=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice && maxPrice != 4500 ? `&maxPrice=${maxPrice}` : ''}`)
@@ -34,7 +35,6 @@ function FilterPart({ catname, subname, page, setdataFinal }) {
         setMinPrice(0)
         setMaxPrice(4500)
         setDiscounted(false)
-        // showSortSelection(false)
         getDataBySubCategory(subid, page).then((res) => {
             setdataFinal(res.data)
             setTotalPage(res.meta.totalPages)
@@ -75,7 +75,7 @@ function FilterPart({ catname, subname, page, setdataFinal }) {
         setMaxPrice(prices[1])
     }
     useEffect(() => {
-        getDataBySubCategory(subid, page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
+        getDataBySubCategory(subid, selectedColors?.length>0 || selectedSizes?.length>0 ||  selectedBrand ? 1 : page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
             const filteredData = discounted ? res.data.filter((item) => item.discount > 1)
                 : res.data;
             setdataFinal(filteredData);
@@ -128,9 +128,9 @@ function FilterPart({ catname, subname, page, setdataFinal }) {
     }, [dataCategory, colorData, sizeData, brandData, discounted])
     return (
         <>
-            <div className={` relative flex bg-white z-30  h-[100vh] justify-center w-[100%] `}>
-                <IoClose onClick={() => { setShowFilter(false) }} className="cursor-pointer absolute top-[30px] right-[10px]" />
-                <div className='mx-[auto]  w-[90%]'>
+            <div className={` relative flex justify-between bg-white z-30  h-[100vh]  w-[100%] `}>
+                <IoClose onClick={() => { setShowFilter(false) }} className={`z-50 cursor-pointer top-[30px] right-[10px] ${isSliding ? 'absolute' : 'hidden'}`} />
+                <div className={`${isSliding ? ' mt-[70px]' : 'mt-[10px]'} w-[95%] mx-[auto]`}>
                     {newdatafilter &&
                         newdatafilter.map((item, i) => {
                             return (
