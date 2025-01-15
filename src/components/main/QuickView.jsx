@@ -43,8 +43,8 @@ function QuickView({setShowBag}) {
           className='absolute cursor-pointer top-[20px] right-[20px]' />
         {product ? <div className='w-full h-full flex items-center pt-[20px] flex-col bp900:flex-row justify-start gap-[50px] '>
           {/* IMAGEDIV */}
-          <div className='flex w-[100%] justify-between'>
-            <div className="h-[90%] w-[400px]">
+          <div className='flex w-[100%] justify-center'>
+            <div className="h-[90%] w-[280px] bp400:w-[400px]  bp500:w-[450px]">
               <EcommerceSwiper images={product?.images} />
             </div>
           </div>

@@ -11,7 +11,7 @@ function EcommerceSwiper({ images }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     return (
         <>
-            <div className='flex justify-center w-[100%] '>
+            <div className='flex flex-row justify-center w-[100%] '>
                 <Swiper
                     style={{
                         '--swiper-navigation-color': '#fff',

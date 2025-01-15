@@ -27,14 +27,14 @@ function Header() {
     setShowBag(false);
     setShowSearchBar(false)
   }, [location.pathname]);
-  
+
   return (
     <>
       <header className=" fixed w-[100%] bg-white z-50">
         <div
           onClick={() => setShowQuick(false)}
           className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
-            <QuickView setShowBag={setShowBag}/>
+          <QuickView setShowBag={setShowBag} />
         </div>
         <div
           onClick={() => {
@@ -161,12 +161,17 @@ function Header() {
                   <MdOutlineSearch className="text-[1.1em] text-gray-600" />
                 </div>
               </div>
-              <IoPersonOutline
-                onClick={() => {
-                  setShowLogin(!showLogin);
-                }}
-                className={`hidden cursor-pointer bp1200:block`}
-              />
+              <div className="flex items-center">
+                {/* <div className="font-cormorant text-[.6em] border-[1px] border-black flex items-center justify-center h-[30px] w-[30px] rounded-full p-[16px]">
+                   M.A
+                </div> */}
+                <IoPersonOutline
+                  onClick={() => {
+                    setShowLogin(!showLogin);
+                  }}
+                  className={`hidden cursor-pointer bp1200:block`}
+                />
+              </div>
               <Link to={"/wishlist"}>
                 <div className="relative z-10">
                   <GoHeart className="cursor-pointer" />

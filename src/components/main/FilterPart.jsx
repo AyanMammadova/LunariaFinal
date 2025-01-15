@@ -7,7 +7,7 @@ import { getDataBySubCategory } from "../../services/api";
 import { useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
 
-function FilterPart({ catname, subname,setPage, page,isSliding, setdataFinal }) {
+function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }) {
     const [discounted, setDiscounted] = useState(false)
     const [minPrice, setMinPrice] = useState(0)
     const [maxPrice, setMaxPrice] = useState(4500)
@@ -75,7 +75,7 @@ function FilterPart({ catname, subname,setPage, page,isSliding, setdataFinal }) 
         setMaxPrice(prices[1])
     }
     useEffect(() => {
-        getDataBySubCategory(subid, selectedColors?.length>0 || selectedSizes?.length>0 ||  selectedBrand ? 1 : page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
+        getDataBySubCategory(subid, selectedColors?.length > 0 || selectedSizes?.length > 0 || selectedBrand ? 1 : page, selectedColors, selectedBrand, selectedSizes, minPrice, maxPrice).then((res) => {
             const filteredData = discounted ? res.data.filter((item) => item.discount > 1)
                 : res.data;
             setdataFinal(filteredData);
@@ -128,7 +128,7 @@ function FilterPart({ catname, subname,setPage, page,isSliding, setdataFinal }) 
     }, [dataCategory, colorData, sizeData, brandData, discounted])
     return (
         <>
-            <div className={` relative flex justify-between bg-white z-30  h-[100vh]  w-[100%] `}>
+            <div className={` relative flex justify-between bg-white z-30  pb-[50px]  w-[100%] `}>
                 <IoClose onClick={() => { setShowFilter(false) }} className={`z-50 cursor-pointer top-[30px] right-[10px] ${isSliding ? 'absolute' : 'hidden'}`} />
                 <div className={`${isSliding ? ' mt-[70px]' : 'mt-[10px]'} w-[95%] mx-[auto]`}>
                     {newdatafilter &&
@@ -136,12 +136,12 @@ function FilterPart({ catname, subname,setPage, page,isSliding, setdataFinal }) 
                             return (
                                 <div key={i} className="w-[100%]">
                                     <div
-                                        className={`text-[.9em]  bg-white  relative font-bold p-[10px]  mx-[10px] border-t-4 flex justify-between w-[100%] cursor-pointer`}>
+                                        className={`text-[.9em]   bg-white  relative font-bold p-[10px]  mx-[10px] border-t-4 flex justify-between w-[100%] `}>
                                         <p
                                             onClick={() => {
                                                 handleSubFilter(item.id);
                                             }}
-                                            className="flex z-0 justify-between capitalize w-[100%]">
+                                            className="flex z-0 justify-between bg-white h-[30px] capitalize w-[100%] cursor-pointer">
                                             {item.name}
                                             <IoIosArrowDown
                                                 className={`transition-all duration-300 ${item.name == "price" ? "hidden" : "block"
@@ -149,18 +149,18 @@ function FilterPart({ catname, subname,setPage, page,isSliding, setdataFinal }) 
                                         </p>
                                     </div>
 
-                                    <div className={` pt-[10px]  w-[100%] `}>
+                                    <div className={` pt-[5px]  w-[100%] `}>
                                         <div>
                                             <ul className={` pl-[30px] lowercase flex flex-col ${item.isOpen ? "block" : "hidden"}`}>
                                                 {
                                                     item.subfilter && item.subfilter[0]?.map((subitem, subi) => {
                                                         return (
                                                             <li key={subi}
-                                                                className={`p-[5px] ${item.name == 'colors' && subitem.isChecked == true ? 'bg-pink-300' : ''} rounded-xl cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
+                                                            onClick={() => {
+                                                                handleCheckedFilters(subitem.name, subi, item.name, i, item.id)
+                                                            }}
+                                                                className={`p-[5px] my-[1px] ${item.name == 'colors' && subitem.isChecked == true ? 'bg-gray-300' : ''} rounded-xl cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
                                                                 <div
-                                                                    onClick={() => {
-                                                                        handleCheckedFilters(subitem.name, subi, item.name, i, item.id)
-                                                                    }}
                                                                     className={`relative  border-[1px] border-black
                                       ${item.name == 'colors' ? 'rounded-full w-[25px] h-[25px]'
                                                                             : 'rounded h-[15px] w-[15px]'}
@@ -168,7 +168,8 @@ function FilterPart({ catname, subname,setPage, page,isSliding, setdataFinal }) 
                                                                     style={{ backgroundColor: subitem.name }}
                                                                 >
                                                                     <IoIosCheckmark className={`-right-[5px] 
-                                      ${item.name == "colors" ? '-top-[3px]  text-[2em] text-white' : 'text-black -top-[6px]  text-[1.5em]'}   
+                                                                     ${subitem.name == 'BLACK' || subitem.name == 'PURPLE' || subitem.name == 'BLUE' || subitem.name == 'GREEN'? 'text-white' : 'text-black'}
+                                      ${item.name == "colors"  ? '-top-[3px]  text-[2em] ' : ' -top-[6px]  text-[1.5em]'}   
                                       ${subitem.isChecked ? 'absolute' : 'hidden'}
                                         `}
                                                                     />

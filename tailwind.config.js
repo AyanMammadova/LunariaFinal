@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       screens: {
+        'bp300': '300px',
         'bp400': '400px',
         'bp500': '500px',
         'bp600':'600px',

@@ -156,7 +156,7 @@ function BySubCategory() {
         {
           dataFinal && <div className="flex p-[30px] justify-between">
             {/* FILTERDIV */}
-            <div className="hidden lg:block lg:w-[40%] h-[200px] lg:min-h-[60vh]  mr-[20px]">
+            <div className="hidden lg:block lg:w-[40%] lg:min-h-[60vh]  mr-[20px]">
               <FilterPart catname={catname} subname={subname} setPage={setPage} page={page} isSliding={false} setdataFinal={setdataFinal} />
             </div>
 
