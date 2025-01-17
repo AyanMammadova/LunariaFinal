@@ -4,7 +4,6 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import DataContext from './context/DataContext.jsx'
 import BasketContext from './context/BasketContext.jsx'
-import UserInfoContext from './context/UserInfoContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter
@@ -15,9 +14,7 @@ createRoot(document.getElementById('root')).render(
   >
     <DataContext>
       <BasketContext>
-        <UserInfoContext>
           <App />
-        </UserInfoContext>
       </BasketContext>
     </DataContext>
   </BrowserRouter>

@@ -57,9 +57,6 @@ function Payment() {
             <input
               required
               value=''
-              // onChange={(e) => {
-              //   setRegisterData({ ...registerData, name: e.target.value })
-              // }}
               type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[300px]' placeholder='Ad Soyad' />
 
           </div>

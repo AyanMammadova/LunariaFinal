@@ -82,7 +82,7 @@ function OrderSummary({ urgent, setShowOrderSumFull, pickup }) {
                     </div>
                     <p className="flex px-[15px] pt-[5px] font-montserrat w-full  justify-between">
                         ItemsTotal:{" "}
-                        <span>${urgent ? `${SubTotal + 15}` : `${SubTotal}`}$</span>{" "}
+                        <span>${SubTotal}$</span>{" "}
                     </p>
                     <p className={`${pickup ? 'hidden' : 'block'} flex px-[15px] font-montserrat w-full justify-between py-[5px]`}>
                         Delivery: <span>{urgent ? `15$` : `FREE`}</span>

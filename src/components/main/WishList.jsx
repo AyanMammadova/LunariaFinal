@@ -20,10 +20,10 @@ function WishList() {
             <PiHeartLight className='text-[4em] text-center w-[100%] ' />
             <p className='text-center font-cormorant text-[1.5em]'>Your wishlist is empty</p>
           </div>
-          <div className={`flex w-[100%] flex-wrap gap-[10px] bp600:gap-[20px] ${dataFav?.length>4 ? 'justify-around' : 'justify-normal'} `}>
+          <div className={`w-[100%] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-5 gap-[10px] bp600:gap-[20px] `}>
             {
               dataFav && dataFav.map((item, i) => {
-                return <Link key={i} className='w-[45%]  md:w-[200px]' to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
+                return <Link key={i} className='w-[100%]  ' to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
                   <div className='my-[20px]  w-[100%] shadow-lg bg-white  relative flex cursor-pointer flex-col'>
                     <div
                       className=' relative h-[100%] overflow-hidden group '>

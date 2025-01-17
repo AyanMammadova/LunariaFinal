@@ -28,7 +28,6 @@ function CheckOut() {
       setSummaryFixed(true)
     }
   }
-  console.log(': '  +payment)
   
   function handleProceedtoPayment(status) {
     setPayment(status);

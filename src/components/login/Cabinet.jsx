@@ -3,7 +3,8 @@ import { TbPhotoEdit } from 'react-icons/tb';
 
 function Cabinet() {
     const [image, setImage] = useState(null);
-
+    const savedData = localStorage.getItem('registerData');
+    console.log(savedData)
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -28,7 +29,7 @@ function Cabinet() {
                             ) : ''}
                         </label>
                         <input
-                        onChange={handleImageChange }
+                            onChange={handleImageChange}
                             id="photoInput"
                             type="file"
                             accept="image/*"
@@ -39,7 +40,8 @@ function Cabinet() {
                     <div>
                         <p className=' font-bold'>FIRST NAME</p>
                         <input
-                            type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[95%]' placeholder='First Name' />
+                            value={savedData?.name}
+                            type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[95%]' />
 
                         <p className=' font-bold'>LAST NAME</p>
                         <input

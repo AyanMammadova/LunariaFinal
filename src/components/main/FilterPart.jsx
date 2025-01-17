@@ -4,8 +4,9 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import { DATA } from '../../context/DataContext';
 import { IoIosArrowDown, IoIosCheckmark } from 'react-icons/io';
 import { getDataBySubCategory } from "../../services/api";
-import { useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
 
 function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }) {
     const [discounted, setDiscounted] = useState(false)
@@ -22,10 +23,12 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
     const [newdatafilter, setnewdatafilter] = useState(dataFilter)
     const [totalPage, setTotalPage] = useState(1)
     const navigate = useNavigate()
-    // console.log(selectedColors)
+
+
 
     useEffect(() => {
         navigate(`?${page && page != 1 ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item.toLowerCase()).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item.toLowerCase()).join(',')}` : ''}${selectedBrand ? `&brand=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice && maxPrice != 4500 ? `&maxPrice=${maxPrice}` : ''}`)
+
     }, [selectedColors, selectedSizes, page, discounted, selectedBrand, minPrice, maxPrice])
 
 
@@ -156,9 +159,9 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
                                                     item.subfilter && item.subfilter[0]?.map((subitem, subi) => {
                                                         return (
                                                             <li key={subi}
-                                                            onClick={() => {
-                                                                handleCheckedFilters(subitem.name, subi, item.name, i, item.id)
-                                                            }}
+                                                                onClick={() => {
+                                                                    handleCheckedFilters(subitem.name, subi, item.name, i, item.id)
+                                                                }}
                                                                 className={`p-[5px] my-[1px] ${item.name == 'colors' && subitem.isChecked == true ? 'bg-gray-300' : ''} rounded-xl cursor-pointer flex gap-[10px]  items-center  ${item.name == 'colors' ? 'uppercase' : ' capitalize'}`}>
                                                                 <div
                                                                     className={`relative  border-[1px] border-black
@@ -168,8 +171,8 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
                                                                     style={{ backgroundColor: subitem.name }}
                                                                 >
                                                                     <IoIosCheckmark className={`-right-[5px] 
-                                                                     ${subitem.name == 'BLACK' || subitem.name == 'PURPLE' || subitem.name == 'BLUE' || subitem.name == 'GREEN'? 'text-white' : 'text-black'}
-                                      ${item.name == "colors"  ? '-top-[3px]  text-[2em] ' : ' -top-[6px]  text-[1.5em]'}   
+                                                                     ${subitem.name == 'BLACK' || subitem.name == 'PURPLE' || subitem.name == 'BLUE' || subitem.name == 'GREEN' ? 'text-white' : 'text-black'}
+                                      ${item.name == "colors" ? '-top-[3px]  text-[2em] ' : ' -top-[6px]  text-[1.5em]'}   
                                       ${subitem.isChecked ? 'absolute' : 'hidden'}
                                         `}
                                                                     />

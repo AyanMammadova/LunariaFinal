@@ -14,7 +14,7 @@ function ShoppingBag({ setShowBag }) {
   return (
     <>
       <div
-        className='w-full relative overflow-y-scroll h-[100vh] bg-white z-40 shadow-lg'>
+        className='w-full relative overflow-y-scroll scrollbar-hidden h-[100vh] bg-white z-40 shadow-lg'>
         <IoCloseSharp
           className='absolute top-[20px] right-[20px] cursor-pointer text-[1.2em]'
           onClick={() => { setShowBag(false) }} />

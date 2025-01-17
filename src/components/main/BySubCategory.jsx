@@ -33,17 +33,7 @@ function BySubCategory() {
   const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
 
-  useEffect(() => {
-    setSelectedColors(
-      colorData?.filter((item) => item.isChecked).map((item) => item.name) || []
-    )
-    setSelectedSizes(
-      sizeData?.filter((item) => item.isChecked).map((item) => item.name) || []
-    )
-    setSelectedBrand(
-      brandData?.find((item, i) => item.isChecked == true)?.id
-    )
-  }, [colorData, sizeData, brandData])
+  
   
   useEffect(() => {
     setDiscounted(false)
@@ -98,7 +88,7 @@ function BySubCategory() {
       {/* SLIDING FILTER DIV */}
       <div className="bp1200:hidden">
         <div
-          className={`absolute  w-[100%] z-50 translate-x-0 duration-300 ${showFilter ? "left-0" : "-left-[170%]"
+          className={`absolute h-[100vh] bg-white  w-[100%] z-50 translate-x-0 duration-300 ${showFilter ? "left-0" : "-left-[170%]"
             } `}
         >
           <FilterPart catname={catname} subname={subname} setPage={setPage} page={page} isSliding={true} setdataFinal={setdataFinal} />
@@ -154,20 +144,20 @@ function BySubCategory() {
           </div>
         </div>
         {
-          dataFinal && <div className="flex p-[30px] justify-between">
+          dataFinal && <div className="flex md:p-[30px] justify-between">
             {/* FILTERDIV */}
-            <div className="hidden lg:block lg:w-[40%] lg:min-h-[60vh]  mr-[20px]">
+            <div className="hidden lg:block lg:w-[20%] lg:min-h-[60vh]  mr-[20px]">
               <FilterPart catname={catname} subname={subname} setPage={setPage} page={page} isSliding={false} setdataFinal={setdataFinal} />
             </div>
 
             {/* PAGINATIONDIV */}
             <div className={`flex flex-col  w-[100%]  `}>
-              <div className="flex w-[100%]  gap-[20px] flex-wrap justify-center px-[10px] md:px-[20px]">
+              <div className={` mx-auto  bp500:gap-[20px] grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 bp500:px-[10px] md:px-[20px] `}>
                 {dataFinal?.length > 0 ?
                   dataFinal.map((item, i) => {
                     return (
-                      <Link key={i} to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
-                        <div className="my-[20px] max-w-[200px] shadow-lg bg-white  relative flex cursor-pointer flex-col">
+                      <Link key={i} to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`} >
+                        <div className="my-[20px] w-[100%] shadow-lg bg-white  relative flex cursor-pointer flex-col">
                           <div className=" relative h-[100%] overflow-hidden group ">
                             <img
                               className={`group-hover:hidden transition-opacity duration-300 ease-in-out `}
@@ -228,9 +218,9 @@ function BySubCategory() {
                         </div>
                       </Link>
                     );
-                  }) : <div className="flex flex-col items-center">
+                  }) : <div className="flex flex-col w-[100%] items-center">
                     <ImDropbox className="text-[4em]" />
-                    <p className="text-center font-cormorant text-[2em]">No Product Found</p>
+                    <p className="text-center  font-cormorant text-[2em]">No Product Found</p>
                   </div>
                 }
               </div>
@@ -248,7 +238,7 @@ function BySubCategory() {
 
                   }}
                   className={`flex items-center ${page == 1 ? 'text-gray-400' : 'text-black'}`}>
-                  <IoIosArrowBack className={``} /> Previous{" "}
+                  <IoIosArrowBack className={``} /> Prev{" "}
                 </div>
                 {Array(totalPage)
                   .fill("ayan")
@@ -260,7 +250,7 @@ function BySubCategory() {
                       }}
                       key={i}
                       title={`Page ${i + 1}`}
-                      className={`${page == i + 1 ? 'bg-black text-white' : ''} hover:bg-black flex transition-all duration-100 justify-center items-center rounded border-[1px] border-black  hover:text-white w-[40px] h-[40px]`}
+                      className={`${page == i + 1 ? 'bg-black text-white' : ''} hover:bg-black flex transition-all duration-100 justify-center items-center rounded border-[1px] border-black  hover:text-white w-[30px] h-[30px]`}
                     >
                       {i + 1}
                     </div>

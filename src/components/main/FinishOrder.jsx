@@ -7,7 +7,6 @@ function FinishOrder() {
     clearBasket()
     
   },[])
-  console.log(basket)
   return (
     <>
       <div className='text-center w-[100%] h-[100vh]'>

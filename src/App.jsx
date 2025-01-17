@@ -17,6 +17,7 @@ import { Helmet } from 'react-helmet'
 import FinishOrder from './components/main/FinishOrder'
 import Payment from './components/main/Payment'
 import Cabinet from './components/login/Cabinet'
+import DynamicParams from './components/main/TrySearchparams'
 
 function App() {
   const { pathname } = useLocation()
@@ -45,9 +46,12 @@ function App() {
           <Route path='/finishorder' element={<FinishOrder/>}/>
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/cabinet' element={<Cabinet/>}/>
+          
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>  
+        <Route path='/nese1' element={<DynamicParams/>}/>
+
         <Route path='/payment' element={<Payment/>}/>     
      </Routes>
     </>
