@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { IoCloseSharp } from 'react-icons/io5'
 import { getProductById } from '../../services/api'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Link } from 'react-router-dom';
@@ -21,13 +21,13 @@ function QuickView({ setShowBag }) {
   const [alreadyExist, setAlreadyExist] = useState(true)
   useEffect(() => {
     quickId && getProductById({ proid: quickId }).then(res => { setProduct(res) })
-    // setNewColor(null)
-    // setNewSize(null)
+    setNewColor(null)
+    setNewSize(null)
   }, [quickId, showQuick])
   useEffect(() => {
-    setNewColor(product?.Colors[0])
-    setNewSize(product?.Size[0])
-  }, [product,showQuick])
+    setColor(product?.Colors[0])
+    setSize(product?.Size[0])
+  }, [product, showQuick])
   function handleIsAlreadyExist(id, color, size) {
     if (basket?.filter(item => item.id == id && item.color == color && item.size == size).length == 1) {
       setAlreadyExist(true)
@@ -39,6 +39,10 @@ function QuickView({ setShowBag }) {
 
   return (
     <>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
       <div
         onClick={(e) => { e.stopPropagation() }}
         className='w-[100%] md:w-[90%] py-[20px] overflow-y-auto  font-[600] relative h-[100vh]  md:h-[85vh] bg-white'>
@@ -67,7 +71,7 @@ function QuickView({ setShowBag }) {
                     style={{ backgroundColor: item }}
                     onClick={() => { setColor(item) }}
                   >
-                    <FaCheck className={`${item == color ? 'block' : 'hidden'} ${item == 'BLACK' || item == 'BLUE' ? 'text-white' : ''}`} />
+                    <FaCheck className={`${item == color ? 'block' : 'hidden'} ${item == 'BLACK' || item == 'BLUE' || item == 'PURPLE' || item == 'GREEN' ? 'text-white' : ''}`} />
                   </div>
                 }) :
                   <div className='font-thin'>There is no color options</div>
@@ -137,7 +141,7 @@ function QuickView({ setShowBag }) {
               {/* ADD BUTTON */}
               <div
                 onClick={() => {
-                  if (size) {
+                  if (size, color) {
                     addToBasket(
                       product?.id,
                       product.name,
@@ -146,7 +150,8 @@ function QuickView({ setShowBag }) {
                       product.discount,
                       product.Brands.name,
                       product.images,
-                      size
+                      size,
+                      color
                     );
                     toast.success('dhello xalqim')
                   }

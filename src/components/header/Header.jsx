@@ -20,6 +20,7 @@ function Header() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showBag, setShowBag] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const savedLogin = JSON.parse(localStorage.getItem('registerData'));
 
   useEffect(() => {
     setShowLogin(false);
@@ -161,44 +162,49 @@ function Header() {
                   <MdOutlineSearch className="text-[1.1em] text-gray-600" />
                 </div>
               </div>
-              <div className="">
-                {/* <div className="font-cormorant text-[.6em] border-[1px] border-black flex items-center justify-center h-[30px] w-[30px] rounded-full p-[16px]">
-                   M.A
-                </div> */}
-                <IoPersonOutline
-                  onClick={() => {
-                    setShowLogin(!showLogin);
-                  }}
-                  className={`hidden cursor-pointer bp1200:block`}
-                />
+              <div className="flex items-center">
+                <Link to={'/cabinet'} className={`${savedLogin ? 'block' : 'hidden'} flex items-center justify-center`}>
+                  <div className="font-cormorant hidden  bp1200:flex text-[.6em] border-[1px] border-gray-600  h-[30px]  items-center justify-center w-[30px] rounded-full p-[16px]">
+                    {savedLogin?.name[0]}.{savedLogin?.lastname[0]}
+                  </div>
+                  </Link>
+                  <IoPersonOutline
+                    onClick={() => {
+                      setShowLogin(savedLogin ? false : !showLogin)
+                    }}
+                    className={`hidden cursor-pointer bp1200:block`}
+                  />
+                
               </div>
-              <Link to={"/wishlist"}>
-                <div className="relative z-10">
-                  <GoHeart className="cursor-pointer" />
-                  {dataFav.length > 0 ? (
+              <div className="flex items-center gap-[5px]">
+                <Link to={"/wishlist"}>
+                  <div className="relative z-10">
+                    <GoHeart className="cursor-pointer" />
+                    {dataFav.length > 0 ? (
+                      <div className="absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white">
+                        <p>{dataFav.length}</p>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </Link>
+                <div
+                  onClick={() => {
+                    setShowBag(true);
+                  }}
+                  className="cursor-pointer relative"
+                >
+                  <BsBag className="cursor-pointer" />
+
+                  {basket.length > 0 ? (
                     <div className="absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white">
-                      <p>{dataFav.length}</p>
+                      <p>{basket.length}</p>
                     </div>
                   ) : (
                     ""
                   )}
                 </div>
-              </Link>
-              <div
-                onClick={() => {
-                  setShowBag(true);
-                }}
-                className="cursor-pointer relative"
-              >
-                <BsBag className="cursor-pointer" />
-
-                {basket.length > 0 ? (
-                  <div className="absolute top-[15px] right-0 text-[.5em] px-[5px] py-[2px] rounded-full bg-black text-white">
-                    <p>{basket.length}</p>
-                  </div>
-                ) : (
-                  ""
-                )}
               </div>
             </div>
           </div>

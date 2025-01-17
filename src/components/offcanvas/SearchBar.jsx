@@ -11,10 +11,10 @@ function SearchBar({ setShowSearchBar, showSearchBar }) {
   const { dataCategory, dataAll } = useContext(DATA)
   const [searchedData, setSearchedData] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [trimmedInput, setTrimmedInput] = useState(null)
-  const [input,setInput]=useState('')
-  
-  function handleInput(value){
+  const [trimmedInput, setTrimmedInput] = useState('')
+  const [input, setInput] = useState('')
+
+  function handleInput(value) {
     setInput(value)
     setTrimmedInput(value.toLowerCase().trim())
   }
@@ -33,10 +33,10 @@ function SearchBar({ setShowSearchBar, showSearchBar }) {
         <div className='w-[100%] h-[100vh] lg:h-auto pt-[30px] absolute top-0 bg-white'>
           <img className='mx-[auto] h-[30px] my-[5px]' src="/img/logo.png" />
           <div className='w-[250px] bp600:w-[400px] relative mx-[auto] p-[5px] h-[40px] border-[1px] border-gray-200'>
-            <input className='w-[90%] border-white border-2 focus:outline-none'
+            <input className='w-[90%] border-white border-2'
               type="text"
               placeholder='Search...'
-              onChange={(e) => { handleInput(e.target.value)}}
+              onChange={(e) => { handleInput(e.target.value) }}
               value={input}
             />
             <IoIosSearch className='absolute right-[10px] top-[10px] text-[1.3em]' />
@@ -85,9 +85,9 @@ function SearchBar({ setShowSearchBar, showSearchBar }) {
                   <TbListSearch className="text-[2em]" />
                   <p className="text-center font-cormorant text-[2em]">Search smth</p>
                 </div>
-                </>
+              </>
             }
-              
+
           </div>
         </div>
 

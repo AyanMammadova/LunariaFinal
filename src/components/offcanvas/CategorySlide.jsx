@@ -10,13 +10,16 @@ function CategorySlide() {
     const news = ids
     setId(ids)
   }
+  const savedLogin = JSON.parse(localStorage.getItem('registerData'));
   return (
     <>
       <div className={`w-[100vw] relative flex  z-50  h-[100vh] bg-white`}>
-        <div className=' w-[100px] flex items-center justify-around p-[10px] absolute top-[30px] right-[30px] border-[1px] border-gray-300'>
-          <Link to={'/login'} className='w-[100%] flex items-center justify-around'>
-            <IoPersonOutline />
-            <p>Sign in</p>
+        <div className=' flex items-center justify-around p-[10px] absolute top-[30px] right-[30px] border-[1px] border-gray-300'>
+          <Link to={savedLogin ? '/cabinet' : '/login'} className='w-[100%]  flex items-center justify-around'>
+            <div className={`flex font-montserrat items-center`}>
+              <IoPersonOutline />
+              <p>{savedLogin ? savedLogin?.lastname  : 'Sign in'}</p>
+            </div>
           </Link>
         </div>
         <div className='absolute top-[100px] left-[20px]'>
