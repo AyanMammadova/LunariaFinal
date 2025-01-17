@@ -36,7 +36,7 @@ function ProductById() {
                 <div className='w-full flex flex-col md:flex-row justify-start gap-[50px] '>
                     {/* IMAGEDIV */}
                     <div className='flex justify-center'>
-                        <div className="h-[80%] w-[450px]">
+                        <div className="h-[80%] w-[100%] bp500:w-[450px]">
                             <EcommerceSwiper images={product?.images} />
                         </div>
                     </div>
@@ -82,7 +82,7 @@ function ProductById() {
                             }
                         </div>
                         {/* BUTTONS */}
-                        <div className='flex pt-[30px] flex-col gap-[10px] *:w-[100%]'>
+                        <div className='flex pt-[30px] flex-col gap-[10px] w-[90%] mx-[auto] '>
                             <div
                                 onClick={() => {
                                     if (size && color) {
@@ -117,7 +117,7 @@ function ProductById() {
                                         "_blank"
                                     )
                                 }
-                                className='h-[45px] flex w-[100%]  gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white'
+                                className='h-[45px] flex w-[100%] mx-[auto] gap-[10px] items-center justify-center  transition-all duration-300 border-[1px] border-black  bg-white text-black hover:bg-black hover:text-white'
                             >
                                     <FaWhatsapp />SEND US A MESSAGE
                             </Link>

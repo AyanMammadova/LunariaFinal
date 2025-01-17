@@ -56,18 +56,15 @@
   display: block;
 }
 
-
 .mySwiper1 .swiper-wrapper {
-  width: 90px;
-  height: 400px;
+  /* width: 100px; */
+  height: 500px;
   padding: 0;
   margin: 0;
   cursor: pointer;
 }
 
-/* .swiper-wrapper{
 
-} */
 .mySwiper1 {
   display: flex;
   flex-direction: column;

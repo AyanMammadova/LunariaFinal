@@ -9,7 +9,6 @@ import RegisterPage from './components/login/RegisterPage'
 import WishList from './components/main/WishList'
 import ForgotPassword from './components/login/ForgotPassword'
 import Login from './components/login/Login'
-import About from './components/main/About'
 import ShoppingBagPage from './components/main/ShoppingBagPage'
 import CheckOut from './components/main/CheckOut'
 import NotFound from './NotFound'
@@ -17,7 +16,6 @@ import { Helmet } from 'react-helmet'
 import FinishOrder from './components/main/FinishOrder'
 import Payment from './components/main/Payment'
 import Cabinet from './components/login/Cabinet'
-import DynamicParams from './components/main/TrySearchparams'
 
 function App() {
   const { pathname } = useLocation()
@@ -42,7 +40,6 @@ function App() {
           <Route path='/wishlist' element={<WishList/>}/>
           <Route path='/remind' element={<ForgotPassword/>}/>
           <Route path='/login' element={<Login/>}/>
-          <Route path='/about' element={<About/>}/>
           <Route path='/finishorder' element={<FinishOrder/>}/>
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/cabinet' element={<Cabinet/>}/>
@@ -50,7 +47,6 @@ function App() {
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>  
-        <Route path='/nese1' element={<DynamicParams/>}/>
 
         <Route path='/payment' element={<Payment/>}/>     
      </Routes>

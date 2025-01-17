@@ -6,6 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 import OrderSummary from "./OrderSummary";
 import { IoIosArrowUp } from "react-icons/io";
+import { Helmet } from "react-helmet";
 
 function CheckOut() {
   const { basket, SubTotal, removeFromBasket, handleCount } = useContext(BASKET);
@@ -28,7 +29,7 @@ function CheckOut() {
       setSummaryFixed(true)
     }
   }
-  
+
   function handleProceedtoPayment(status) {
     setPayment(status);
     window.scrollTo({
@@ -40,6 +41,9 @@ function CheckOut() {
 
   return (
     <>
+      <Helmet>
+        <title>Lunaria | Checkout</title>
+      </Helmet>
       <div className="lg:flex mx-[auto] relative w-[100%] lg:justify-center pt-[130px]">
         <div
           className={` w-[100%] bp600:w-[80%] mx-[auto] lg:w-[70%] lg:ml-[10px]`}
@@ -61,10 +65,10 @@ function CheckOut() {
             </div>
           </div>
           <div className="w-[100%] font-montserrat px-[10px] bp600:px-[60px] flex justify-between">
-              <p>Delivery</p>
-              <p>Review&Pay</p>
-              <p>Complete</p>
-            </div>
+            <p>Delivery</p>
+            <p>Review&Pay</p>
+            <p>Complete</p>
+          </div>
           {/* DIV AFTER PROCEED TO PAYMENT */}
           <div className={`${payment ? "block" : "hidden"} `}>
             <p className="text-[1.3em] font-cormorant px-[40px] pt-[100px] py-[20px] ">
@@ -158,7 +162,7 @@ function CheckOut() {
             <Link to={onlinepay ? '/payment' : '/finishorder'}>
               <button
 
-                className="bg-black text-white transition-all font-montserrat duration-200 hover:bg-white hover:text-black text-center w-[95%] rounded mt-[20px] h-[40px] border-[1px] border-black"
+                className="bg-black text-white bp500:mx-[20px] transition-all font-montserrat duration-200 hover:bg-white hover:text-black text-center w-[95%] rounded mt-[20px] h-[40px] border-[1px] border-black"
               >
                 {onlinepay ? 'Go to payment' : 'Complete Order'}
               </button>
@@ -173,7 +177,7 @@ function CheckOut() {
           </div>
           {/* DIV BEFORE PROCEED TO PAYMENT */}
           <div className={`${payment ? "hidden" : "block"} `}>
-            
+
             <div className="p-[10px] bp400:p-[40px] font-montserrat">
               <p className="font-cormorant text-[1.3em] py-[20px]">
                 Select delivery method

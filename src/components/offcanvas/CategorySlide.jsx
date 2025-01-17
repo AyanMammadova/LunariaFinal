@@ -23,7 +23,7 @@ function CategorySlide() {
           </Link>
         </div>
         <div className='absolute top-[100px] left-[20px]'>
-          <ul className='flex max-w-[100%] overflow-hidden gap-[10px]'>
+          <ul className='flex max-w-[100%] overflow-hidden gap-[0px]'>
             {
               dataCategory && dataCategory.map((item, i) => {
                 return <NavLink

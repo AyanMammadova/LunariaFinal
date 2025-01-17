@@ -14,8 +14,8 @@ function BySubCategory() {
   const pathname = useLocation()
   const { catname, subname } = useParams()
   const [sortSelection, showSortSelection] = useState(false)
-  const {setUpdating}=useContext(BASKET)
-  const { dataCategory, dataFav, handleFavs, setShowFilter, dataFilter, showFilter,showQuick, setShowQuick,quickId, setQuickId } = useContext(DATA)
+  const { setUpdating } = useContext(BASKET)
+  const { dataCategory, dataFav, handleFavs, setShowFilter, dataFilter, showFilter, showQuick, setShowQuick, quickId, setQuickId } = useContext(DATA)
   const sortData = ['PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
   const [selectedSort, setSelectedSort] = useState('PRICE LOW TO HIGH')
   const [dataFinal, setdataFinal] = useState(null)
@@ -33,8 +33,8 @@ function BySubCategory() {
   const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
 
-  
-  
+
+
   useEffect(() => {
     setDiscounted(false)
     showSortSelection(false)
@@ -84,7 +84,7 @@ function BySubCategory() {
       <Helmet>
         <title>{subname} | Lunaria</title>
       </Helmet>
-      
+
       {/* SLIDING FILTER DIV */}
       <div className="bp1200:hidden">
         <div
@@ -96,7 +96,7 @@ function BySubCategory() {
       </div>
       <div className=" pt-[150px]">
         <p className="text-[3em] font-serif text-center">{subname}</p>
-        <ul className="underline flex  gap-[20px] justify-center">
+        <ul className="underline flex flex-wrap gap-[20px] justify-center">
           {dataCategory &&
             dataCategory[catid - 1]?.Subcategory.map((item, i) => {
               return (
@@ -152,7 +152,7 @@ function BySubCategory() {
 
             {/* PAGINATIONDIV */}
             <div className={`flex flex-col  w-[100%]  `}>
-              <div className={` mx-auto  bp500:gap-[20px] grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 bp500:px-[10px] md:px-[20px] `}>
+              <div className={` mx-auto  bp500:gap-[20px] ${dataFinal?.length > 0 ? 'grid' : ''} grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 bp500:px-[10px] md:px-[20px] `}>
                 {dataFinal?.length > 0 ?
                   dataFinal.map((item, i) => {
                     return (
@@ -218,10 +218,15 @@ function BySubCategory() {
                         </div>
                       </Link>
                     );
-                  }) : <div className="flex flex-col w-[100%] items-center">
-                    <ImDropbox className="text-[4em]" />
-                    <p className="text-center  font-cormorant text-[2em]">No Product Found</p>
-                  </div>
+                  }) : (
+                    <>
+                      <div className="flex flex-col w-[100%] justify-center items-center">
+                        <ImDropbox className="text-[4em]" />
+                        <p className="text-center  font-cormorant text-[2em]">No Product Found</p>
+                      </div>
+                    </>
+                  )
+
                 }
               </div>
 

@@ -26,17 +26,17 @@ function ShoppingBagPage() {
                             <div key={i}>
                                 <div className='flex border-t-2 pt-[20px] mx-[5px] p-[4px] gap-[40px] relative' >
                                     <div
-                                        className='h-[180px]    relative flex items-center justify-center group cursor-pointer'
+                                        className='h-[180px]  w-[100px]  relative flex items-center justify-center group cursor-pointer'
                                     >
                                         <img
-                                            className={`group-hover:hidden transition-opacity duration-300 ease-in-out `}
+                                            className={`group-hover:hidden h-[100%] w-[100%] object-cover transition-opacity duration-300 ease-in-out `}
                                             src={item.images[0]}
                                         />
                                         <img
-                                            className={`hidden z-20 group-hover:block transition-opacity duration-300 ease-in-out`}
+                                            className={`hidden z-20 group-hover:block h-[100%] w-[100%] object-cover transition-opacity duration-300 ease-in-out`}
                                             src={item.images[1]}
                                         />
-                                        <div className=" bg-black/20 w-[100%] h-[100%] z-40 absolute opacity-0 inset-0 group-hover:opacity-100 transition-all duration-200 ease-in-out">
+                                        <div className=" bg-black/20 w-[100%] h-[100%]  z-40 absolute opacity-0 inset-0 group-hover:opacity-100 transition-all duration-200 ease-in-out">
                                             <div
                                                 onClick={() => {
                                                     setShowQuick(true)

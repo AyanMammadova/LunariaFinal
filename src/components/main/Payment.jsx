@@ -6,10 +6,14 @@ import { FaArrowLeft } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 function Payment() {
+  const [name, setName] = useState('')
   const { SubTotal } = useContext(BASKET)
   const [cardNumber, setCardNumber] = useState("")
 
-  const handleInputChange = (e) => {
+  function handlename(namem) {
+    setName(namem)
+  }
+  function handleInputChange(e) {
     let value = e.target.value.replace(/\D/g, "")
     value = value.replace(/(\d{4})(?=\d)/g, "$1 ")
     setCardNumber(value)
@@ -36,11 +40,13 @@ function Payment() {
       <div className='w-[100%] h-[100vh] flex items-center justify-center bg-[#F7F8F2]'>
         <div className='w-[350px] scale-90 flex flex-col items-center justify-start h-[90vh] rounded bg-white'>
           <div className='  w-[90%] flex justify-center h-[40px] '>
-            <img
-              className="   object-cover"
-              src="/img/logo.png"
-              alt="Lunaria.logo"
-            />
+            <Link to={'/'}>
+              <img
+                className="object-cover"
+                src="/img/logo.png"
+                alt="Lunaria.logo"
+              />
+            </Link>
           </div>
           <div >
             <p className='flex w-[300px] border-t-2 pt-[15px] my-[20px] font-bold justify-between'>
@@ -55,8 +61,9 @@ function Payment() {
           <div >
             <p className='text-start w-[300px] border-t-2 py-[10px]'>Name,Surname:</p>
             <input
+              onChange={(e) => { handlename(e.target.value) }}
               required
-              value=''
+              value={name}
               type="text" className='border-[1px] border-gray-400 rounded p-[3px]  w-[300px]' placeholder='Ad Soyad' />
 
           </div>
@@ -78,7 +85,7 @@ function Payment() {
                 <option value=""> Choose month...</option>
                 {
                   Array(12).fill('ayan').map((item, i) => {
-                    return <option> {i + 1} | {months[i]}</option>
+                    return <option key={i}> {i + 1} | {months[i]}</option>
                   })
                 }
               </select>
@@ -86,7 +93,7 @@ function Payment() {
                 <option value=""> Choose year...</option>
                 {
                   Array(10).fill('ayan').map((item, i) => {
-                    return <option> {2024 + i}</option>
+                    return <option key={i}> {2024 + i}</option>
                   })
                 }
               </select>
@@ -116,9 +123,9 @@ function Payment() {
                 <FaArrowLeft className='text-[.7em]' /> <p>Go Back</p>
               </Link>
             </button>
-            <Link 
-            to={'/finishorder'}
-            className={`border-[1px] flex justify-center items-center transition-all w-[45%]  bg-black text-white hover:bg-white hover:text-black duration-200 border-black h-[40px] `}>
+            <Link
+              to={'/finishorder'}
+              className={`border-[1px] flex justify-center items-center transition-all w-[45%]  bg-black text-white hover:bg-white hover:text-black duration-200 border-black h-[40px] `}>
               PAY
             </Link>
           </div>

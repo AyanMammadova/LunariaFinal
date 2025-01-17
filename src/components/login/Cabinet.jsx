@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
+import { Helmet } from 'react-helmet';
 import { MdOutlineLogout } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
 function Cabinet() {
-    
+
     const savedData = JSON.parse(localStorage.getItem('registerData'));
-    const navigate=useNavigate()
-    
+    const navigate = useNavigate()
+
     function handleLogout() {
         localStorage.clear()
         navigate('/')
     }
     return (
         <>
+            <Helmet>
+                <title>Lunaria | Cabinet</title>
+            </Helmet>
             <div className='pt-[150px]  flex justify-around w-[100%]'>
 
                 <div className='flex flex-col bp600:flex-row w-[97%] justify-between items-center bp600:items-start bp600:w-[80%]  pt-[20px]   rounded-md'>

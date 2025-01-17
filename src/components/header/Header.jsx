@@ -11,6 +11,7 @@ import ShoppingBag from "../offcanvas/ShoppingBag";
 import LoginPopUp from "../login/LoginPopUp";
 import { BASKET } from "../../context/BasketContext";
 import QuickView from "../main/QuickView";
+import FullLoader from "../main/FullLoader";
 
 function Header() {
   const location = useLocation();
@@ -32,6 +33,9 @@ function Header() {
   return (
     <>
       <header className=" fixed w-[100%] bg-white z-50">
+        <div className={`${dataCategory ? 'hidden' : 'block'} z-50`}>
+          <FullLoader />
+        </div>
         <div
           onClick={() => setShowQuick(false)}
           className={`${showQuick ? 'block' : 'hidden'} w-[100vw] bg-[#53525280] flex justify-center items-center  fixed h-[100vh] z-50`}>
@@ -156,7 +160,7 @@ function Header() {
                 >
                   <input
                     type="text"
-                    className="w-[100px] text-[.7em] h-[30px]  text-gray-200 px-[10px]focus:outline-none"
+                    className="w-[100px] text-[.7em] h-[30px]   text-gray-200 px-[10px]focus:outline-none"
                     placeholder="Search"
                   />
                   <MdOutlineSearch className="text-[1.1em] text-gray-600" />
@@ -167,14 +171,14 @@ function Header() {
                   <div className="font-cormorant hidden  bp1200:flex text-[.6em] border-[1px] border-gray-600  h-[30px]  items-center justify-center w-[30px] rounded-full p-[16px]">
                     {savedLogin?.name[0]}.{savedLogin?.lastname[0]}
                   </div>
-                  </Link>
-                  <IoPersonOutline
-                    onClick={() => {
-                      setShowLogin(savedLogin ? false : !showLogin)
-                    }}
-                    className={`hidden cursor-pointer bp1200:block`}
-                  />
-                
+                </Link>
+                <IoPersonOutline
+                  onClick={() => {
+                    setShowLogin(savedLogin ? false : !showLogin)
+                  }}
+                  className={`hidden cursor-pointer bp1200:block`}
+                />
+
               </div>
               <div className="flex items-center gap-[5px]">
                 <Link to={"/wishlist"}>
