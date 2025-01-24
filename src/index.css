@@ -12,22 +12,11 @@
   top: 80px;
 }
 
-/* HTML: <div class="loader"></div> */
-.loader {
-  width: fit-content;
-  font-weight: bold;
-  font-family: monospace;
-  font-size: 30px;
-  clip-path: inset(0 3ch 0 0);
-  animation: l4 1s steps(4) infinite;
-}
-
-.loader:before {
-  content: "Loading..."
-}
 .scrollbar-hidden {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 @keyframes l4 {
@@ -56,32 +45,35 @@
   display: block;
 }
 
-.mySwiper1 .swiper-wrapper {
-  /* width: 100px; */
-  height: 500px;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-}
 
-
-.mySwiper1 {
-  display: flex;
-  flex-direction: column;
-}
-
+/* E COMMERCE SWIPER */
 .swiper-button-next,
 .swiper-button-prev {
   display: none !important;
 }
 
-.mySwiper2 .swiper-wrapper {
-  width: 400px;
-  height: 400px;
-}
+@media screen and (min-width: 500px) {
+  .mySwiper1desktop .swiper-wrapper {
+    /* width: 100px; */
+    height: 400px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
 
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-}
+  .mySwiper1desktop {
+    display: flex;
+    flex-direction: column;
+  }
 
+  .mySwiper2desktop .swiper-wrapper {
+    width: 400px;
+    height: 400px;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+  }
+
+}

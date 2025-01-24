@@ -76,12 +76,12 @@ function ShoppingBag({ setShowBag }) {
                     <p>Size:{item.size}</p>
                   </div>
 
-                  <p className={`${item?.discount > 1 ? 'block' : 'hidden'} text-black text-[1.2em]`}>
+                  <p className={`${item?.discount > 1 ? 'block' : 'hidden'}  text-black text-[1.2em]`}>
                     <span>{((item?.price * (100 - item?.discount)) / 100).toFixed(1)}$</span>
-                    <del className='text-gray-600 px-[5px] text-[.8em]'>{item?.price}</del>
+                    <del className='text-gray-600 px-[5px] text-[.8em]'>{item?.price.toFixed(1)}</del>
                   </p>
                   <p className={`${item?.discount > 1 ? 'hidden' : 'block'} text-[1.2em]`}>
-                    {item?.price}$
+                    {item?.price.toFixed(1)}$
                   </p>
                   <div>
                     <p className='flex gap-[5px] items-center'>Quantity:
@@ -99,7 +99,7 @@ function ShoppingBag({ setShowBag }) {
                     </p>
                   </div>
 
-                  <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price}$</p>
+                  <p className={`${item.discount > 1 ? 'hidden' : 'block'} font-bold text-right`}>ItemTotal: {item.quantity * item.price.toFixed(2)}$</p>
                   <p className={`${item.discount > 1 ? 'block' : 'hidden'} font-bold text-right`}>ItemTotal: {item.quantity * (item.price * ((100 - item.discount)) / 100).toFixed(2)}$</p>
                 </div>
                 <hr />

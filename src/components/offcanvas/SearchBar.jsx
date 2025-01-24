@@ -33,7 +33,7 @@ function SearchBar({ setShowSearchBar, showSearchBar }) {
         <div className='w-[100%] h-[100vh] lg:h-auto pt-[30px] absolute top-0 bg-white'>
           <img className='mx-[auto] h-[30px] my-[5px]' src="/img/logo.png" />
           <div className='w-[250px] bp600:w-[400px] relative mx-[auto] p-[5px] h-[40px] border-[1px] border-gray-200'>
-            <input className='w-[90%] border-white border-2'
+            <input className='w-[90%] border-white border-2 focus:outline-none'
               type="text"
               placeholder='Search...'
               onChange={(e) => { handleInput(e.target.value) }}

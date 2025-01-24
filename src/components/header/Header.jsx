@@ -8,10 +8,10 @@ import CategorySlide from "../offcanvas/CategorySlide";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import SearchBar from "../offcanvas/SearchBar";
 import ShoppingBag from "../offcanvas/ShoppingBag";
-import LoginPopUp from "../login/LoginPopUp";
 import { BASKET } from "../../context/BasketContext";
 import QuickView from "../main/QuickView";
 import FullLoader from "../main/FullLoader";
+import LoginPopUp from "../userinfo/login/LoginPopUp";
 
 function Header() {
   const location = useLocation();
@@ -160,7 +160,7 @@ function Header() {
                 >
                   <input
                     type="text"
-                    className="w-[100px] text-[.7em] h-[30px]   text-gray-200 px-[10px]focus:outline-none"
+                    className="w-[100px] text-[.7em] h-[30px] focus:outline-none  text-gray-200 px-[10px]focus:outline-none"
                     placeholder="Search"
                   />
                   <MdOutlineSearch className="text-[1.1em] text-gray-600" />

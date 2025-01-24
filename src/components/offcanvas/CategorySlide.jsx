@@ -34,7 +34,7 @@ function CategorySlide() {
               })
             }
           </ul>
-          <ul className='text-[.8em] flex flex-col  pt-[30px] font-bold'>
+          <ul className='text-[1em] flex flex-col  pt-[30px] font-bold'>
             {
               id ? <Link to={`/category/${dataCategory[id - 1]?.name}`}>
                 {dataCategory[id - 1]?.name}-HomePage

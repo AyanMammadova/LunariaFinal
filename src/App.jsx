@@ -5,17 +5,18 @@ import Main from './components/main/Main'
 import ByCategory from './components/main/ByCategory'
 import ProductById from './components/main/ProductById'
 import BySubCategory from './components/main/BySubCategory'
-import RegisterPage from './components/login/RegisterPage'
 import WishList from './components/main/WishList'
-import ForgotPassword from './components/login/ForgotPassword'
-import Login from './components/login/Login'
 import ShoppingBagPage from './components/main/ShoppingBagPage'
 import CheckOut from './components/main/CheckOut'
 import NotFound from './NotFound'
 import { Helmet } from 'react-helmet'
 import FinishOrder from './components/main/FinishOrder'
 import Payment from './components/main/Payment'
-import Cabinet from './components/login/Cabinet'
+import RegisterPage from './components/userinfo/login/RegisterPage'
+import ForgotPassword from './components/userinfo/login/ForgotPassword'
+import Login from './components/userinfo/login/Login'
+import Cabinet from './components/userinfo/cabinet/Cabinet'
+import AccountInfo from './components/userinfo/cabinet/AccountInfo'
 
 function App() {
   const { pathname } = useLocation()
@@ -43,12 +44,15 @@ function App() {
           <Route path='/finishorder' element={<FinishOrder/>}/>
           <Route path='/checkout' element={<CheckOut/>}/>
           <Route path='/cabinet' element={<Cabinet/>}/>
+          <Route path='/accountinfo' element={<AccountInfo/>}/>
+
           
           <Route path='/shoppingbagpage' element={<ShoppingBagPage/>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>  
 
-        <Route path='/payment' element={<Payment/>}/>     
+        <Route path='/payment' element={<Payment/>}/> 
+
      </Routes>
     </>
   )

@@ -24,17 +24,15 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
     const [totalPage, setTotalPage] = useState(1)
     const navigate = useNavigate()
 
-
-
     useEffect(() => {
         navigate(`?${page && page != 1 ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item.toLowerCase()).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item.toLowerCase()).join(',')}` : ''}${selectedBrand ? `&brand=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice && maxPrice != 4500 ? `&maxPrice=${maxPrice}` : ''}`)
-
     }, [selectedColors, selectedSizes, page, discounted, selectedBrand, minPrice, maxPrice])
 
-
+    console.log(minPrice)
     const catid = dataCategory?.find((item, i) => item.name == catname).id
     const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
     useEffect(() => {
+        
         setMinPrice(0)
         setMaxPrice(4500)
         setDiscounted(false)
@@ -57,6 +55,7 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
                 }, [])
             )
         })
+        setPrices([0,4500])
 
     }, [subid, page])
     useEffect(() => {
@@ -189,7 +188,7 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
                             )
                         })}
 
-                    <Box sx={{ width: 300 }}>
+                    <Box >
                         <Slider
                             sx={{
                                 '& .MuiSlider-thumb': {
@@ -208,6 +207,7 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
                             valueLabelDisplay="auto"
                             min={0}
                             max={10000}
+                            className='w-[30%] mx-[ auto]'
                         />
                     </Box>
                     <div className="flex justify-between w-[100%]">

@@ -20,6 +20,7 @@ function BasketContext({ children }) {
         )
     }
     function clearBasket() {
+        localStorage.setItem('PastOrders', JSON.stringify(basket));
         setBasket(basket.filter(item => !item))
     }
 
@@ -64,13 +65,6 @@ function BasketContext({ children }) {
                     : item
             ))
         }
-        // const ayan=basket.filter((item,i)=> item.id == id && (item.color == color) && (item.size == size))
-        // if(ayan.length==2){
-        //     const index=basket.findIndex((item, i) => item.id === id && item.color === color && item.size === size)
-        //     setBasket(basket.filter((item,i)=> i!=index))
-        // } else {
-        //     console.log('deyil')
-        // }
     } 
     useEffect(() => {
         localStorage.setItem('basketLocal', JSON.stringify(basket));

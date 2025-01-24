@@ -35,14 +35,13 @@ function RegisterPage() {
   const handleSubmit = () => {
     const newErrors = { ...errors }
 
-    // Validation for each field
     newErrors.name = !registerData.name.trim()
     newErrors.lastname = !registerData.lastname.trim()
-    newErrors.email = !/\S+@\S+\.\S+/.test(registerData.email) // Email regex validation
-    newErrors.number = !/^\d{10}$/.test(registerData.number) // Mobile number validation (10 digits)
+    newErrors.email = !/\S+@\S+\.\S+/.test(registerData.email) 
+    newErrors.number = !/^\d{10}$/.test(registerData.number) 
     newErrors.username = !registerData.username.trim()
     newErrors.gender = !registerData.gender.trim()
-    newErrors.password = !registerData.password.trim() || registerData.password.length < 6 // Password length validation
+    newErrors.password = !registerData.password.trim() || registerData.password.length < 6 
     newErrors.repeatpass = registerData.password !== registerData.repeatpass
 
     setErrors(newErrors)
