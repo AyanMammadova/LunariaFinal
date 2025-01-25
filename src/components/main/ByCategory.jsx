@@ -7,16 +7,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-import QuickView from './QuickView'
 import { Helmet } from 'react-helmet'
 import { getDataByCategory } from '../../services/api'
-import { BASKET } from '../../context/BasketContext'
 
 function ByCategory() {
   const { catname } = useParams()
   const [cdata, setcdata] = useState(null)
-  const { imgsfordeps, imgsforsubcats, dataCategory,showQuick, setShowQuick,quickId, setQuickId } = useContext(DATA)
- const {updating,setUpdating}=useContext(BASKET)
+  const { imgsfordeps, imgsforsubcats, dataCategory, setShowQuick, setQuickId } = useContext(DATA)
   const catid=dataCategory?.find((item, i) => item.name == catname).id
   useEffect(() => {
     getDataByCategory(catid).then(res => { setcdata(res.data) })
@@ -24,7 +21,7 @@ function ByCategory() {
   return (
     <>
       <Helmet>
-        <title>{catname} | Lunaria</title>
+        <title>Lunaria |{catname} </title>
       </Helmet>
       <section>
         <div className='overflow-hidden h-[100vh]  w-[95%] mx-[auto] relative group'>

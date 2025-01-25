@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { FaRegSadCry } from 'react-icons/fa'
+import React, { useContext} from 'react'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import { IoCloseSharp } from 'react-icons/io5'
 import { BASKET } from '../../context/BasketContext'
@@ -9,7 +8,7 @@ import { DATA } from '../../context/DataContext'
 
 function ShoppingBag({ setShowBag }) {
   const { basket, removeFromBasket, SubTotal, handleCount,setUpdateColor,setUpdateSize,setUpdating } = useContext(BASKET)
-  const { setShowQuick, quickId, setQuickId } = useContext(DATA)
+  const { setShowQuick,  setQuickId } = useContext(DATA)
 
   return (
     <>

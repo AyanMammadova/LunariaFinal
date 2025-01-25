@@ -13,7 +13,7 @@ import { FaCheck } from 'react-icons/fa6';
 
 
 function QuickView({ setShowBag }) {
-  const { dataFav, handleFavs, setShowQuick, showQuick, quickId, setQuickId } = useContext(DATA)
+  const { dataFav, handleFavs, setShowQuick, showQuick, quickId } = useContext(DATA)
   const { addToBasket, size, setSize, color, setColor, updateSize, updateColor, updating, handleUpdate, basket } = useContext(BASKET)
   const [product, setProduct] = useState(null)
   const [newColor, setNewColor] = useState(null)
@@ -206,9 +206,7 @@ function QuickView({ setShowBag }) {
           </div>
         </div>
           :
-          <div className='animate-pulse w-full flex items-center pt-[20px]  md:flex-row justify-center gap-[50px] '>
-            <div className='w-[300px]  h-[200px] bg-gray-500'></div>
-          </div>
+          <div className="w-12 h-12 mx-[auto] border-4 border-black border-t-transparent rounded-full animate-spin"></div>
 
         }
       </div>

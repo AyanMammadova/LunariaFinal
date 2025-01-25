@@ -9,7 +9,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { Helmet } from "react-helmet";
 
 function CheckOut() {
-  const { basket, SubTotal, removeFromBasket, handleCount } = useContext(BASKET);
+  const { basket, SubTotal } = useContext(BASKET);
   const [summaryFixed, setSummaryFixed] = useState(true);
   const [delivery, setDelivery] = useState(true);
   const [urgent, setUrgent] = useState(false);

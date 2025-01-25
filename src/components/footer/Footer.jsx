@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import FooterSwiper from "./FooterSwiper";
-import { Link } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
 import { IoIosArrowDown } from "react-icons/io";
 import { GoCreditCard } from "react-icons/go";

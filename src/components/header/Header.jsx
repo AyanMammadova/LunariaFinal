@@ -181,7 +181,7 @@ function Header() {
                 />
 
               </div>
-              <div className="flex items-center gap-[5px]">
+              <div className="flex items-center gap-[12px]">
                 <Link to={"/wishlist"}>
                   <div className="relative z-10">
                     <GoHeart className="cursor-pointer" />

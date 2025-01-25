@@ -4,7 +4,6 @@ import { MdOutlineLogout } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Cabinet() {
-
     const savedData = JSON.parse(localStorage.getItem('registerData'));
     const navigate = useNavigate()
 

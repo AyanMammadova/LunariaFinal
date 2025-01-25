@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation,  useParams } from "react-router-dom";
 import { DATA } from "../../context/DataContext";
 import { getDataBySubCategory } from "../../services/api";
 import { VscHeart, VscHeartFilled } from "react-icons/vsc";
@@ -15,22 +15,17 @@ function BySubCategory() {
   const { catname, subname } = useParams()
   const [sortSelection, showSortSelection] = useState(false)
   const { setUpdating } = useContext(BASKET)
-  const { dataCategory, dataFav, handleFavs, setShowFilter, dataFilter, showFilter, showQuick, setShowQuick, quickId, setQuickId } = useContext(DATA)
+  const { dataCategory, dataFav, handleFavs, setShowFilter,  showFilter,  setShowQuick,  setQuickId } = useContext(DATA)
   const sortData = ['PRICE LOW TO HIGH', 'PRICE HIGH TO LOW']
   const [selectedSort, setSelectedSort] = useState('PRICE LOW TO HIGH')
   const [dataFinal, setdataFinal] = useState(null)
   const [totalPage, setTotalPage] = useState(1)
-  const [selectedColors, setSelectedColors] = useState(null)
-  const [selectedSizes, setSelectedSizes] = useState(null)
-  const [selectedBrand, setSelectedBrand] = useState(null)
   const [colorData, setColorData] = useState(null)
   const [sizeData, setSizeData] = useState(null)
   const [brandData, setBrandData] = useState(null)
-  const [newdatafilter, setnewdatafilter] = useState(dataFilter)
   const [page, setPage] = useState(null)
   const catid = dataCategory?.find((item, i) => item.name == catname).id
   const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
-  const navigate = useNavigate()
   const [discounted, setDiscounted] = useState(false)
 
 
@@ -82,7 +77,7 @@ function BySubCategory() {
   return (
     <>
       <Helmet>
-        <title>{subname} | Lunaria</title>
+        <title>Lunaria | {subname} </title>
       </Helmet>
 
       {/* SLIDING FILTER DIV */}

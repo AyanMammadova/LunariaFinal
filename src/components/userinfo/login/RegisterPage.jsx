@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { LuEye, LuEyeOff } from 'react-icons/lu'
 import { Link, useNavigate } from 'react-router-dom'
@@ -18,8 +18,6 @@ function RegisterPage() {
     repeatpass: ''
   })
   const [registerData, setRegisterData] = useState(initialObj)
- 
-
 
   const [errors, setErrors] = useState({
     name: false,

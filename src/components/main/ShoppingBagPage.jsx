@@ -13,7 +13,7 @@ function ShoppingBagPage() {
     return (
         <>
             <Helmet>
-                <title>ShoppingBag | Lunaria</title>
+                <title>Lunaria | ShoppingBag</title>
             </Helmet>
             <div className='w-[100%] flex flex-col bp800:flex-row pt-[150px] gap-[40px] text-[.9em] text-gray-800 p-[10px] '>
                 <div className='w-[100%] bp800:w-[70%]'>
