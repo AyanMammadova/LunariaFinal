@@ -1,23 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { MdOutlineLogout } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 
 function AccountInfo() {
-    const [image, setImage] = useState(null);
+    
     const navigate = useNavigate()
     const [error, setError] = useState(null);
     const [LastPassword,setLastPassword]=useState(null)
     const [newPassword, setNewPassword] = useState(null)
     const savedData = JSON.parse(localStorage.getItem('registerData'));
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => setImage(reader.result);
-            reader.readAsDataURL(file);
-        }
-    }
+    
+    
     function handleLogout() {
         localStorage.clear()
         navigate('/')
@@ -49,52 +43,34 @@ function AccountInfo() {
                 <div className="md:flex mx-[auto] justify-between gap-[30px]">
 
                     <div className="bp800:flex justify-center gap-[50px]">
-                        <div className="flex flex-col justify-center  items-center ">
-                            <label
-                                htmlFor="photoInput"
-                                className="w-[200px] mx-[auto] h-[200px] rounded-full border-2  border-gray-300 flex items-center justify-center cursor-pointer overflow-hidden bg-gray-100"
-                            >
-                                {image ? (
-                                    <img src={image} alt="Profile" className="w-full h-full object-cover" />
-                                ) : (
-                                    <span className="text-gray-400 text-2xl">+</span>
-                                )}
-                            </label>
-                            <input
-                                id="photoInput"
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={handleImageChange}
-                            />
-                        </div>
+                        
                         <div className="grid bp600:grid-cols-2 w-[100%]  gap-[20px]">
                             <div>
                                 <p>Name</p>
-                                <div className="mb-2  mx-[auto] bp600:w-[270px] text-gray-600 px-4 py-2 border ">
+                                <div className="mb-2  mx-[auto] bp600:w-[100%] text-gray-600 px-4 py-2 border ">
                                     {savedData?.name}
                                 </div>
                                 <p>Lastname</p>
-                                <div className="mb-2  mx-[auto] bp600:w-[270px] text-gray-600 px-4 py-2 border ">
+                                <div className="mb-2  mx-[auto] bp600:w-[100%] text-gray-600 px-4 py-2 border ">
                                     {savedData?.lastname}
                                 </div>
                                 Password
-                                <div className="mb-2  mx-[auto] bp600:w-[270px] text-gray-600 px-4 py-2 border ">
+                                <div className="mb-2  mx-[auto] bp600:w-[100%] text-gray-600 px-4 py-2 border ">
                                     {LastPassword ? LastPassword :  savedData?.password}
                                 </div>
                             </div>
                             <div>
                                 <p>Email</p>
-                                <div className="mb-2  mx-[auto] bp600:w-[270px] overflow-hidden truncate text-gray-600 px-4 py-2 border ">
+                                <div className="mb-2  mx-[auto] bp600:w-[100%] overflow-hidden truncate text-gray-600 px-4 py-2 border ">
                                     {savedData?.email}
                                 </div>
                                 <p>Number</p>
-                                <div className="mb-2  mx-[auto] bp600:w-[270px] text-gray-600 px-4 py-2 border ">
+                                <div className="mb-2  mx-[auto] bp600:w-[100%] text-gray-600 px-4 py-2 border ">
                                     {savedData?.number}
                                 </div>
                                 Change Password:
                                 <div className="relative">
-                                    <div className='flex  mb-2  mx-[auto] bp600:w-[270px] text-gray-600 px-4 py-2 border'>
+                                    <div className='flex  mb-2  mx-[auto] bp600:w-[100%] text-gray-600 px-4 py-2 border'>
                                         <input
                                             required
                                             type='text'

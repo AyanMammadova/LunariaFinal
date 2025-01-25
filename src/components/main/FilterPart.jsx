@@ -28,7 +28,6 @@ function FilterPart({ catname, subname, setPage, page, isSliding, setdataFinal }
         navigate(`?${page && page != 1 ? `page=${page}` : ''}${selectedColors?.length ? `&color=${selectedColors.map(item => item.toLowerCase()).join(',')}` : ''}${selectedSizes?.length ? `&size=${selectedSizes.map(item => item.toLowerCase()).join(',')}` : ''}${selectedBrand ? `&brand=${selectedBrand}` : ''}${discounted ? `&discounted=true` : ''}${minPrice ? `&minPrice=${minPrice}` : ''}${maxPrice && maxPrice != 4500 ? `&maxPrice=${maxPrice}` : ''}`)
     }, [selectedColors, selectedSizes, page, discounted, selectedBrand, minPrice, maxPrice])
 
-    console.log(minPrice)
     const catid = dataCategory?.find((item, i) => item.name == catname).id
     const subid = dataCategory?.[catid - 1]?.Subcategory?.find((item, i) => item.name == subname).id
     useEffect(() => {

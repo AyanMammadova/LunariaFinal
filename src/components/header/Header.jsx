@@ -22,7 +22,6 @@ function Header() {
   const [showBag, setShowBag] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const savedLogin = JSON.parse(localStorage.getItem('registerData'));
-
   useEffect(() => {
     setShowLogin(false);
     setShowCategorySlide(false);
@@ -168,8 +167,10 @@ function Header() {
               </div>
               <div className="flex items-center">
                 <Link to={'/cabinet'} className={`${savedLogin ? 'block' : 'hidden'} flex items-center justify-center`}>
-                  <div className="font-cormorant hidden  bp1200:flex text-[.6em] border-[1px] border-gray-600  h-[30px]  items-center justify-center w-[30px] rounded-full p-[16px]">
-                    {savedLogin?.name[0]}.{savedLogin?.lastname[0]}
+                  <div className="font-cormorant hidden bg-gray-200 relative  bp1200:flex text-[.6em] border-[1px] border-gray-600  h-[30px]  items-center justify-center w-[30px] rounded-full p-[16px]">
+                    
+                     <span>{savedLogin?.name[0]}.{savedLogin?.lastname[0]}</span> 
+
                   </div>
                 </Link>
                 <IoPersonOutline
