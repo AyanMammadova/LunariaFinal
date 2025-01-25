@@ -13,7 +13,7 @@ function CategorySlide() {
   const savedLogin = JSON.parse(localStorage.getItem('registerData'));
   return (
     <>
-      <div className={`w-[100vw] relative flex  z-50  h-[100vh] bg-white`}>
+      <div className={`w-[100vw] relative flex  font-montserrat   z-50  h-[100vh] bg-white`}>
         <div className=' flex items-center justify-around p-[10px] absolute top-[30px] right-[30px] border-[1px] border-gray-300'>
           <Link to={savedLogin ? '/cabinet' : '/login'} className='w-[100%]  flex items-center justify-around'>
             <div className={`flex font-montserrat items-center`}>
@@ -27,14 +27,14 @@ function CategorySlide() {
             {
               dataCategory && dataCategory.map((item, i) => {
                 return <NavLink
-                  className='cursor-pointer navlarim rounded  hover:bg-gray-200 px-[10px] p-[4px]'
+                  className='cursor-pointer navlarim rounded  hover:bg-gray-200 px-[5px] p-[4px]'
                   onClick={() => { showSubs(item.id) }}
                   key={i}>{item.name}
                 </NavLink>
               })
             }
           </ul>
-          <ul className='text-[1em] flex flex-col  pt-[30px] font-bold'>
+          <ul className='text-[1em] flex flex-col text-[1.1em] pt-[30px] font-bold'>
             {
               id ? <Link to={`/category/${dataCategory[id - 1]?.name}`}>
                 {dataCategory[id - 1]?.name}-HomePage

@@ -162,7 +162,7 @@ function CheckOut() {
             <Link to={onlinepay ? '/payment' : '/finishorder'}>
               <button
 
-                className="bg-black text-white bp500:mx-[20px] transition-all font-montserrat duration-200 hover:bg-white hover:text-black text-center w-[95%] rounded mt-[20px] h-[40px] border-[1px] border-black"
+                className="bg-black text-white bp500:mx-[20px] mx-[5px] transition-all font-montserrat duration-200 hover:bg-white hover:text-black text-center w-[95%] rounded mt-[20px] h-[40px] border-[1px] border-black"
               >
                 {onlinepay ? 'Go to payment' : 'Complete Order'}
               </button>

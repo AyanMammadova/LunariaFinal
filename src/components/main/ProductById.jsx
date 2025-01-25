@@ -41,10 +41,10 @@ function ProductById() {
                         </div>
                     </div>
                     {/* DETAILSDIV */}
-                    <div className='text-black flex flex-col gap-[10px] md:w-[50%]'>
-                        <p className='font-bold'>{product?.Brands.name}</p>
-                        <p className=''>{product?.name}</p>
-                        <p className={`${product?.discount > 1 ? 'block' : 'hidden'} text-black text-[1.4em]`}>
+                    <div className='text-black flex flex-col   gap-[10px] md:w-[50%]'>
+                        <p className='font-bold mx-[10px]'>{product?.Brands.name}</p>
+                        <p className=' mx-[10px]'>{product?.name}</p>
+                        <p className={`${product?.discount > 1 ? 'block' : 'hidden'} text-black mx-[10px] text-[1.4em]`}>
                             <span className='pr-[10px]'>{((product?.price * (100 - product?.discount)) / 100).toFixed(1)}$</span>
                             <del className='text-gray-600 text-[.8em]'>{product?.price}</del>
                         </p>
@@ -52,7 +52,7 @@ function ProductById() {
                             {product?.price}$
                         </p>
                         {/* COLOR */}
-                        <div className='flex gap-[10px]'>Color:
+                        <div className='flex mx-[10px] gap-[10px]'>Color:
                             {
                                 product?.Colors.length > 0 ? product?.Colors.map((item, i) => {
                                     return <div
@@ -69,7 +69,7 @@ function ProductById() {
 
                         </div>
                         {/* SIZE */}
-                        <div className='flex gap-[5px] flex-wrap'>
+                        <div className='flex mx-[10px] gap-[5px] flex-wrap'>
                             {
                                 product?.Size.map((item, i) => (
                                     <div

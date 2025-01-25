@@ -29,7 +29,7 @@ function SearchBar({ setShowSearchBar, showSearchBar }) {
   }, [trimmedInput, selectedCategory])
   return (
     <>
-      <div className='relative'>
+      <div className='relative  font-montserrat text-[1.1em]'>
         <div className='w-[100%] h-[100vh] lg:h-auto pt-[30px] absolute top-0 bg-white'>
           <img className='mx-[auto] h-[30px] my-[5px]' src="/img/logo.png" />
           <div className='w-[250px] bp600:w-[400px] relative mx-[auto] p-[5px] h-[40px] border-[1px] border-gray-200'>
@@ -61,12 +61,12 @@ function SearchBar({ setShowSearchBar, showSearchBar }) {
               }
             </ul>
           </div>
-          <div className='w-[280px] max-h-[60vh] lg:max-h-[300px] overflow-y-scroll z-10  mx-[auto] mb-[20px] bp600:w-[450px]'>
+          <div className='w-[97%] max-h-[60vh] lg:max-h-[300px] overflow-y-scroll z-10  mx-[auto] mb-[20px] bp600:w-[450px]'>
             {
               searchedData?.length > 0 ? searchedData.map((item, i) => {
                 return <Link key={i} to={`/details/${item.name.replace(/ /g, '-')}-${item.id}`}>
                   <div className='flex justify-between h-[60px] items-center w-[100%]'>
-                    <div className='flex items-center justify-between'>
+                    <div className='flex items-center text-[1.1em] justify-between'>
                       <img className='h-[60px] p-[3px]' src={item.images[0]} alt="" />
                       <p>{item?.name}</p>
                     </div>
