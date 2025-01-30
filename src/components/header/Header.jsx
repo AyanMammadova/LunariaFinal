@@ -159,7 +159,7 @@ function Header() {
                 >
                   <input
                     type="text"
-                    className="w-[100px] text-[.7em] h-[30px] focus:outline-none  text-gray-200 px-[10px]focus:outline-none"
+                    className="w-[100px] text-[.7em] px-[6px] h-[30px] focus:outline-none  text-gray-200 px-[10px]focus:outline-none"
                     placeholder="Search"
                   />
                   <MdOutlineSearch className="text-[1.1em] text-gray-600" />
